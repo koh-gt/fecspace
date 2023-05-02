@@ -8,54 +8,30 @@ const browserWindowEnv = browserWindow.__env || {};
 
 let routes: Routes = [];
 
-if (browserWindowEnv.BASE_MODULE && (browserWindowEnv.BASE_MODULE === 'bisq' || browserWindowEnv.BASE_MODULE === 'liquid')) {
-  routes = [
-    {
-      path: '',
-      redirectTo: 'api/rest',
-      pathMatch: 'full'
-    },
-    {
-      path: 'api/:type',
-      component: DocsComponent
-    },
-    {
-      path: 'api',
-      redirectTo: 'api/rest',
-      pathMatch: 'full'
-    },
-    {
-      path: '**',
-      redirectTo: 'api/rest',
-      pathMatch: 'full'
-    }
-  ];
-} else {
-  routes = [
-    {
-      path: '',
-      pathMatch: 'full',
-      redirectTo: 'faq'
-    },
-    {
-      path: 'api/:type',
-      component: DocsComponent
-    },
-    {
-      path: 'faq',
-      data: { networks: ['bitcoin'] },
-      component: DocsComponent
-    },
-    {
-      path: 'api',
-      redirectTo: 'api/rest'
-    },
-    {
-      path: '**',
-      redirectTo: 'api/faq'
-    }
-  ];
-}
+routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'faq'
+  },
+  {
+    path: 'api/:type',
+    component: DocsComponent
+  },
+  {
+    path: 'faq',
+    data: { networks: ['bitcoin'] },
+    component: DocsComponent
+  },
+  {
+    path: 'api',
+    redirectTo: 'api/rest'
+  },
+  {
+    path: '**',
+    redirectTo: 'api/faq'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

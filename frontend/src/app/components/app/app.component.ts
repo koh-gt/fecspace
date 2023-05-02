@@ -52,12 +52,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        let domain = 'mempool.space';
-        if (this.stateService.env.BASE_MODULE === 'liquid') {
-          domain = 'liquid.network';
-        } else if (this.stateService.env.BASE_MODULE === 'bisq') {
-          domain = 'bisq.markets';
-        }
+        let domain = 'explorer.litecoin.net';
         this.link.setAttribute('href', 'https://' + domain + this.location.path());
       }
     });

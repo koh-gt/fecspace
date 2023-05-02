@@ -38,16 +38,8 @@ export class SeoService {
 
   getTitle(): string {
     if (this.network === 'testnet')
-      return this.baseTitle + ' - Bitcoin Testnet';
-    if (this.network === 'signet')
-      return this.baseTitle + ' - Bitcoin Signet';
-    if (this.network === 'liquid')
-      return this.baseTitle + ' - Liquid Network';
-    if (this.network === 'liquidtestnet')
-      return this.baseTitle + ' - Liquid Testnet';
-    if (this.network === 'bisq')
-      return this.baseTitle + ' - Bisq Markets';
-    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Bitcoin') + ' Explorer';
+      return this.baseTitle + ' - Litecoin Testnet';
+    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Litecoin') + ' Explorer';
   }
 
   ucfirst(str: string) {

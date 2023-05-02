@@ -75,9 +75,6 @@ export class SearchFormComponent implements OnInit {
     const searchText$ = this.searchForm.get('searchText').valueChanges
     .pipe(
       map((text) => {
-        if (this.network === 'bisq' && text.match(/^(b)[^c]/i)) {
-          return text.substr(1);
-        }
         return text.trim();
       }),
       distinctUntilChanged(),
@@ -108,9 +105,6 @@ export class SearchFormComponent implements OnInit {
         );
       }),
       map((result: any[]) => {
-        if (this.network === 'bisq') {
-          result[0] = result[0].map((address: string) => 'B' + address);
-        }
         return result;
       }),
       tap(() => {
@@ -154,10 +148,6 @@ export class SearchFormComponent implements OnInit {
           const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
           const matchesBlockHash = this.regexBlockhash.test(searchText);
           const matchesAddress = this.regexAddress.test(searchText);
-
-          if (matchesAddress && this.network === 'bisq') {
-            searchText = 'B' + searchText;
-          }
 
           return {
             searchText: searchText,

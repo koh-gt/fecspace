@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { StateService } from './state.service';
@@ -8,19 +8,7 @@ const networkModules = {
   bitcoin: {
     subnets: [
       { name: 'mainnet', path: '' },
-      { name: 'testnet', path: '/testnet' },
-      { name: 'signet', path: '/signet' },
-    ],
-  },
-  liquid: {
-    subnets: [
-      { name: 'liquid', path: '' },
-      { name: 'liquidtestnet', path: '/testnet' },
-    ],
-  },
-  bisq: {
-    subnets: [
-      { name: 'bisq', path: '' },
+      { name: 'testnet', path: '/testnet' }
     ],
   },
 };
@@ -44,7 +32,7 @@ export class NavigationService {
     });
   }
 
-  // For each network (bitcoin/liquid/bisq), find and save the longest url path compatible with the current route
+  // For each network (bitcoin), find and save the longest url path compatible with the current route
   updateSubnetPaths(root: ActivatedRouteSnapshot): void {
     let path = '';
     const networkPaths = {};

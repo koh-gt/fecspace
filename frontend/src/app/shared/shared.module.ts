@@ -8,8 +8,6 @@ import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, fa
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MasterPageComponent } from '../components/master-page/master-page.component';
 import { PreviewTitleComponent } from '../components/master-page-preview/preview-title.component';
-import { BisqMasterPageComponent } from '../components/bisq-master-page/bisq-master-page.component';
-import { LiquidMasterPageComponent } from '../components/liquid-master-page/liquid-master-page.component';
 import { AboutComponent } from '../components/about/about.component';
 import { VbytesPipe } from './pipes/bytes-pipe/vbytes.pipe';
 import { ShortenStringPipe } from './pipes/shorten-string-pipe/shorten-string.pipe';
@@ -116,8 +114,6 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     AboutComponent,
     MasterPageComponent,
     PreviewTitleComponent,
-    BisqMasterPageComponent,
-    LiquidMasterPageComponent,
     StartComponent,
     TransactionComponent,
     BlockComponent,

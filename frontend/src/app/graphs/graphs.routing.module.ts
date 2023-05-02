@@ -8,7 +8,6 @@ import { BlockSizesWeightsGraphComponent } from '../components/block-sizes-weigh
 import { GraphsComponent } from '../components/graphs/graphs.component';
 import { HashrateChartComponent } from '../components/hashrate-chart/hashrate-chart.component';
 import { HashrateChartPoolsComponent } from '../components/hashrates-chart-pools/hashrate-chart-pools.component';
-import { LiquidMasterPageComponent } from '../components/liquid-master-page/liquid-master-page.component';
 import { MasterPageComponent } from '../components/master-page/master-page.component';
 import { MempoolBlockComponent } from '../components/mempool-block/mempool-block.component';
 import { MiningDashboardComponent } from '../components/mining-dashboard/mining-dashboard.component';
@@ -28,12 +27,11 @@ import { NodesChannelsMap } from '../lightning/nodes-channels-map/nodes-channels
 const browserWindow = window || {};
 // @ts-ignore
 const browserWindowEnv = browserWindow.__env || {};
-const isLiquid = browserWindowEnv && browserWindowEnv.BASE_MODULE === 'liquid';
 
 const routes: Routes = [
   {
     path: '',
-    component: isLiquid ? LiquidMasterPageComponent : MasterPageComponent,
+    component: MasterPageComponent,
     children: [
       {
         path: 'mining/pool/:slug',
@@ -53,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: 'mempool-block/:id',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['bitcoin'] },
         component: StartComponent,
         children: [
           {
@@ -64,12 +62,12 @@ const routes: Routes = [
       },
       {
         path: 'graphs',
-        data: { networks: ['bitcoin', 'liquid'] },
+        data: { networks: ['bitcoin'] },
         component: GraphsComponent,
         children: [
           {
             path: 'mempool',
-            data: { networks: ['bitcoin', 'liquid'] },
+            data: { networks: ['bitcoin'] },
             component: StatisticsComponent,
           },
           {
@@ -161,7 +159,7 @@ const routes: Routes = [
   },
   {
     path: 'tv',
-    data: { networks: ['bitcoin', 'liquid'] },
+    data: { networks: ['bitcoin'] },
     component: TelevisionComponent
   },
 ];

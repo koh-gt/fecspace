@@ -242,9 +242,6 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
               });
             }
           }
-          this.seoService.setTitle(
-            $localize`:@@bisq.transaction.browser-title:Transaction: ${this.txId}:INTERPOLATION:`
-          );
           this.resetTransaction();
           return merge(
             of(true),

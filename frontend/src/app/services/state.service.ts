@@ -18,11 +18,6 @@ export interface ILoadingIndicators { [name: string]: number; }
 
 export interface Env {
   TESTNET_ENABLED: boolean;
-  SIGNET_ENABLED: boolean;
-  LIQUID_ENABLED: boolean;
-  LIQUID_TESTNET_ENABLED: boolean;
-  BISQ_ENABLED: boolean;
-  BISQ_SEPARATE_BACKEND: boolean;
   ITEMS_PER_PAGE: number;
   KEEP_BLOCKS_AMOUNT: number;
   OFFICIAL_MEMPOOL_SPACE: boolean;
@@ -35,8 +30,6 @@ export interface Env {
   GIT_COMMIT_HASH: string;
   PACKAGE_JSON_VERSION: string;
   MEMPOOL_WEBSITE_URL: string;
-  LIQUID_WEBSITE_URL: string;
-  BISQ_WEBSITE_URL: string;
   MINING_DASHBOARD: boolean;
   LIGHTNING: boolean;
   AUDIT: boolean;
@@ -48,12 +41,7 @@ export interface Env {
 
 const defaultEnv: Env = {
   'TESTNET_ENABLED': false,
-  'SIGNET_ENABLED': false,
-  'LIQUID_ENABLED': false,
-  'LIQUID_TESTNET_ENABLED': false,
   'BASE_MODULE': 'mempool',
-  'BISQ_ENABLED': false,
-  'BISQ_SEPARATE_BACKEND': false,
   'ITEMS_PER_PAGE': 10,
   'KEEP_BLOCKS_AMOUNT': 8,
   'OFFICIAL_MEMPOOL_SPACE': false,
@@ -65,8 +53,6 @@ const defaultEnv: Env = {
   'GIT_COMMIT_HASH': '',
   'PACKAGE_JSON_VERSION': '',
   'MEMPOOL_WEBSITE_URL': 'https://mempool.space',
-  'LIQUID_WEBSITE_URL': 'https://liquid.network',
-  'BISQ_WEBSITE_URL': 'https://bisq.markets',
   'MINING_DASHBOARD': true,
   'LIGHTNING': false,
   'AUDIT': false,
@@ -159,11 +145,6 @@ export class StateService {
 
     this.blocks$ = new ReplaySubject<[BlockExtended, boolean]>(this.env.KEEP_BLOCKS_AMOUNT);
 
-    if (this.env.BASE_MODULE === 'bisq') {
-      this.network = this.env.BASE_MODULE;
-      this.networkChanged$.next(this.env.BASE_MODULE);
-    }
-
     this.blockVSize = this.env.BLOCK_WEIGHT_UNITS / 4;
 
     const savedTimePreference = this.storageService.getValue('time-preference-ltr');
@@ -202,43 +183,14 @@ export class StateService {
     // /^\/                                         starts with a forward slash...
     // (?:[a-z]{2}(?:-[A-Z]{2})?\/)?                optional locale prefix (non-capturing)
     // (?:preview\/)?                               optional "preview" prefix (non-capturing)
-    // (bisq|testnet|liquidtestnet|liquid|signet)/  network string (captured as networkMatches[1])
+    // (testnet)/  network string (captured as networkMatches[1])
     // ($|\/)                                       network string must end or end with a slash
-    const networkMatches = url.match(/^\/(?:[a-z]{2}(?:-[A-Z]{2})?\/)?(?:preview\/)?(bisq|testnet|liquidtestnet|liquid|signet)($|\/)/);
+    const networkMatches = url.match(/^\/(?:[a-z]{2}(?:-[A-Z]{2})?\/)?(?:preview\/)?(testnet)($|\/)/);
     switch (networkMatches && networkMatches[1]) {
-      case 'liquid':
-        if (this.network !== 'liquid') {
-          this.network = 'liquid';
-          this.networkChanged$.next('liquid');
-        }
-        return;
-      case 'liquidtestnet':
-        if (this.network !== 'liquidtestnet') {
-          this.network = 'liquidtestnet';
-          this.networkChanged$.next('liquidtestnet');
-        }
-        return;
-      case 'signet':
-        if (this.network !== 'signet') {
-          this.network = 'signet';
-          this.networkChanged$.next('signet');
-        }
-        return;
       case 'testnet':
         if (this.network !== 'testnet') {
-          if (this.env.BASE_MODULE === 'liquid') {
-            this.network = 'liquidtestnet';
-            this.networkChanged$.next('liquidtestnet');
-          } else {
-            this.network = 'testnet';
-            this.networkChanged$.next('testnet');
-          }
-        }
-        return;
-      case 'bisq':
-        if (this.network !== 'bisq') {
-          this.network = 'bisq';
-          this.networkChanged$.next('bisq');
+          this.network = 'testnet';
+          this.networkChanged$.next('testnet');
         }
         return;
       default:

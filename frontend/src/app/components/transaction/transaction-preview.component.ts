@@ -1,15 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ElectrsApiService } from '../../services/electrs-api.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import {
   switchMap,
-  filter,
   catchError,
-  retryWhen,
-  delay,
 } from 'rxjs/operators';
 import { Transaction, Vout } from '../../interfaces/electrs.interface';
-import { of, merge, Subscription, Observable, Subject, from } from 'rxjs';
+import { of, Subscription, Subject } from 'rxjs';
 import { StateService } from '../../services/state.service';
 import { CacheService } from '../../services/cache.service';
 import { OpenGraphService } from '../../services/opengraph.service';
@@ -31,7 +28,6 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
   error: any = undefined;
   errorUnblinded: any = undefined;
   transactionTime = -1;
-  subscription: Subscription;
   fetchCpfpSubscription: Subscription;
   cpfpInfo: CpfpInfo | null;
   showCpfpDetails = false;
@@ -56,9 +52,6 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
     this.stateService.networkChanged$.subscribe(
       (network) => {
         this.network = network;
-        if (this.network === 'liquid' || this.network == 'liquidtestnet') {
-          this.isLiquid = true;
-        }
       }
     );
 
@@ -76,117 +69,6 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
         this.cpfpInfo = cpfpInfo;
         this.openGraphService.waitOver('cpfp-data-' + this.txId);
       });
-
-    this.subscription = this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          const urlMatch = (params.get('id') || '').split(':');
-          this.txId = urlMatch[0];
-          this.openGraphService.waitFor('tx-data-' + this.txId);
-          this.openGraphService.waitFor('tx-time-' + this.txId);
-          this.seoService.setTitle(
-            $localize`:@@bisq.transaction.browser-title:Transaction: ${this.txId}:INTERPOLATION:`
-          );
-          this.resetTransaction();
-          return merge(
-            of(true),
-            this.stateService.connectionState$.pipe(
-              filter(
-                (state) => state === 2 && this.tx && !this.tx.status.confirmed
-              )
-            )
-          );
-        }),
-        switchMap(() => {
-          let transactionObservable$: Observable<Transaction>;
-          const cached = this.cacheService.getTxFromCache(this.txId);
-          if (cached && cached.fee !== -1) {
-            transactionObservable$ = of(cached);
-          } else {
-            transactionObservable$ = this.electrsApiService
-              .getTransaction$(this.txId)
-              .pipe(
-                catchError(error => {
-                  this.error = error;
-                  this.isLoadingTx = false;
-                  return of(null);
-                })
-              );
-          }
-          return merge(
-            transactionObservable$,
-            this.stateService.mempoolTransactions$
-          );
-        }),
-        switchMap((tx) => {
-          if (this.network === 'liquid' || this.network === 'liquidtestnet') {
-            return from(this.liquidUnblinding.checkUnblindedTx(tx))
-              .pipe(
-                catchError((error) => {
-                  this.errorUnblinded = error;
-                  return of(tx);
-                })
-              );
-          }
-          return of(tx);
-        })
-      )
-      .subscribe((tx: Transaction) => {
-          if (!tx) {
-            this.openGraphService.fail('tx-data-' + this.txId);
-            return;
-          }
-
-          this.tx = tx;
-          if (tx.fee === undefined) {
-            this.tx.fee = 0;
-          }
-          this.tx.feePerVsize = tx.fee / (tx.weight / 4);
-          this.isLoadingTx = false;
-          this.error = undefined;
-          this.totalValue = this.tx.vout.reduce((acc, v) => v.value + acc, 0);
-          this.opReturns = this.getOpReturns(this.tx);
-          this.extraData = this.chooseExtraData();
-
-          if (tx.status.confirmed) {
-            this.transactionTime = tx.status.block_time;
-            this.openGraphService.waitOver('tx-time-' + this.txId);
-          } else if (!tx.status.confirmed && tx.firstSeen) {
-            this.transactionTime = tx.firstSeen;
-            this.openGraphService.waitOver('tx-time-' + this.txId);
-          } else {
-            this.getTransactionTime();
-          }
-
-          if (this.tx.status.confirmed) {
-            this.stateService.markBlock$.next({
-              blockHeight: tx.status.block_height,
-            });
-            this.openGraphService.waitFor('cpfp-data-' + this.txId);
-            this.fetchCpfp$.next(this.tx.txid);
-          } else {
-            if (tx.cpfpChecked) {
-              this.stateService.markBlock$.next({
-                txFeePerVSize: tx.effectiveFeePerVsize,
-              });
-              this.cpfpInfo = {
-                ancestors: tx.ancestors,
-                bestDescendant: tx.bestDescendant,
-              };
-            } else {
-              this.openGraphService.waitFor('cpfp-data-' + this.txId);
-              this.fetchCpfp$.next(this.tx.txid);
-            }
-          }
-
-          this.openGraphService.waitOver('tx-data-' + this.txId);
-        },
-        (error) => {
-          this.openGraphService.fail('tx-data-' + this.txId);
-          this.error = error;
-          this.isLoadingTx = false;
-        }
-      );
   }
 
   getTransactionTime() {
@@ -239,7 +121,6 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.fetchCpfpSubscription.unsubscribe();
   }
 }

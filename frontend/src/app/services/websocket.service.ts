@@ -48,7 +48,7 @@ export class WebsocketService {
         .pipe(take(1))
         .subscribe((response) => this.handleResponse(response));
     } else {
-      this.network = this.stateService.network === 'bisq' && !this.stateService.env.BISQ_SEPARATE_BACKEND ? '' : this.stateService.network;
+      this.network = this.stateService.network;
       this.websocketSubject = webSocket<WebsocketResponse>(this.webSocketUrl.replace('{network}', this.network ? '/' + this.network : ''));
 
       const theInitData = this.transferState.get<any>(initData, null);
@@ -60,9 +60,6 @@ export class WebsocketService {
       }
 
       this.stateService.networkChanged$.subscribe((network) => {
-        if (network === 'bisq' && !this.stateService.env.BISQ_SEPARATE_BACKEND) {
-          network = '';
-        }
         if (network === this.network) {
           return;
         }
@@ -171,14 +168,6 @@ export class WebsocketService {
   stopTrackMempoolBlock() {
     this.websocketSubject.next({ 'track-mempool-block': -1 });
     this.isTrackingMempoolBlock = false
-  }
-
-  startTrackBisqMarket(market: string) {
-    this.websocketSubject.next({ 'track-bisq-market': market });
-  }
-
-  stopTrackingBisqMarket() {
-    this.websocketSubject.next({ 'track-bisq-market': 'stop' });
   }
 
   fetchStatistics(historicalDate: string) {
