@@ -36,37 +36,20 @@ nvm        3.62T  1.25T  2.38T        -         -     2%    34%  1.00x    ONLINE
 For maximum flexibility of configuration, I recommend separate partitions for each data folder:
 ```
 Filesystem                             Size    Used   Avail Capacity  Mounted on
-nvm/bisq                             766G    1.1G    765G     0%    /bisq
 nvm/bitcoin                          766G    648M    765G     0%    /bitcoin
 nvm/bitcoin/blocks                   1.1T    375G    765G    33%    /bitcoin/blocks
 nvm/bitcoin/chainstate               770G    4.5G    765G     1%    /bitcoin/chainstate
 nvm/bitcoin/electrs                  772G    7.3G    765G     1%    /bitcoin/electrs
 nvm/bitcoin/indexes                  799G     34G    765G     4%    /bitcoin/indexes
-nvm/bitcoin/testnet3                 765G    5.0M    765G     0%    /bitcoin/testnet3
-nvm/bitcoin/testnet3/blocks          786G     21G    765G     3%    /bitcoin/testnet3/blocks
-nvm/bitcoin/testnet3/chainstate      766G    1.1G    765G     0%    /bitcoin/testnet3/chainstate
-nvm/bitcoin/testnet3/indexes         768G    2.9G    765G     0%    /bitcoin/testnet3/indexes
 nvm/electrs                          765G    128K    765G     0%    /electrs
-nvm/electrs/liquid                   765G    104K    765G     0%    /electrs/liquid
-nvm/electrs/liquid/cache             765G    7.8M    765G     0%    /electrs/liquid/newindex/cache
-nvm/electrs/liquid/history           766G    886M    765G     0%    /electrs/liquid/newindex/history
-nvm/electrs/liquid/txstore           775G     10G    765G     1%    /electrs/liquid/newindex/txstore
-nvm/electrs/liquidtestnet            765G    112K    765G     0%    /electrs/liquidtestnet
-nvm/electrs/liquidtestnet/cache      765G     96K    765G     0%    /electrs/liquidtestnet/newindex/cache
-nvm/electrs/liquidtestnet/history    765G     96K    765G     0%    /electrs/liquidtestnet/newindex/history
-nvm/electrs/liquidtestnet/txstore    765G     96K    765G     0%    /electrs/liquidtestnet/newindex/txstore
 nvm/electrs/mainnet                  765G    112K    765G     0%    /electrs/mainnet
 nvm/electrs/mainnet/cache            765G    4.4M    765G     0%    /electrs/mainnet/newindex/cache
 nvm/electrs/mainnet/history          1.0T    300G    765G    28%    /electrs/mainnet/newindex/history
 nvm/electrs/mainnet/txstore          1.3T    530G    765G    41%    /electrs/mainnet/newindex/txstore
-nvm/electrs/signet                   766G    522M    765G     0%    /electrs/signet
 nvm/electrs/testnet                  765G    104K    765G     0%    /electrs/testnet
 nvm/electrs/testnet/cache            765G    1.6M    765G     0%    /electrs/testnet/newindex/cache
 nvm/electrs/testnet/history          784G     19G    765G     2%    /electrs/testnet/newindex/history
 nvm/electrs/testnet/txstore          803G     38G    765G     5%    /electrs/testnet/newindex/txstore
-nvm/elements                         766G    927M    765G     0%    /elements
-nvm/elements/electrs                 766G    716M    765G     0%    /elements/electrs
-nvm/elements/liquidv1                777G     11G    765G     1%    /elements/liquidv1
 nvm/mempool                          789G     24G    765G     3%    /mempool
 nvm/mysql                            766G    648M    765G     0%    /mysql
 tmpfs                                1.0G    1.3M    1.0G     0%    /var/cache/nginx
@@ -171,59 +154,6 @@ bind=127.0.0.1:38333
 rpcbind=127.0.0.1:38332
 ```
 
-### Elements
-
-Build [Elements Core](https://github.com/ElementsProject/elements) from source:
-```
-./autogen.sh
-MAKE=gmake CC=cc CXX=c++ CPPFLAGS=-I/usr/local/include \
-  ./configure --with-gui=no --disable-wallet
-gmake -j19
-gmake install
-```
-
-Configure your `elements.conf` like this:
-```
-server=1
-daemon=1
-listen=1
-rpcuser=foo
-rpcpassword=bar
-mainchainrpchost=127.0.0.1
-mainchainrpcuser=foo
-mainchainrpcpassword=bar
-txindex=1
-
-[liquidv1]
-validatepegin=1
-mainchainrpcport=8332
-
-[liquidtestnet]
-validatepegin=0
-anyonecanspendaremine=0
-initialfreecoins=2100000000000000
-con_dyna_deploy_start=0
-con_max_block_sig_size=150
-checkblockindex=0
-fallbackfee=0.00000100
-con_has_parent_chain=0
-parentgenesisblockhash=NULL
-pubkeyprefix=36
-scriptprefix=19
-blindedprefix=23
-bech32_hrp=tex
-blech32_hrp=tlq
-pchmessagestart=410edd62
-dynamic_epoch_length=1000
-signblockscript=51210217e403ddb181872c32a0cd468c710040b2f53d8cac69f18dad07985ee37e9a7151ae
-evbparams=dynafed:0:::
-addnode=liquid-testnet.blockstream.com:18892
-addnode=liquidtestnet.com:18891
-addnode=liquid.network:18444
-```
-
-Start `elementsd` and wait for it to sync the Liquid blockchain.
-
 ### Electrs
 
 Install [Electrs](https://github.com/Blockstream/electrs) from source:
@@ -251,23 +181,7 @@ create database mempool;
 grant all on mempool.* to 'mempool'@'localhost' identified by 'mempool';
 create database mempool_testnet;
 grant all on mempool_testnet.* to 'mempool_testnet'@'localhost' identified by 'mempool_testnet';
-create database mempool_signet;
-grant all on mempool_signet.* to 'mempool_signet'@'localhost' identified by 'mempool_signet';
-create database mempool_liquid;
-grant all on mempool_liquid.* to 'mempool_liquid'@'localhost' identified by 'mempool_liquid';
-create database mempool_liquidtestnet;
-grant all on mempool_liquidtestnet.* to 'mempool_liquidtestnet'@'localhost' identified by 'mempool_liquidtestnet';
 ```
-
-
-### Bisq
-
-Build bisq-statsnode normally and run using options like this:
-```
-./bisq-statsnode --dumpBlockchainData=true --dumpStatistics=true
-```
-
-If Bisq is happy, it should dump JSON files for Bisq Markets and BSQ data into `/bisq` for the Mempool backend to use.
 
 ### Mempool
 
