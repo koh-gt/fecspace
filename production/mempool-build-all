@@ -6,10 +6,8 @@ LOCKFILE="${HOME}/lock"
 REF=$(echo "${1:=origin/master}"|sed -e 's!:!/!')
 
 # get rpc credentials
-BITCOIN_RPC_USER=$(grep '^rpcuser' /bitcoin/bitcoin.conf | cut -d '=' -f2)
-BITCOIN_RPC_PASS=$(grep '^rpcpassword' /bitcoin/bitcoin.conf | cut -d '=' -f2)
-ELEMENTS_RPC_USER=$(grep '^rpcuser' /elements/elements.conf | cut -d '=' -f2)
-ELEMENTS_RPC_PASS=$(grep '^rpcpassword' /elements/elements.conf | cut -d '=' -f2)
+BITCOIN_RPC_USER=$(grep '^rpcuser' /etc/litecoin/litecoin.conf | cut -d '=' -f2)
+BITCOIN_RPC_PASS=$(grep '^rpcpassword' /etc/litecoin/litecoin.conf | cut -d '=' -f2)
 
 # get mysql credentials
 MYSQL_CRED_FILE=${HOME}/.mysql_credentials
@@ -90,26 +88,14 @@ build_backend()
 	sed -i .orig \
 	-e "s!__BITCOIN_RPC_USER__!${BITCOIN_RPC_USER}!" \
 	-e "s!__BITCOIN_RPC_PASS__!${BITCOIN_RPC_PASS}!" \
-	-e "s!__ELEMENTS_RPC_USER__!${ELEMENTS_RPC_USER}!" \
-	-e "s!__ELEMENTS_RPC_PASS__!${ELEMENTS_RPC_PASS}!" \
         -e "s!__MEMPOOL_MAINNET_USER__!${MEMPOOL_MAINNET_USER}!" \
         -e "s!__MEMPOOL_MAINNET_PASS__!${MEMPOOL_MAINNET_PASS}!" \
-        -e "s!__MEMPOOL_TESTNET_USER__!${MEMPOOL_TESTNET_USER}!" \
-        -e "s!__MEMPOOL_TESTNET_PASS__!${MEMPOOL_TESTNET_PASS}!" \
-        -e "s!__MEMPOOL_SIGNET_USER__!${MEMPOOL_SIGNET_USER}!" \
-        -e "s!__MEMPOOL_SIGNET_PASS__!${MEMPOOL_SIGNET_PASS}!" \
-        -e "s!__MEMPOOL_MAINNET_LIGHTNING_USER__!${MEMPOOL_MAINNET_LIGHTNING_USER}!" \
-        -e "s!__MEMPOOL_MAINNET_LIGHTNING_PASS__!${MEMPOOL_MAINNET_LIGHTNING_PASS}!" \
-        -e "s!__MEMPOOL_TESTNET_LIGHTNING_USER__!${MEMPOOL_TESTNET_LIGHTNING_USER}!" \
-        -e "s!__MEMPOOL_TESTNET_LIGHTNING_PASS__!${MEMPOOL_TESTNET_LIGHTNING_PASS}!" \
-        -e "s!__MEMPOOL_SIGNET_LIGHTNING_USER__!${MEMPOOL_SIGNET_LIGHTNING_USER}!" \
-        -e "s!__MEMPOOL_SIGNET_LIGHTNING_PASS__!${MEMPOOL_SIGNET_LIGHTNING_PASS}!" \
-        -e "s!__MEMPOOL_LIQUID_USER__!${MEMPOOL_LIQUID_USER}!" \
-        -e "s!__MEMPOOL_LIQUID_PASS__!${MEMPOOL_LIQUID_PASS}!" \
-        -e "s!__MEMPOOL_LIQUIDTESTNET_USER__!${MEMPOOL_LIQUIDTESTNET_USER}!" \
-        -e "s!__MEMPOOL_LIQUIDTESTNET_PASS__!${MEMPOOL_LIQUIDTESTNET_PASS}!" \
-        -e "s!__MEMPOOL_BISQ_USER__!${MEMPOOL_BISQ_USER}!" \
-        -e "s!__MEMPOOL_BISQ_PASS__!${MEMPOOL_BISQ_PASS}!" \
+        # -e "s!__MEMPOOL_TESTNET_USER__!${MEMPOOL_TESTNET_USER}!" \
+        # -e "s!__MEMPOOL_TESTNET_PASS__!${MEMPOOL_TESTNET_PASS}!" \
+        # -e "s!__MEMPOOL_MAINNET_LIGHTNING_USER__!${MEMPOOL_MAINNET_LIGHTNING_USER}!" \
+        # -e "s!__MEMPOOL_MAINNET_LIGHTNING_PASS__!${MEMPOOL_MAINNET_LIGHTNING_PASS}!" \
+        # -e "s!__MEMPOOL_TESTNET_LIGHTNING_USER__!${MEMPOOL_TESTNET_LIGHTNING_USER}!" \
+        # -e "s!__MEMPOOL_TESTNET_LIGHTNING_PASS__!${MEMPOOL_TESTNET_LIGHTNING_PASS}!" \
 	"mempool-config.json"
     fi
     npm install --omit=dev --omit=optional || exit 1
@@ -129,8 +115,8 @@ export NVM_DIR="${HOME}/.nvm"
 source "${NVM_DIR}/nvm.sh"
 
 # what to look for
-frontends=(mainnet liquid bisq)
-backends=(mainnet testnet signet liquid liquidtestnet bisq)
+frontends=(mainnet)
+backends=(mainnet)
 frontend_repos=()
 backend_repos=()
 
@@ -147,11 +133,12 @@ done
 
 # update all repos
 for repo in $backend_repos;do
-    update_repo "${repo}"
+    # litecoin: updates currently disabled 
+    # update_repo "${repo}"
 done
 
 # build unfurlers
-for repo in mainnet liquid bisq;do
+for repo in mainnet;do
     build_unfurler "${repo}"
 done
 
@@ -166,12 +153,8 @@ for repo in $frontend_repos;do
 done
 
 # ship frontend dist folders to public_html
-for target in mainnet liquid bisq;do
+for target in mainnet;do
     ship_frontend "${target}"
 done
-
-# notify everyone
-echo "${HOSTNAME} updated to \`${REF}\` @ \`${HASH}\`" | /usr/local/bin/keybase chat send --nonblock --channel general mempool.dev
-echo "${HOSTNAME} updated to \`${REF}\` @ \`${HASH}\`" | /usr/local/bin/keybase chat send --nonblock --channel general "mempool.ops.${LOCATION}"
 
 exit 0
