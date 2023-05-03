@@ -577,20 +577,8 @@
         <source>Blocks</source>
         <target>Bloques</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-blocks/bisq-blocks.component.ts</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/bisq-master-page/bisq-master-page.component.html</context>
-          <context context-type="linenumber">66,68</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/blocks-list/blocks-list.component.html</context>
           <context context-type="linenumber">4,7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/liquid-master-page/liquid-master-page.component.html</context>
-          <context context-type="linenumber">68,70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/master-page/master-page.component.html</context>
@@ -600,45 +588,6 @@
           <context context-type="sourcefile">src/app/components/pool-ranking/pool-ranking.component.html</context>
           <context context-type="linenumber">94,95</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="6b2fdbdddef74630e1076d58786ca339a8c030f0" datatype="html">
-        <source>Bisq Trading Volume</source>
-        <target>Volumen de intercambio en Bisq</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-dashboard/bisq-dashboard.component.html</context>
-          <context context-type="linenumber">3,7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-main-dashboard/bisq-main-dashboard.component.html</context>
-          <context context-type="linenumber">48,50</context>
-        </context-group>
-        <note priority="1" from="description">Bisq markets title</note>
-      </trans-unit>
-      <trans-unit id="d3ad0babadabfa3e3b7f51637651822f3e56a7b1" datatype="html">
-        <source>Markets</source>
-        <target>Mercados</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-dashboard/bisq-dashboard.component.html</context>
-          <context context-type="linenumber">20,21</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-main-dashboard/bisq-main-dashboard.component.html</context>
-          <context context-type="linenumber">66,67</context>
-        </context-group>
-        <note priority="1" from="description">Bisq All Markets</note>
-      </trans-unit>
-      <trans-unit id="ece163b62f5e9b0b68a8d6a2d93e216318f557ba" datatype="html">
-        <source>Bitcoin Markets</source>
-        <target>Mercados Bitcoin</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-dashboard/bisq-dashboard.component.html</context>
-          <context context-type="linenumber">21,24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/bisq/bisq-main-dashboard/bisq-main-dashboard.component.html</context>
-          <context context-type="linenumber">67,71</context>
-        </context-group>
-        <note priority="1" from="description">Bisq Bitcoin Markets</note>
       </trans-unit>
       <trans-unit id="32072c7fb0469aaf82d256a59b3e0d6ecce973b9" datatype="html">
         <source>Currency</source>
@@ -1448,8 +1397,8 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Bitcoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
-        <target>Nuestro explorador de bloques y mempool para la comunidad Bitcoin,  con foco en las tasas de mercado de transacciones y el ecosistema multicapa, completamente auto-hosteado sin terceras partes de confianza.</target>
+        <source>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <target>Nuestro explorador de bloques y mempool para la comunidad Litecoin,  con foco en las tasas de mercado de transacciones y el ecosistema multicapa, completamente auto-hosteado sin terceras partes de confianza.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">13,16</context>
@@ -4168,13 +4117,13 @@
         <note priority="1" from="description">mining.fees-per-block-desc</note>
       </trans-unit>
       <trans-unit id="0705223420d290a218e4ed83bd4d904454a9cee8" datatype="html">
-        <source>BTC/block</source>
-        <target>BTC/bloque</target>
+        <source>LTC/block</source>
+        <target>LTC/bloque</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">21,24</context>
         </context-group>
-        <note priority="1" from="description">BTC/block</note>
+        <note priority="1" from="description">LTC/block</note>
         <note priority="1" from="meaning">shared.btc-block</note>
       </trans-unit>
       <trans-unit id="cf3a97b1c1546b843411cfe101bc55ba2ac46bac" datatype="html">
@@ -4223,8 +4172,8 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Explore the full Bitcoin ecosystem</source>
-        <target>Explora todo el ecosistema Bitcoin</target>
+        <source>Explore the full Litecoin ecosystem</source>
+        <target>Explora todo el ecosistema Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -4241,8 +4190,8 @@
         <note priority="1" from="description">search-form.search-title</note>
       </trans-unit>
       <trans-unit id="0673b255ba8db0bc5e2cccd5962d31dc88c24578" datatype="html">
-        <source>Bitcoin Block Height</source>
-        <target>Altura del bloque de Bitcoin</target>
+        <source>Litecoin Block Height</source>
+        <target>Altura del bloque de Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">3</context>
@@ -4250,8 +4199,8 @@
         <note priority="1" from="description">search.bitcoin-block-height</note>
       </trans-unit>
       <trans-unit id="8b786a14d8c948e31bfb84369f123847a21dbf50" datatype="html">
-        <source>Bitcoin Transaction</source>
-        <target>Transacción de Bitcoin</target>
+        <source>Litecoin Transaction</source>
+        <target>Transacción de Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">9</context>
@@ -4259,8 +4208,8 @@
         <note priority="1" from="description">search.bitcoin-transaction</note>
       </trans-unit>
       <trans-unit id="aacf72635ebf6cfe00590e3a426ea6002c43a729" datatype="html">
-        <source>Bitcoin Address</source>
-        <target>Dirección de Bitcoin</target>
+        <source>Litecoin Address</source>
+        <target>Dirección de Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">15</context>
@@ -4268,8 +4217,8 @@
         <note priority="1" from="description">search.bitcoin-address</note>
       </trans-unit>
       <trans-unit id="97089c008af92d87389ff1ec5fb2cc96a6ecef0e" datatype="html">
-        <source>Bitcoin Block</source>
-        <target>Bloque de Bitcoin</target>
+        <source>Litecoin Block</source>
+        <target>Bloque de Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">21</context>
@@ -4277,8 +4226,8 @@
         <note priority="1" from="description">search.bitcoin-block</note>
       </trans-unit>
       <trans-unit id="e89c09d708a1da5f6a59ba6c38ba3db78031fe0e" datatype="html">
-        <source>Bitcoin Addresses</source>
-        <target>Direcciones de Bitcoin</target>
+        <source>Litecoin Addresses</source>
+        <target>Direcciones de Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">27</context>
@@ -5222,8 +5171,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>mempool.space merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>memepool.space simplemente proporciona datos sobre la red Bitcoin. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>No puede ayudarle a recuperar fondos, confirmar su transacción más rápdio, etc. </target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>mempool.space merely provides data about the Litecoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>memepool.space simplemente proporciona datos sobre la red Litecoin. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>No puede ayudarle a recuperar fondos, confirmar su transacción más rápdio, etc. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>
@@ -6620,8 +6569,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7032954508645880700" datatype="html">
-        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> BTC capacity</source>
-        <target><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> capacidad BTC</target>
+        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> LTC capacity</source>
+        <target><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> capacidad LTC</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/nodes-per-country-chart/nodes-per-country-chart.component.ts</context>
           <context context-type="linenumber">104,102</context>
@@ -6738,8 +6687,8 @@
         <note priority="1" from="description">lightning.top-100-isp-ln</note>
       </trans-unit>
       <trans-unit id="3627306100664959238" datatype="html">
-        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> BTC</source>
-        <target><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> BTC</target>
+        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> LTC</source>
+        <target><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> LTC</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/nodes-per-isp-chart/nodes-per-isp-chart.component.ts</context>
           <context context-type="linenumber">158,156</context>

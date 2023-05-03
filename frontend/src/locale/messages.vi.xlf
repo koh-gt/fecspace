@@ -628,8 +628,8 @@
         <note priority="1" from="description">Bisq All Markets</note>
       </trans-unit>
       <trans-unit id="ece163b62f5e9b0b68a8d6a2d93e216318f557ba" datatype="html">
-        <source>Bitcoin Markets</source>
-        <target>Thị trường Bitcoin</target>
+        <source>Litecoin Markets</source>
+        <target>Thị trường Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/bisq/bisq-dashboard/bisq-dashboard.component.html</context>
           <context context-type="linenumber">21,24</context>
@@ -638,7 +638,7 @@
           <context context-type="sourcefile">src/app/bisq/bisq-main-dashboard/bisq-main-dashboard.component.html</context>
           <context context-type="linenumber">67,71</context>
         </context-group>
-        <note priority="1" from="description">Bisq Bitcoin Markets</note>
+        <note priority="1" from="description">Bisq Litecoin Markets</note>
       </trans-unit>
       <trans-unit id="32072c7fb0469aaf82d256a59b3e0d6ecce973b9" datatype="html">
         <source>Currency</source>
@@ -1448,8 +1448,8 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Bitcoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
-        <target>Mempool và blockchain explorer của chúng tôi dành cho cộng đồng Bitcoin, tập trung vào thị trường phí giao dịch và hệ sinh thái nhiều lớp, hoàn toàn tự lưu trữ mà không cần bất kỳ bên thứ ba nào.</target>
+        <source>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <target>Mempool và blockchain explorer của chúng tôi dành cho cộng đồng Litecoin, tập trung vào thị trường phí giao dịch và hệ sinh thái nhiều lớp, hoàn toàn tự lưu trữ mà không cần bất kỳ bên thứ ba nào.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">13,17</context>
@@ -4172,13 +4172,13 @@
         <note priority="1" from="description">mining.fees-per-block-desc</note>
       </trans-unit>
       <trans-unit id="0705223420d290a218e4ed83bd4d904454a9cee8" datatype="html">
-        <source>BTC/block</source>
-        <target>BTC/khối</target>
+        <source>LTC/block</source>
+        <target>LTC/khối</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">21,24</context>
         </context-group>
-        <note priority="1" from="description">BTC/block</note>
+        <note priority="1" from="description">LTC/block</note>
         <note priority="1" from="meaning">shared.btc-block</note>
       </trans-unit>
       <trans-unit id="cf3a97b1c1546b843411cfe101bc55ba2ac46bac" datatype="html">
@@ -4227,8 +4227,8 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Explore the full Bitcoin ecosystem</source>
-        <target>Khám phá hệ sinh thái Bitcoin trọn vẹn</target>
+        <source>Explore the full Litecoin ecosystem</source>
+        <target>Khám phá hệ sinh thái Litecoin trọn vẹn</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -4245,8 +4245,8 @@
         <note priority="1" from="description">search-form.search-title</note>
       </trans-unit>
       <trans-unit id="0673b255ba8db0bc5e2cccd5962d31dc88c24578" datatype="html">
-        <source>Bitcoin Block Height</source>
-        <target>Chiều cao khối Bitcoin</target>
+        <source>Litecoin Block Height</source>
+        <target>Chiều cao khối Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">3</context>
@@ -4254,8 +4254,8 @@
         <note priority="1" from="description">search.bitcoin-block-height</note>
       </trans-unit>
       <trans-unit id="8b786a14d8c948e31bfb84369f123847a21dbf50" datatype="html">
-        <source>Bitcoin Transaction</source>
-        <target>Giao dịch Bitcoin</target>
+        <source>Litecoin Transaction</source>
+        <target>Giao dịch Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">9</context>
@@ -4263,8 +4263,8 @@
         <note priority="1" from="description">search.bitcoin-transaction</note>
       </trans-unit>
       <trans-unit id="aacf72635ebf6cfe00590e3a426ea6002c43a729" datatype="html">
-        <source>Bitcoin Address</source>
-        <target>Địa chỉ Bitcoin</target>
+        <source>Litecoin Address</source>
+        <target>Địa chỉ Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">15</context>
@@ -4272,8 +4272,8 @@
         <note priority="1" from="description">search.bitcoin-address</note>
       </trans-unit>
       <trans-unit id="97089c008af92d87389ff1ec5fb2cc96a6ecef0e" datatype="html">
-        <source>Bitcoin Block</source>
-        <target>Khối Bitcoin</target>
+        <source>Litecoin Block</source>
+        <target>Khối Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">21</context>
@@ -4281,8 +4281,8 @@
         <note priority="1" from="description">search.bitcoin-block</note>
       </trans-unit>
       <trans-unit id="e89c09d708a1da5f6a59ba6c38ba3db78031fe0e" datatype="html">
-        <source>Bitcoin Addresses</source>
-        <target>Địa chỉ Bitcoin</target>
+        <source>Litecoin Addresses</source>
+        <target>Địa chỉ Litecoin</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">27</context>
@@ -5226,8 +5226,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>mempool.space merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target> <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/> mempool.space chỉ cung cấp dữ liệu về mạng Bitcoin. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Trang không thể giúp bạn lấy tiền, xác nhận giao dịch của bạn nhanh hơn, v.v.</target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>mempool.space merely provides data about the Litecoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target> <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="mempool.space merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/> mempool.space chỉ cung cấp dữ liệu về mạng Litecoin. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Trang không thể giúp bạn lấy tiền, xác nhận giao dịch của bạn nhanh hơn, v.v.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>
@@ -6628,8 +6628,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7032954508645880700" datatype="html">
-        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> BTC capacity</source>
-        <target> <x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> công suất BTC</target>
+        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> LTC capacity</source>
+        <target> <x id="PH" equiv-text="this.amountShortenerPipe.transform(country.capacity / 100000000, 2)"/> công suất LTC</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/nodes-per-country-chart/nodes-per-country-chart.component.ts</context>
           <context context-type="linenumber">104,102</context>
@@ -6746,8 +6746,8 @@
         <note priority="1" from="description">lightning.top-100-isp-ln</note>
       </trans-unit>
       <trans-unit id="3627306100664959238" datatype="html">
-        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> BTC</source>
-        <target> <x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> BTC</target>
+        <source><x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> LTC</source>
+        <target> <x id="PH" equiv-text="this.amountShortenerPipe.transform(isp[2] / 100000000, 2)"/> LTC</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/nodes-per-isp-chart/nodes-per-isp-chart.component.ts</context>
           <context context-type="linenumber">158,156</context>
