@@ -7,8 +7,6 @@ export interface ApiPrice {
   USD: number,
   EUR: number,
   GBP: number,
-  CAD: number,
-  CHF: number,
   AUD: number,
   JPY: number,
 }
@@ -17,8 +15,6 @@ const ApiPriceFields = `
   USD,
   EUR,
   GBP,
-  CAD,
-  CHF,
   AUD,
   JPY
 `;
@@ -26,8 +22,6 @@ const ApiPriceFields = `
 export interface ExchangeRates {
   USDEUR: number,
   USDGBP: number,
-  USDCAD: number,
-  USDCHF: number,
   USDAUD: number,
   USDJPY: number,
 }
@@ -41,8 +35,6 @@ export const MAX_PRICES = {
   USD: 100000000,
   EUR: 100000000,
   GBP: 100000000,
-  CAD: 100000000,
-  CHF: 100000000,
   AUD: 100000000,
   JPY: 10000000000,
 };
@@ -65,9 +57,9 @@ class PricesRepository {
     
     try {
       await DB.query(`
-        INSERT INTO prices(time,             USD, EUR, GBP, CAD, CHF, AUD, JPY)
-        VALUE             (FROM_UNIXTIME(?), ?,   ?,   ?,   ?,   ?,   ?,   ?  )`,
-        [time, prices.USD, prices.EUR, prices.GBP, prices.CAD, prices.CHF, prices.AUD, prices.JPY]
+        INSERT INTO prices(time,             USD, EUR, GBP, AUD, JPY)
+        VALUE             (FROM_UNIXTIME(?), ?,   ?,   ?,   ?,   ?  )`,
+        [time, prices.USD, prices.EUR, prices.GBP, prices.AUD, prices.JPY]
       );
     } catch (e) {
       logger.err(`Cannot save exchange rate into db. Reason: ` + (e instanceof Error ? e.message : e));
@@ -170,8 +162,6 @@ class PricesRepository {
       const exchangeRates: ExchangeRates = {
         USDEUR: computeFx(latestPrice.USD, latestPrice.EUR),
         USDGBP: computeFx(latestPrice.USD, latestPrice.GBP),
-        USDCAD: computeFx(latestPrice.USD, latestPrice.CAD),
-        USDCHF: computeFx(latestPrice.USD, latestPrice.CHF),
         USDAUD: computeFx(latestPrice.USD, latestPrice.AUD),
         USDJPY: computeFx(latestPrice.USD, latestPrice.JPY),
       };
@@ -209,8 +199,6 @@ class PricesRepository {
       const exchangeRates: ExchangeRates = {
         USDEUR: computeFx(latestPrice.USD, latestPrice.EUR),
         USDGBP: computeFx(latestPrice.USD, latestPrice.GBP),
-        USDCAD: computeFx(latestPrice.USD, latestPrice.CAD),
-        USDCHF: computeFx(latestPrice.USD, latestPrice.CHF),
         USDAUD: computeFx(latestPrice.USD, latestPrice.AUD),
         USDJPY: computeFx(latestPrice.USD, latestPrice.JPY),
       };

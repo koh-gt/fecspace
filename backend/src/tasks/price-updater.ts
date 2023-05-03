@@ -28,7 +28,7 @@ class PriceUpdater {
   private lastHistoricalRun = 0;
   private running = false;
   private feeds: PriceFeed[] = [];
-  private currencies: string[] = ['USD', 'EUR', 'GBP', 'CAD', 'CHF', 'AUD', 'JPY'];
+  private currencies: string[] = ['USD', 'EUR', 'GBP', 'AUD', 'JPY'];
   private latestPrices: ApiPrice;
   private ratesChangedCallback: ((rates: ApiPrice) => void) | undefined;
 
@@ -51,8 +51,6 @@ class PriceUpdater {
       USD: -1,
       EUR: -1,
       GBP: -1,
-      CAD: -1,
-      CHF: -1,
       AUD: -1,
       JPY: -1,
     };
@@ -239,7 +237,7 @@ class PriceUpdater {
 
         if (grouped[time] === undefined) {
           grouped[time] = {
-            USD: [], EUR: [], GBP: [], CAD: [], CHF: [], AUD: [], JPY: []
+            USD: [], EUR: [], GBP: [], AUD: [], JPY: []
           };
         }
 

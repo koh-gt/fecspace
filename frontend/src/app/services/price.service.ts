@@ -9,16 +9,12 @@ export interface ApiPrice {
   USD: number,
   EUR: number,
   GBP: number,
-  CAD: number,
-  CHF: number,
   AUD: number,
   JPY: number,
 }
 export interface ExchangeRates {
   USDEUR: number,
   USDGBP: number,
-  USDCAD: number,
-  USDCHF: number,
   USDAUD: number,
   USDJPY: number,
 }
@@ -61,10 +57,10 @@ export class PriceService {
   getEmptyPrice(): Price {
     return {
       price: {
-        USD: 0, EUR: 0, GBP: 0, CAD: 0, CHF: 0, AUD: 0, JPY: 0,
+        USD: 0, EUR: 0, GBP: 0, AUD: 0, JPY: 0,
       },
       exchangeRates: {
-        USDEUR: 0, USDGBP: 0, USDCAD: 0, USDCHF: 0, USDAUD: 0, USDJPY: 0,
+        USDEUR: 0, USDGBP: 0, USDAUD: 0, USDJPY: 0,
       },
     };
   }
@@ -93,8 +89,8 @@ export class PriceService {
           }
           return {
             price: {
-              USD: conversion.prices[0].USD, EUR: conversion.prices[0].EUR, GBP: conversion.prices[0].GBP, CAD: conversion.prices[0].CAD,
-              CHF: conversion.prices[0].CHF, AUD: conversion.prices[0].AUD, JPY: conversion.prices[0].JPY
+              USD: conversion.prices[0].USD, EUR: conversion.prices[0].EUR, GBP: conversion.prices[0].GBP,
+              AUD: conversion.prices[0].AUD, JPY: conversion.prices[0].JPY
             },
             exchangeRates: conversion.exchangeRates,
           };
@@ -123,8 +119,8 @@ export class PriceService {
           };
           for (const price of conversion.prices) {
             historicalPrice.prices[price.time] = {
-              USD: price.USD, EUR: price.EUR, GBP: price.GBP, CAD: price.CAD,
-              CHF: price.CHF, AUD: price.AUD, JPY: price.JPY
+              USD: price.USD, EUR: price.EUR, GBP: price.GBP,
+              AUD: price.AUD, JPY: price.JPY
             };
           }
 

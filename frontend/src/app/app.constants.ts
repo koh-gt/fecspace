@@ -148,16 +148,6 @@ export const fiatCurrencies = {
     code: 'AUD',
     indexed: true,
   },
-  CAD: {
-    name: 'Canadian Dollar',
-    code: 'CAD',
-    indexed: true,
-  },
-  CHF: {
-    name: 'Swiss Franc',
-    code: 'CHF',
-    indexed: true,
-  },
   EUR: {
     name: 'Euro',
     code: 'EUR',

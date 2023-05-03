@@ -259,8 +259,6 @@ class DatabaseMigration {
       await this.$executeQuery('ALTER TABLE `prices` ADD `USD` float DEFAULT "0"');
       await this.$executeQuery('ALTER TABLE `prices` ADD `EUR` float DEFAULT "0"');
       await this.$executeQuery('ALTER TABLE `prices` ADD `GBP` float DEFAULT "0"');
-      await this.$executeQuery('ALTER TABLE `prices` ADD `CAD` float DEFAULT "0"');
-      await this.$executeQuery('ALTER TABLE `prices` ADD `CHF` float DEFAULT "0"');
       await this.$executeQuery('ALTER TABLE `prices` ADD `AUD` float DEFAULT "0"');
       await this.$executeQuery('ALTER TABLE `prices` ADD `JPY` float DEFAULT "0"');
       await this.updateToSchemaVersion(23);

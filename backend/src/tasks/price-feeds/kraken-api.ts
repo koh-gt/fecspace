@@ -15,7 +15,7 @@ class KrakenApi implements PriceFeed {
 
   private getTicker(currency) {
     let ticker = `XLTCZ${currency}`;
-    if (['CHF', 'AUD', 'GBP'].includes(currency)) {
+    if (['AUD', 'GBP'].includes(currency)) {
       ticker = `LTC${currency}`;
     }
     return ticker;
@@ -65,8 +65,6 @@ class KrakenApi implements PriceFeed {
     // USD weekly price history goes back to timestamp 1380758400 (October 3, 2013)
     // GBP weekly price history goes back to timestamp 1415232000 (November 6, 2014)
     // JPY weekly price history goes back to timestamp 1415232000 (November 6, 2014)
-    // CAD weekly price history goes back to timestamp 1436400000 (July 9, 2015)
-    // CHF weekly price history goes back to timestamp 1575504000 (December 5, 2019)
     // AUD weekly price history goes back to timestamp 1591833600 (June 11, 2020)
 
     let priceHistory: any = {}; // map: timestamp -> Prices
