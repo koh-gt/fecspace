@@ -10,16 +10,12 @@ import memPool from './api/mempool';
 import diskCache from './api/disk-cache';
 import statistics from './api/statistics/statistics';
 import websocketHandler from './api/websocket-handler';
-import bisq from './api/bisq/bisq';
-import bisqMarkets from './api/bisq/markets';
 import logger from './logger';
 import backendInfo from './api/backend-info';
 import loadingIndicators from './api/loading-indicators';
 import mempool from './api/mempool';
-import elementsParser from './api/liquid/elements-parser';
 import databaseMigration from './api/database-migration';
 import syncAssets from './sync-assets';
-import icons from './api/liquid/icons';
 import { Common } from './api/common';
 import poolsUpdater from './tasks/pools-updater';
 import indexer from './indexer';
@@ -30,8 +26,6 @@ import lightningStatsUpdater from './tasks/lightning/stats-updater.service';
 import networkSyncService from './tasks/lightning/network-sync.service';
 import statisticsRoutes from './api/statistics/statistics.routes';
 import miningRoutes from './api/mining/mining-routes';
-import bisqRoutes from './api/bisq/bisq.routes';
-import liquidRoutes from './api/liquid/liquid.routes';
 import bitcoinRoutes from './api/bitcoin/bitcoin.routes';
 import fundingTxFetcher from './tasks/lightning/sync-tasks/funding-tx-fetcher';
 import forensicsService from './tasks/lightning/forensics.service';
@@ -127,14 +121,6 @@ class Server {
       statistics.startStatistics();
     }
 
-    if (Common.isLiquid()) {
-      try {
-        icons.loadIcons();
-      } catch (e) {
-        logger.err('Cannot load liquid icons. Ignoring. Reason: ' + (e instanceof Error ? e.message : e));
-      }
-    }
-
     priceUpdater.$run();
     await chainTips.updateOrphanedBlocks();
 
@@ -145,13 +131,6 @@ class Server {
     }
 
     setInterval(() => { this.healthCheck(); }, 2500);
-
-    if (config.BISQ.ENABLED) {
-      bisq.startBisqService();
-      bisq.setPriceCallbackFunction((price) => websocketHandler.setExtraInitProperties('bsq-price', price));
-      blocks.setNewBlockCallback(bisq.handleNewBitcoinBlock.bind(bisq));
-      bisqMarkets.startBisqService();
-    }
 
     if (config.LIGHTNING.ENABLED) {
       this.$runLightningBackend();
@@ -225,15 +204,6 @@ class Server {
     if (this.wss) {
       websocketHandler.setWebsocketServer(this.wss);
     }
-    if (Common.isLiquid() && config.DATABASE.ENABLED) {
-      blocks.setNewBlockCallback(async () => {
-        try {
-          await elementsParser.$parse();
-        } catch (e) {
-          logger.warn('Elements parsing error: ' + (e instanceof Error ? e.message : e));
-        }
-      });
-    }
     websocketHandler.setupConnectionHandling();
     if (config.MEMPOOL.ENABLED) {
       statistics.setNewStatisticsEntryCallback(websocketHandler.handleNewStatistic.bind(websocketHandler));
@@ -251,12 +221,6 @@ class Server {
     }
     if (Common.indexingEnabled() && config.MEMPOOL.ENABLED) {
       miningRoutes.initRoutes(this.app);
-    }
-    if (config.BISQ.ENABLED) {
-      bisqRoutes.initRoutes(this.app);
-    }
-    if (Common.isLiquid()) {
-      liquidRoutes.initRoutes(this.app);
     }
     if (config.LIGHTNING.ENABLED) {
       generalLightningRoutes.initRoutes(this.app);
