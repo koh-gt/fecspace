@@ -5,7 +5,7 @@ import priceUpdater, { PriceFeed, PriceHistory } from '../price-updater';
 
 class KrakenApi implements PriceFeed {
   public name: string = 'Kraken';
-  public currencies: string[] = ['USD', 'EUR', 'GBP', 'CAD', 'CHF', 'AUD', 'JPY'];
+  public currencies: string[] = ['USD', 'EUR', 'GBP', 'AUD', 'JPY'];
 
   public url: string = 'https://api.kraken.com/0/public/Ticker?pair=LTC';
   public urlHist: string = 'https://api.kraken.com/0/public/OHLC?interval={GRANULARITY}&pair=LTC';
@@ -15,7 +15,7 @@ class KrakenApi implements PriceFeed {
 
   private getTicker(currency) {
     let ticker = `XLTCZ${currency}`;
-    if (['CHF', 'AUD'].includes(currency)) {
+    if (['CHF', 'AUD', 'GBP'].includes(currency)) {
       ticker = `LTC${currency}`;
     }
     return ticker;
@@ -98,7 +98,7 @@ class KrakenApi implements PriceFeed {
     }
 
     if (Object.keys(priceHistory).length > 0) {
-      logger.info(`Inserted ${Object.keys(priceHistory).length} Kraken EUR, USD, GBP, JPY, CAD, CHF and AUD weekly price history into db`, logger.tags.mining);
+      logger.info(`Inserted ${Object.keys(priceHistory).length} Kraken EUR, USD, GBP, JPY and AUD weekly price history into db`, logger.tags.mining);
     }
   }
 }
