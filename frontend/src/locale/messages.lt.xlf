@@ -2221,8 +2221,8 @@
         <note priority="1" from="meaning">transaction.fee-rate</note>
       </trans-unit>
       <trans-unit id="d2eb45d1cd8cd146b7cb0223ab97a4b03b614060" datatype="html">
-        <source>sat/vB</source>
-        <target>sat/vB</target>
+        <source>lit/vB</source>
+        <target>lit/vB</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-overview-tooltip/block-overview-tooltip.component.html</context>
           <context context-type="linenumber">28</context>
@@ -2315,7 +2315,7 @@
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">213,217</context>
         </context-group>
-        <note priority="1" from="description">sat/vB</note>
+        <note priority="1" from="description">lit/vB</note>
         <note priority="1" from="meaning">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit id="54c58b39481f1749fce23fa8a77f616eee84d761" datatype="html">
@@ -4206,7 +4206,7 @@
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">33,36</context>
         </context-group>
-        <note priority="1" from="description">sat/vB</note>
+        <note priority="1" from="description">lit/vB</note>
         <note priority="1" from="meaning">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit id="c4ae62409269c8255a390587baad3ff496889cba" datatype="html">
@@ -4313,8 +4313,8 @@
         <note priority="1" from="description">search.go-to</note>
       </trans-unit>
       <trans-unit id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc" datatype="html">
-        <source>Mempool by vBytes (sat/vByte)</source>
-        <target>Mempool pagal vBitus (sat/vByte)</target>
+        <source>Mempool by vBytes (lit/vByte)</source>
+        <target>Mempool pagal vBitus (lit/vByte)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
           <context context-type="linenumber">7</context>
@@ -5138,8 +5138,8 @@
         <note priority="1" from="meaning">tx-fee-rating.optimal</note>
       </trans-unit>
       <trans-unit id="60601e02e7c1f6c4dbabd0ef0bb8946003db8dec" datatype="html">
-        <source>Only ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> sat/vB was needed to get into this block</source>
-        <target>Norint patekti į šį bloką, būtų užtekę ir ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> sat/vB</target>
+        <source>Only ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> lit/vB was needed to get into this block</source>
+        <target>Norint patekti į šį bloką, būtų užtekę ir ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> lit/vB</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tx-fee-rating/tx-fee-rating.component.html</context>
           <context context-type="linenumber">2</context>

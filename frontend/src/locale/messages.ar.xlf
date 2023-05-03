@@ -2208,7 +2208,7 @@
         <note priority="1" from="meaning">transaction.fee-rate</note>
       </trans-unit>
       <trans-unit id="d2eb45d1cd8cd146b7cb0223ab97a4b03b614060" datatype="html">
-        <source>sat/vB</source>
+        <source>lit/vB</source>
         <target>ساتوشي/بايت</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/block-overview-tooltip/block-overview-tooltip.component.html</context>
@@ -2302,7 +2302,7 @@
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">213,217</context>
         </context-group>
-        <note priority="1" from="description">sat/vB</note>
+        <note priority="1" from="description">lit/vB</note>
         <note priority="1" from="meaning">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit id="54c58b39481f1749fce23fa8a77f616eee84d761" datatype="html">
@@ -4197,7 +4197,7 @@
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">33,36</context>
         </context-group>
-        <note priority="1" from="description">sat/vB</note>
+        <note priority="1" from="description">lit/vB</note>
         <note priority="1" from="meaning">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit id="c4ae62409269c8255a390587baad3ff496889cba" datatype="html">
@@ -4303,7 +4303,7 @@
         <note priority="1" from="description">search.go-to</note>
       </trans-unit>
       <trans-unit id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc" datatype="html">
-        <source>Mempool by vBytes (sat/vByte)</source>
+        <source>Mempool by vBytes (lit/vByte)</source>
         <target>المعاملات الغير مؤكدة بالبايتات الافتراضية (ساتوشي/بايت افتراضي)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
@@ -5128,7 +5128,7 @@
         <note priority="1" from="meaning">tx-fee-rating.optimal</note>
       </trans-unit>
       <trans-unit id="60601e02e7c1f6c4dbabd0ef0bb8946003db8dec" datatype="html">
-        <source>Only ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> sat/vB was needed to get into this block</source>
+        <source>Only ~<x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> lit/vB was needed to get into this block</source>
         <target>كان مطلوب حوالي <x id="INTERPOLATION" equiv-text="{{ medianFeeNeeded | feeRounding }}"/> ساتوشي/بايت فقط لاضافة هذه المعاملة الى هذه الكتلة</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tx-fee-rating/tx-fee-rating.component.html</context>

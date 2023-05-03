@@ -178,8 +178,8 @@
         <note from="meaning" priority="1">transaction.fee-per-vbyte</note>
       </trans-unit>
       <trans-unit datatype="html" id="d2eb45d1cd8cd146b7cb0223ab97a4b03b614060">
-        <source>sat/vB</source>
-        <target>sat/vB</target>
+        <source>lit/vB</source>
+        <target>lit/vB</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/transaction/transaction.component.html</context>
           <context context-type="linenumber">81</context>
@@ -228,7 +228,7 @@
           <context context-type="sourcefile">src/app/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">117</context>
         </context-group>
-        <note from="description" priority="1">sat/vB</note>
+        <note from="description" priority="1">lit/vB</note>
         <note from="meaning" priority="1">shared.sat-vbyte</note>
       </trans-unit>
       <trans-unit datatype="html" id="0d6ed649666c5cdcf12be0216d82051bba3614b0">
@@ -1300,8 +1300,8 @@
         <note from="description" priority="1">statistics.loading-graphs</note>
       </trans-unit>
       <trans-unit datatype="html" id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc">
-        <source>Mempool by vBytes (sat/vByte)</source>
-        <target>Mempool by vBytes (sat/vByte)</target>
+        <source>Mempool by vBytes (lit/vByte)</source>
+        <target>Mempool by vBytes (lit/vByte)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
           <context context-type="linenumber">16</context>
@@ -2292,7 +2292,7 @@
         <note from="meaning" priority="1">tx-fee-rating.optimal</note>
       </trans-unit>
       <trans-unit datatype="html" id="f1b50928719b5261ccc81e9ec3ea4cc074018f89">
-        <source>Only ~<x equiv-text="ltip=&quot;Only ~{{ median" id="INTERPOLATION"/> sat/vB was needed to get into this block</source>
+        <source>Only ~<x equiv-text="ltip=&quot;Only ~{{ median" id="INTERPOLATION"/> lit/vB was needed to get into this block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/tx-fee-rating/tx-fee-rating.component.html</context>
           <context context-type="linenumber">2</context>
