@@ -3,7 +3,7 @@ import priceUpdater, { PriceFeed, PriceHistory } from '../price-updater';
 
 class GeminiApi implements PriceFeed {
   public name: string = 'Gemini';
-  public currencies: string[] = ['USD', 'GBP', 'SGD'];
+  public currencies: string[] = ['USD'];
 
   public url: string = 'https://api.gemini.com/v1/pubticker/LTC';
   public urlHist: string = 'https://api.gemini.com/v2/candles/LTC{CURRENCY}/{GRANULARITY}';

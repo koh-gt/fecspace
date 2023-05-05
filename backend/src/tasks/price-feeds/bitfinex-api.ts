@@ -3,7 +3,7 @@ import priceUpdater, { PriceFeed, PriceHistory } from '../price-updater';
 
 class BitfinexApi implements PriceFeed {
   public name: string = 'Bitfinex';
-  public currencies: string[] = ['USD', 'GPB'];
+  public currencies: string[] = ['USD'];
 
   public url: string = 'https://api.bitfinex.com/v1/pubticker/LTC';
   public urlHist: string = 'https://api-pub.bitfinex.com/v2/candles/trade:{GRANULARITY}:tLTC{CURRENCY}/hist';

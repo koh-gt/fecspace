@@ -13,7 +13,7 @@ class KrakenApi implements PriceFeed {
   constructor() {
   }
 
-  private getTicker(currency) {
+  private getTicker(currency): string {
     let ticker = `XLTCZ${currency}`;
     if (['AUD', 'GBP'].includes(currency)) {
       ticker = `LTC${currency}`;
@@ -61,10 +61,10 @@ class KrakenApi implements PriceFeed {
   public async $insertHistoricalPrice(): Promise<void> {
     const existingPriceTimes = await PricesRepository.$getPricesTimes();
 
-    // EUR weekly price history goes back to timestamp 1378339200 (September 5, 2013)
-    // USD weekly price history goes back to timestamp 1380758400 (October 3, 2013)
-    // GBP weekly price history goes back to timestamp 1415232000 (November 6, 2014)
-    // JPY weekly price history goes back to timestamp 1415232000 (November 6, 2014)
+    // EUR weekly price history goes back to timestamp 1378944000 (September 12, 2013)
+    // USD weekly price history goes back to timestamp 1383782400 (November 7, 2013)
+    // GBP weekly price history goes back to timestamp 1588204800 (April 30, 2020)
+    // JPY weekly price history goes back to timestamp 1603324800 (October 22, 2020)
     // AUD weekly price history goes back to timestamp 1591833600 (June 11, 2020)
 
     let priceHistory: any = {}; // map: timestamp -> Prices
