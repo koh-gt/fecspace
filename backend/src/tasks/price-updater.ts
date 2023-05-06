@@ -1,5 +1,3 @@
-import * as fs from 'fs';
-import path from 'path';
 import config from '../config';
 import logger from '../logger';
 import PricesRepository, { ApiPrice, MAX_PRICES } from '../repositories/PricesRepository';
