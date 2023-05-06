@@ -191,7 +191,11 @@ class PriceUpdater {
     // Fetch all historical hourly prices
     for (const feed of this.feeds) {
       try {
-        historicalPrices.push(await feed.$fetchRecentPrice(this.currencies, type));
+        if (feed.name === 'Coinbase') {
+          historicalPrices.push(await feed.$fetchRecentPrice(['USD', 'EUR', 'GBP'], type));
+        } else {
+          historicalPrices.push(await feed.$fetchRecentPrice(this.currencies, type));
+        }
       } catch (e) {
         logger.err(`Cannot fetch hourly historical price from ${feed.name}. Ignoring this feed. Reason: ${e instanceof Error ? e.message : e}`, logger.tags.mining);
       }
