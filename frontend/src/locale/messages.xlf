@@ -1054,7 +1054,7 @@
         &lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-    
+
       &lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
 
       &lt;div class=&quot;box tran"/> confirmations</source>
@@ -3906,7 +3906,7 @@
         <note priority="1" from="description">mining.average-fee</note>
       </trans-unit>
       <trans-unit id="31443c29cb161e8aa661eb5035f675746ef95b45" datatype="html">
-        <source>sats/tx</source>
+        <source>lits/tx</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">33,36</context>
