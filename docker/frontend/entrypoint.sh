@@ -10,6 +10,10 @@ cp /etc/nginx/nginx.conf /patch/nginx.conf
 sed -i "s/__MEMPOOL_FRONTEND_HTTP_PORT__/${__MEMPOOL_FRONTEND_HTTP_PORT__}/g" /patch/nginx.conf
 cat /patch/nginx.conf > /etc/nginx/nginx.conf
 
+if [ "${LIGHTNING_DETECTED_PORT}" != "" ];then
+  export LIGHTNING=true
+fi
+
 # Runtime overrides - read env vars defined in docker compose
 
 __TESTNET_ENABLED__=${TESTNET_ENABLED:=false}
@@ -35,6 +39,7 @@ __AUDIT__=${AUDIT:=false}
 __MAINNET_BLOCK_AUDIT_START_HEIGHT__=${MAINNET_BLOCK_AUDIT_START_HEIGHT:=0}
 __TESTNET_BLOCK_AUDIT_START_HEIGHT__=${TESTNET_BLOCK_AUDIT_START_HEIGHT:=0}
 __SIGNET_BLOCK_AUDIT_START_HEIGHT__=${SIGNET_BLOCK_AUDIT_START_HEIGHT:=0}
+__FULL_RBF_ENABLED__=${FULL_RBF_ENABLED:=false}
 __HISTORICAL_PRICE__=${HISTORICAL_PRICE:=true}
 
 # Export as environment variables to be used by envsubst
@@ -61,6 +66,7 @@ export __AUDIT__
 export __MAINNET_BLOCK_AUDIT_START_HEIGHT__
 export __TESTNET_BLOCK_AUDIT_START_HEIGHT__
 export __SIGNET_BLOCK_AUDIT_START_HEIGHT__
+export __FULL_RBF_ENABLED__
 export __HISTORICAL_PRICE__
 
 folder=$(find /var/www/mempool -name "config.js" | xargs dirname)

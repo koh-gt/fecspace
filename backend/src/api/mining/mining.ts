@@ -20,10 +20,10 @@ class Mining {
   public lastWeeklyHashrateIndexingDate: number | null = null;
 
   /**
-   * Get historical block predictions match rate
+   * Get historical blocks health
    */
-   public async $getBlockPredictionsHistory(interval: string | null = null): Promise<any> {
-    return await BlocksAuditsRepository.$getBlockPredictionsHistory(
+   public async $getBlocksHealthHistory(interval: string | null = null): Promise<any> {
+    return await BlocksAuditsRepository.$getBlocksHealthHistory(
       this.getTimeRange(interval),
       Common.getSqlInterval(interval)
     );
@@ -141,6 +141,9 @@ class Mining {
     const blockCount1w: number = await BlocksRepository.$blockCount(pool.id, '1w');
     const totalBlock1w: number = await BlocksRepository.$blockCount(null, '1w');
 
+    const avgHealth = await BlocksRepository.$getAvgBlockHealthPerPoolId(pool.id);    
+    const totalReward = await BlocksRepository.$getTotalRewardForPoolId(pool.id);    
+
     let currentEstimatedHashrate = 0;
     try {
       currentEstimatedHashrate = await bitcoinClient.getNetworkHashPs(totalBlock24h);
@@ -162,6 +165,8 @@ class Mining {
       },
       estimatedHashrate: currentEstimatedHashrate * (blockCount24h / totalBlock24h),
       reportedHashrate: null,
+      avgBlockHealth: avgHealth,
+      totalReward: totalReward,
     };
   }
 
@@ -446,7 +451,7 @@ class Mining {
       const elapsedSeconds = Math.max(1, Math.round((new Date().getTime() / 1000) - timer));
       if (elapsedSeconds > 5) {
         const progress = Math.round(totalBlockChecked / blocks.length * 100);
-        logger.info(`Indexing difficulty adjustment at block #${block.height} | Progress: ${progress}%`, logger.tags.mining);
+        logger.debug(`Indexing difficulty adjustment at block #${block.height} | Progress: ${progress}%`, logger.tags.mining);
         timer = new Date().getTime() / 1000;
       }
     }
@@ -552,8 +557,10 @@ class Mining {
       currentBlockHeight -= 10000;
     }
 
-    if (totalIndexed) {
-      logger.info(`Indexing missing coinstatsindex data completed`, logger.tags.mining);
+    if (totalIndexed > 0) {
+      logger.info(`Indexing missing coinstatsindex data completed. Indexed ${totalIndexed}`, logger.tags.mining);
+    } else {
+      logger.debug(`Indexing missing coinstatsindex data completed. Indexed 0.`, logger.tags.mining);
     }
   }
 
@@ -568,6 +575,7 @@ class Mining {
 
   private getTimeRange(interval: string | null, scale = 1): number {
     switch (interval) {
+      case '4y': return 43200 * scale; // 12h
       case '3y': return 43200 * scale; // 12h
       case '2y': return 28800 * scale; // 8h
       case '1y': return 28800 * scale; // 8h

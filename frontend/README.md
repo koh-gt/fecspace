@@ -106,13 +106,15 @@ https://www.transifex.com/mempool/mempool/dashboard/
 
 * Arabic @baro0k
 * Czech @pixelmade2
+* Danish @pierrevendelboe
 * German @Emzy
 * English (default)
 * Spanish @maxhodler @bisqes
 * Persian @techmix
 * French @Bayernatoor
-* Korean @kcalvinalvinn
+* Korean @kcalvinalvinn @sogoagain
 * Italian @HodlBits
+* Lithuanian @eimze21
 * Hebrew @rapidlab309
 * Georgian @wyd_idk
 * Hungarian @btcdragonlord

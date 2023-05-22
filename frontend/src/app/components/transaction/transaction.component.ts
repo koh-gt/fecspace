@@ -19,10 +19,11 @@ import { WebsocketService } from '../../services/websocket.service';
 import { AudioService } from '../../services/audio.service';
 import { ApiService } from '../../services/api.service';
 import { SeoService } from '../../services/seo.service';
-import { BlockExtended, CpfpInfo } from '../../interfaces/node-api.interface';
+import { BlockExtended, CpfpInfo, RbfTree, MempoolPosition } from '../../interfaces/node-api.interface';
 import { LiquidUnblinding } from './liquid-ublinding';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url/relative-url.pipe';
 import { Price, PriceService } from '../../services/price.service';
+import { isFeatureActive } from '../../bitcoin.utils';
 
 @Component({
   selector: 'app-transaction',
@@ -34,6 +35,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   tx: Transaction;
   txId: string;
   txInBlockIndex: number;
+  mempoolPosition: MempoolPosition;
   isLoadingTx = true;
   error: any = undefined;
   errorUnblinded: any = undefined;
@@ -45,20 +47,24 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   fetchRbfSubscription: Subscription;
   fetchCachedTxSubscription: Subscription;
   txReplacedSubscription: Subscription;
+  txRbfInfoSubscription: Subscription;
+  mempoolPositionSubscription: Subscription;
   blocksSubscription: Subscription;
   queryParamsSubscription: Subscription;
   urlFragmentSubscription: Subscription;
+  mempoolBlocksSubscription: Subscription;
   fragmentParams: URLSearchParams;
   rbfTransaction: undefined | Transaction;
   replaced: boolean = false;
   rbfReplaces: string[];
+  rbfInfo: RbfTree;
   cpfpInfo: CpfpInfo | null;
   showCpfpDetails = false;
   fetchCpfp$ = new Subject<string>();
   fetchRbfHistory$ = new Subject<string>();
   fetchCachedTx$ = new Subject<string>();
   isCached: boolean = false;
-  now = new Date().getTime();
+  now = Date.now();
   timeAvg$: Observable<number>;
   liquidUnblinding = new LiquidUnblinding();
   inputIndex: number;
@@ -74,6 +80,12 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   flowEnabled: boolean;
   blockConversion: Price;
   tooltipPosition: { x: number, y: number };
+  isMobile: boolean;
+
+  featuresEnabled: boolean;
+  segwitEnabled: boolean;
+  rbfEnabled: boolean;
+  taprootEnabled: boolean;
 
   @ViewChild('graphContainer')
   graphContainer: ElementRef;
@@ -161,11 +173,6 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.tx.effectiveFeePerVsize = totalFees / (totalWeight / 4);
 
-        if (!this.tx.status.confirmed) {
-          this.stateService.markBlock$.next({
-            txFeePerVSize: this.tx.effectiveFeePerVsize,
-          });
-        }
         this.cpfpInfo = cpfpInfo;
       });
 
@@ -176,10 +183,11 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           .getRbfHistory$(txId)
       ),
       catchError(() => {
-        return of([]);
+        return of(null);
       })
-    ).subscribe((replaces) => {
-      this.rbfReplaces = replaces;
+    ).subscribe((rbfResponse) => {
+      this.rbfInfo = rbfResponse?.replacements;
+      this.rbfReplaces = rbfResponse?.replaces || null;
     });
 
     this.fetchCachedTxSubscription = this.fetchCachedTx$
@@ -196,20 +204,41 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      this.tx = tx;
-      this.isCached = true;
-      if (tx.fee === undefined) {
-        this.tx.fee = 0;
-      }
-      this.tx.feePerVsize = tx.fee / (tx.weight / 4);
-      this.isLoadingTx = false;
-      this.error = undefined;
-      this.waitingForTransaction = false;
-      this.graphExpanded = false;
-      this.setupGraph();
+      if (!this.tx) {
+        this.tx = tx;
+        this.setFeatures();
+        this.isCached = true;
+        if (tx.fee === undefined) {
+          this.tx.fee = 0;
+        }
+        this.tx.feePerVsize = tx.fee / (tx.weight / 4);
+        this.isLoadingTx = false;
+        this.error = undefined;
+        this.waitingForTransaction = false;
+        this.graphExpanded = false;
+        this.transactionTime = tx.firstSeen || 0;
+        this.setupGraph();
 
-      if (!this.tx?.status?.confirmed) {
         this.fetchRbfHistory$.next(this.tx.txid);
+        this.txRbfInfoSubscription = this.stateService.txRbfInfo$.subscribe((rbfInfo) => {
+          if (this.tx) {
+            this.rbfInfo = rbfInfo;
+          }
+        });
+      }
+    });
+
+    this.mempoolPositionSubscription = this.stateService.mempoolTxPosition$.subscribe(txPosition => {
+      if (txPosition && txPosition.txid === this.txId && txPosition.position) {
+        this.mempoolPosition = txPosition.position;
+        if (this.tx && !this.tx.status.confirmed) {
+          this.stateService.markBlock$.next({
+            mempoolPosition: this.mempoolPosition
+          });
+          this.txInBlockIndex = this.mempoolPosition.block;
+        }
+      } else {
+        this.mempoolPosition = null;
       }
     });
 
@@ -247,7 +276,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
             of(true),
             this.stateService.connectionState$.pipe(
               filter(
-                (state) => state === 2 && this.tx && !this.tx.status.confirmed
+                (state) => state === 2 && this.tx && !this.tx.status?.confirmed
               )
             )
           );
@@ -284,10 +313,12 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe((tx: Transaction) => {
           if (!tx) {
+            this.fetchCachedTx$.next(this.txId);
             return;
           }
 
           this.tx = tx;
+          this.setFeatures();
           this.isCached = false;
           if (tx.fee === undefined) {
             this.tx.fee = 0;
@@ -296,18 +327,21 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isLoadingTx = false;
           this.error = undefined;
           this.waitingForTransaction = false;
-          this.setMempoolBlocksSubscription();
           this.websocketService.startTrackTransaction(tx.txid);
           this.graphExpanded = false;
           this.setupGraph();
 
-          if (!tx.status.confirmed && tx.firstSeen) {
-            this.transactionTime = tx.firstSeen;
+          if (!tx.status?.confirmed) {
+            if (tx.firstSeen) {
+              this.transactionTime = tx.firstSeen;
+            } else {
+              this.getTransactionTime();
+            }
           } else {
-            this.getTransactionTime();
+            this.transactionTime = 0;
           }
 
-          if (this.tx.status.confirmed) {
+          if (this.tx?.status?.confirmed) {
             this.stateService.markBlock$.next({
               blockHeight: tx.status.block_height,
             });
@@ -316,6 +350,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
             if (tx.cpfpChecked) {
               this.stateService.markBlock$.next({
                 txFeePerVSize: tx.effectiveFeePerVsize,
+                mempoolPosition: this.mempoolPosition,
               });
               this.cpfpInfo = {
                 ancestors: tx.ancestors,
@@ -324,10 +359,10 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               this.fetchCpfp$.next(this.tx.txid);
             }
-            this.fetchRbfHistory$.next(this.tx.txid);
           }
+          this.fetchRbfHistory$.next(this.tx.txid);
 
-          this.priceService.getBlockPrice$(tx.status.block_time, true).pipe(
+          this.priceService.getBlockPrice$(tx.status?.block_time, true).pipe(
             tap((price) => {
               this.blockConversion = price;
             })
@@ -344,7 +379,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.blocksSubscription = this.stateService.blocks$.subscribe(([block, txConfirmed]) => {
       this.latestBlock = block;
 
-      if (txConfirmed && this.tx) {
+      if (txConfirmed && this.tx && !this.tx.status.confirmed) {
         this.tx.status = {
           confirmed: true,
           block_height: block.height,
@@ -368,6 +403,12 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
+    this.txRbfInfoSubscription = this.stateService.txRbfInfo$.subscribe((rbfInfo) => {
+      if (this.tx) {
+        this.rbfInfo = rbfInfo;
+      }
+    });
+
     this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
       if (params.showFlow === 'false') {
         this.overrideFlowPreference = false;
@@ -378,6 +419,34 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.setFlowEnabled();
       this.setGraphSize();
+    });
+
+    this.mempoolBlocksSubscription = this.stateService.mempoolBlocks$.subscribe((mempoolBlocks) => {
+      if (!this.tx || this.mempoolPosition) {
+        return;
+      }
+
+      this.now = Date.now();
+
+      const txFeePerVSize =
+        this.tx.effectiveFeePerVsize || this.tx.fee / (this.tx.weight / 4);
+
+      let found = false;
+      this.txInBlockIndex = 0;
+      for (const block of mempoolBlocks) {
+        for (let i = 0; i < block.feeRange.length - 1 && !found; i++) {
+          if (
+            txFeePerVSize <= block.feeRange[i + 1] &&
+            txFeePerVSize >= block.feeRange[i]
+          ) {
+            this.txInBlockIndex = mempoolBlocks.indexOf(block);
+            found = true;
+          }
+        }
+      }
+      if (!found && txFeePerVSize < mempoolBlocks[mempoolBlocks.length - 1].feeRange[0]) {
+        this.txInBlockIndex = 7;
+      }
     });
   }
 
@@ -395,47 +464,44 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     return of(false);
   }
 
-  setMempoolBlocksSubscription() {
-    this.stateService.mempoolBlocks$.subscribe((mempoolBlocks) => {
-      if (!this.tx) {
-        return;
-      }
-
-      const txFeePerVSize =
-        this.tx.effectiveFeePerVsize || this.tx.fee / (this.tx.weight / 4);
-
-      for (const block of mempoolBlocks) {
-        for (let i = 0; i < block.feeRange.length - 1; i++) {
-          if (
-            txFeePerVSize <= block.feeRange[i + 1] &&
-            txFeePerVSize >= block.feeRange[i]
-          ) {
-            this.txInBlockIndex = mempoolBlocks.indexOf(block);
-          }
-        }
-      }
-    });
-  }
-
   getTransactionTime() {
     this.apiService
       .getTransactionTimes$([this.tx.txid])
       .subscribe((transactionTimes) => {
-        this.transactionTime = transactionTimes[0];
+        if (transactionTimes?.length) {
+          this.transactionTime = transactionTimes[0];
+        }
       });
+  }
+
+  setFeatures(): void {
+    if (this.tx) {
+      this.segwitEnabled = !this.tx.status.confirmed || isFeatureActive(this.stateService.network, this.tx.status.block_height, 'segwit');
+      this.taprootEnabled = !this.tx.status.confirmed || isFeatureActive(this.stateService.network, this.tx.status.block_height, 'taproot');
+      this.rbfEnabled = !this.tx.status.confirmed || isFeatureActive(this.stateService.network, this.tx.status.block_height, 'rbf');
+    } else {
+      this.segwitEnabled = false;
+      this.taprootEnabled = false;
+      this.rbfEnabled = false;
+    }
+    this.featuresEnabled = this.segwitEnabled || this.taprootEnabled || this.rbfEnabled;
   }
 
   resetTransaction() {
     this.error = undefined;
     this.tx = null;
+    this.setFeatures();
     this.waitingForTransaction = false;
     this.isLoadingTx = true;
     this.rbfTransaction = undefined;
     this.replaced = false;
     this.transactionTime = -1;
     this.cpfpInfo = null;
+    this.rbfInfo = null;
     this.rbfReplaces = [];
     this.showCpfpDetails = false;
+    this.txInBlockIndex = null;
+    this.mempoolPosition = null;
     document.body.scrollTo(0, 0);
     this.leaveTransaction();
   }
@@ -492,8 +558,15 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   setGraphSize(): void {
-    if (this.graphContainer) {
-      this.graphWidth = this.graphContainer.nativeElement.clientWidth;
+    this.isMobile = window.innerWidth < 850;
+    if (this.graphContainer?.nativeElement) {
+      setTimeout(() => {
+        if (this.graphContainer?.nativeElement) {
+          this.graphWidth = this.graphContainer.nativeElement.clientWidth;
+        } else {
+          setTimeout(() => { this.setGraphSize(); }, 1);
+        }
+      }, 1);
     }
   }
 
@@ -503,10 +576,14 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetchRbfSubscription.unsubscribe();
     this.fetchCachedTxSubscription.unsubscribe();
     this.txReplacedSubscription.unsubscribe();
+    this.txRbfInfoSubscription.unsubscribe();
     this.blocksSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.flowPrefSubscription.unsubscribe();
     this.urlFragmentSubscription.unsubscribe();
+    this.mempoolBlocksSubscription.unsubscribe();
+    this.mempoolPositionSubscription.unsubscribe();
+    this.mempoolBlocksSubscription.unsubscribe();
     this.leaveTransaction();
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { CpfpInfo, OptimizedMempoolStats, AddressInformation, LiquidPegs, ITranslators,
-  PoolStat, BlockExtended, TransactionStripped, RewardStats, AuditScore, BlockSizesAndWeights } from '../interfaces/node-api.interface';
+  PoolStat, BlockExtended, TransactionStripped, RewardStats, AuditScore, BlockSizesAndWeights, RbfTree } from '../interfaces/node-api.interface';
 import { Observable } from 'rxjs';
 import { StateService } from './state.service';
 import { WebsocketResponse } from '../interfaces/websocket.interface';
@@ -65,6 +65,10 @@ export class ApiService {
     return this.httpClient.get<OptimizedMempoolStats[]>(this.apiBaseUrl + this.apiBasePath + '/api/v1/statistics/3y');
   }
 
+  list4YStatistics$(): Observable<OptimizedMempoolStats[]> {
+    return this.httpClient.get<OptimizedMempoolStats[]>(this.apiBaseUrl + this.apiBasePath + '/api/v1/statistics/4y');
+  }
+
   getTransactionTimes$(txIds: string[]): Observable<number[]> {
     let params = new HttpParams();
     txIds.forEach((txId: string) => {
@@ -117,12 +121,16 @@ export class ApiService {
     return this.httpClient.get<AddressInformation>(this.apiBaseUrl + this.apiBasePath + '/api/v1/validate-address/' + address);
   }
 
-  getRbfHistory$(txid: string): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.apiBaseUrl + this.apiBasePath + '/api/v1/tx/' + txid + '/replaces');
+  getRbfHistory$(txid: string): Observable<{ replacements: RbfTree, replaces: string[] }> {
+    return this.httpClient.get<{ replacements: RbfTree, replaces: string[] }>(this.apiBaseUrl + this.apiBasePath + '/api/v1/tx/' + txid + '/rbf');
   }
 
   getRbfCachedTx$(txid: string): Observable<Transaction> {
     return this.httpClient.get<Transaction>(this.apiBaseUrl + this.apiBasePath + '/api/v1/tx/' + txid + '/cached');
+  }
+
+  getRbfList$(fullRbf: boolean, after?: string): Observable<RbfTree[]> {
+    return this.httpClient.get<RbfTree[]>(this.apiBaseUrl + this.apiBasePath + '/api/v1/' + (fullRbf ? 'fullrbf/' : '') + 'replacements/' + (after || ''));
   }
 
   listLiquidPegsMonth$(): Observable<LiquidPegs[]> {
@@ -227,7 +235,7 @@ export class ApiService {
     );
   }
 
-  getHistoricalBlockPrediction$(interval: string | undefined) : Observable<any> {
+  getHistoricalBlocksHealth$(interval: string | undefined) : Observable<any> {
     return this.httpClient.get<any[]>(
       this.apiBaseUrl + this.apiBasePath + `/api/v1/mining/blocks/predictions` +
       (interval !== undefined ? `/${interval}` : ''), { observe: 'response' }

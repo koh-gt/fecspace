@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppPreloadingStrategy } from './app.preloading-strategy'
+import { AppPreloadingStrategy } from './app.preloading-strategy';
 import { StartComponent } from './components/start/start.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
 import { BlockComponent } from './components/block/block.component';
+import { ClockMinedComponent as ClockMinedComponent } from './components/clock/clock-mined.component';
+import { ClockMempoolComponent as ClockMempoolComponent } from './components/clock/clock-mempool.component';
 import { AddressComponent } from './components/address/address.component';
 import { MasterPageComponent } from './components/master-page/master-page.component';
 import { AboutComponent } from './components/about/about.component';
@@ -13,17 +15,13 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { TrademarkPolicyComponent } from './components/trademark-policy/trademark-policy.component';
 import { PushTransactionComponent } from './components/push-transaction/push-transaction.component';
 import { BlocksList } from './components/blocks-list/blocks-list.component';
-import { AssetGroupComponent } from './components/assets/asset-group/asset-group.component';
-import { AssetsFeaturedComponent } from './components/assets/assets-featured/assets-featured.component';
-import { AssetsComponent } from './components/assets/assets.component';
-import { AssetComponent } from './components/asset/asset.component';
-import { AssetsNavComponent } from './components/assets/assets-nav/assets-nav.component';
+import { RbfList } from './components/rbf-list/rbf-list.component';
 
 const browserWindow = window || {};
 // @ts-ignore
 const browserWindowEnv = browserWindow.__env || {};
 
-let routes: Routes = [
+const routes: Routes = [
   {
     path: 'testnet',
     children: [
@@ -53,6 +51,10 @@ let routes: Routes = [
           {
             path: 'blocks',
             component: BlocksList,
+          },
+          {
+            path: 'rbf',
+            component: RbfList,
           },
           {
             path: 'terms-of-service',
@@ -158,6 +160,10 @@ let routes: Routes = [
         component: BlocksList,
       },
       {
+        path: 'rbf',
+        component: RbfList,
+      },
+      {
         path: 'terms-of-service',
         component: TermsOfServiceComponent
       },
@@ -234,6 +240,14 @@ let routes: Routes = [
         loadChildren: () => import('./previews.module').then(m => m.PreviewsModule)
       },
     ],
+  },
+  {
+    path: 'clock-mined',
+    component: ClockMinedComponent,
+  },
+  {
+    path: 'clock-mempool',
+    component: ClockMempoolComponent,
   },
   {
     path: 'status',

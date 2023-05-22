@@ -7,7 +7,7 @@ import cpfpRepository from '../repositories/CpfpRepository';
 import { RowDataPacket } from 'mysql2';
 
 class DatabaseMigration {
-  private static currentVersion = 58;
+  private static currentVersion = 60;
   private queryTimeout = 3600_000;
   private statisticsAddedIndexed = false;
   private uniqueLogs: string[] = [];
@@ -495,6 +495,7 @@ class DatabaseMigration {
       this.uniqueLog(logger.notice, this.blocksTruncatedMessage);
       await this.$executeQuery('DELETE FROM `pools`');
       await this.$executeQuery('ALTER TABLE pools AUTO_INCREMENT = 1');
+      await this.$executeQuery(`UPDATE state SET string = NULL WHERE name = 'pools_json_sha'`);
       this.uniqueLog(logger.notice, '`pools` table has been truncated`');
       await this.updateToSchemaVersion(56);
     }
@@ -507,6 +508,16 @@ class DatabaseMigration {
     if (databaseSchemaVersion < 58) {
       // We only run some migration queries for this version
       await this.updateToSchemaVersion(58);
+    }
+
+    if (databaseSchemaVersion < 59 && (config.MEMPOOL.NETWORK === 'signet' || config.MEMPOOL.NETWORK === 'testnet')) {
+      // https://github.com/mempool/mempool/issues/3360
+      await this.$executeQuery(`TRUNCATE prices`);
+    }
+
+    if (databaseSchemaVersion < 60 && isBitcoin === true) {
+      await this.$executeQuery('ALTER TABLE `blocks_audits` ADD sigop_txs JSON DEFAULT "[]"');
+      await this.updateToSchemaVersion(60);
     }
   }
 

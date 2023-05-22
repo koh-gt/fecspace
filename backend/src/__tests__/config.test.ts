@@ -42,24 +42,27 @@ describe('Mempool Backend Config', () => {
         ADVANCED_GBT_MEMPOOL: false,
         CPFP_INDEXING: false,
         MAX_BLOCKS_BULK_QUERY: 0,
+        DISK_CACHE_BLOCK_INTERVAL: 6,
       });
 
       expect(config.ELECTRUM).toStrictEqual({ HOST: '127.0.0.1', PORT: 3306, TLS_ENABLED: true });
 
-      expect(config.ESPLORA).toStrictEqual({ REST_API_URL: 'http://127.0.0.1:3000' });
+      expect(config.ESPLORA).toStrictEqual({ REST_API_URL: 'http://127.0.0.1:3000', UNIX_SOCKET_PATH: null, RETRY_UNIX_SOCKET_AFTER: 30000 });
 
       expect(config.CORE_RPC).toStrictEqual({
         HOST: '127.0.0.1',
         PORT: 9332,
         USERNAME: 'mempool',
-        PASSWORD: 'mempool'
+        PASSWORD: 'mempool',
+        TIMEOUT: 60000
       });
 
       expect(config.SECOND_CORE_RPC).toStrictEqual({
         HOST: '127.0.0.1',
         PORT: 8332,
         USERNAME: 'mempool',
-        PASSWORD: 'mempool'
+        PASSWORD: 'mempool',
+        TIMEOUT: 60000
       });
 
       expect(config.DATABASE).toStrictEqual({
@@ -69,7 +72,8 @@ describe('Mempool Backend Config', () => {
         PORT: 3306,
         DATABASE: 'mempool',
         USERNAME: 'mempool',
-        PASSWORD: 'mempool'
+        PASSWORD: 'mempool',
+        TIMEOUT: 180000,
       });
 
       expect(config.SYSLOG).toStrictEqual({
@@ -94,6 +98,13 @@ describe('Mempool Backend Config', () => {
       expect(config.EXTERNAL_DATA_SERVER).toStrictEqual({
         MEMPOOL_API: 'https://mempool.space/api/v1',
         MEMPOOL_ONION: 'http://mempoolhqx4isw62xs7abwphsq7ldayuidyx2v2oethdhhj6mlo2r6ad.onion/api/v1',
+      });
+
+      expect(config.MAXMIND).toStrictEqual({
+        ENABLED: false,
+        GEOLITE2_CITY: '/usr/local/share/GeoIP/GeoLite2-City.mmdb',
+        GEOLITE2_ASN: '/usr/local/share/GeoIP/GeoLite2-ASN.mmdb',
+        GEOIP2_ISP: '/usr/local/share/GeoIP/GeoIP2-ISP.mmdb'
       });
     });
   });
