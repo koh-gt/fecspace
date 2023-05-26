@@ -27,7 +27,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() minimal: boolean = false;
   @Input() blockWidth: number = 125;
   @Input() spotlight: number = 0;
-  
+
   specialBlocks = specialBlocks;
   network = '';
   blocks: BlockchainBlock[] = [];
@@ -58,8 +58,8 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   dividerBlockOffset: number = 205;
   blockPadding: number = 30;
 
-  gradientColors = {
-    '': ['#9339f4', '#105fb0'],
+  gradientColors = { // robbie: current blocks gradient colors
+    '': ['#2396d9', '#2368d9'],
     testnet: ['#1d486f', '#183550'],
   };
 
@@ -296,11 +296,12 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
       addLeft = animateEnterFrom || 0;
     }
 
+    // robbie: block cube background
     return {
       left: addLeft + this.blockOffset * index + 'px',
       background: `repeating-linear-gradient(
-        #2d3348,
-        #2d3348 ${greenBackgroundHeight}%,
+        #5c5c5c,
+        #5c5c5c ${greenBackgroundHeight}%,
         ${this.gradientColors[this.network][0]} ${Math.max(greenBackgroundHeight, 0)}%,
         ${this.gradientColors[this.network][1]} 100%
       )`,
@@ -311,7 +312,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   convertStyleForLoadingBlock(style) {
     return {
       ...style,
-      background: "#2d3348",
+      background: '#4d4d4d',
     };
   }
 
@@ -320,7 +321,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
 
     return {
       left: addLeft + (this.blockOffset * index) + 'px',
-      background: "#2d3348",
+      background: '#4d4d4d',
     };
   }
 
@@ -336,7 +337,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
 
     return {
       left: addLeft + this.blockOffset * this.emptyBlocks.indexOf(block) + 'px',
-      background: "#2d3348",
+      background: '#4d4d4d',
     };
   }
 

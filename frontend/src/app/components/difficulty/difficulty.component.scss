@@ -91,7 +91,7 @@
 }
 
 .card {
-  background-color: #1d1f31;
+  background-color: #0d0d0d; // robbie: difficulty adjustment card bg
   height: 100%;
 }
 
@@ -128,7 +128,7 @@
 
 .main-title {
   position: relative;
-  color: #ffffff91;
+  color: #fff; // robbie: DIFF adjustment text
   margin-top: -13px;
   font-size: 10px;
   text-transform: uppercase;
@@ -177,10 +177,10 @@
 .epoch-blocks {
   display: block;
   width: 100%;
-  background: #2d3348;
+  background: #1a1a1a;
 
   .rect {
-    fill: #2d3348;
+    fill: #1a1a1a;
 
     &.behind {
       fill: #D81B60;

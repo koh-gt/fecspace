@@ -13,24 +13,6 @@
     <p i18n>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</p>
   </div>
 
-  <video src="/resources/promo-video/mempool-promo.mp4" poster="/resources/promo-video/mempool-promo.jpg" controls loop playsinline [autoplay]="true" [muted]="true">
-    <track label="English" kind="captions" srclang="en" src="/resources/promo-video/en.vtt" [attr.default]="showSubtitles('en') ? '' : null">
-    <track label="日本語" kind="captions" srclang="ja" src="/resources/promo-video/ja.vtt" [attr.default]="showSubtitles('ja') ? '' : null">
-    <track label="中文" kind="captions" srclang="zh" src="/resources/promo-video/zh.vtt" [attr.default]="showSubtitles('zh') ? '' : null">
-    <track label="Svenska" kind="captions" srclang="sv" src="/resources/promo-video/sv.vtt" [attr.default]="showSubtitles('sv') ? '' : null">
-    <track label="Čeština" kind="captions" srclang="cs" src="/resources/promo-video/cs.vtt" [attr.default]="showSubtitles('cs') ? '' : null">
-    <track label="Suomi" kind="captions" srclang="fi" src="/resources/promo-video/fi.vtt" [attr.default]="showSubtitles('fi') ? '' : null">
-    <track label="Français" kind="captions" srclang="fr" src="/resources/promo-video/fr.vtt" [attr.default]="showSubtitles('fr') ? '' : null">
-    <track label="Deutsch" kind="captions" srclang="de" src="/resources/promo-video/de.vtt" [attr.default]="showSubtitles('de') ? '' : null">
-    <track label="Italiano" kind="captions" srclang="it" src="/resources/promo-video/it.vtt" [attr.default]="showSubtitles('it') ? '' : null">
-    <track label="Lietuvių" kind="captions" srclang="lt" src="/resources/promo-video/lt.vtt" [attr.default]="showSubtitles('lt') ? '' : null">
-    <track label="Norsk" kind="captions" srclang="nb" src="/resources/promo-video/nb.vtt" [attr.default]="showSubtitles('nb') ? '' : null">
-    <track label="فارسی" kind="captions" srclang="fa" src="/resources/promo-video/fa.vtt" [attr.default]="showSubtitles('fa') ? '' : null">
-    <track label="Polski" kind="captions" srclang="pl" src="/resources/promo-video/pl.vtt" [attr.default]="showSubtitles('pl') ? '' : null">
-    <track label="Română" kind="captions" srclang="ro" src="/resources/promo-video/ro.vtt" [attr.default]="showSubtitles('ro') ? '' : null">
-    <track label="Português" kind="captions" srclang="pt" src="/resources/promo-video/pt.vtt" [attr.default]="showSubtitles('pt') ? '' : null">
-  </video>
-
   <div class="enterprise-sponsor" id="enterprise-sponsors">
     <h3 i18n="about.sponsors.enterprise.withRocket">Enterprise Sponsors 🚀</h3>
     <div class="wrapper">
@@ -287,61 +269,6 @@
       </a>
     </div>
   </div>
-
-  <div class="alliances" id="community-alliances">
-    <h3 i18n="about.alliances">Community Alliances</h3>
-    <div class="wrapper">
-      <a href="https://liquid.net/" title="Liquid Network">
-        <img class="liquid" src="/resources/profile/liquid.svg" />
-      </a>
-      <a href="https://opencrypto.org/" title="Coppa - Crypto Open Patent Alliance">
-        <img class="copa" src="/resources/profile/copa.png" />
-      </a>
-      <a href="https://bisq.network/" title="Bisq Network">
-        <img class="bisq" src="/resources/profile/bisq.svg" />
-      </a>
-    </div>
-  </div>
-
-  <ng-container *ngIf="translators$ | async | keyvalue as translators else loadingSponsors">
-    <div class="project-translators" id="project-translators">
-      <h3 i18n="about.translators">Project Translators</h3>
-      <div class="wrapper">
-        <ng-template ngFor let-translator [ngForOf]="translators">
-          <a [href]="'https://twitter.com/' + translator.value" target="_blank" [title]="translator.key">
-            <img class="image" [src]="'/api/v1/translators/images/' + translator.value" />
-          </a>
-        </ng-template>
-      </div>
-    </div>
-    <br>
-  </ng-container>
-
-  <ng-container *ngIf="allContributors$ | async as contributors else loadingSponsors">
-    <div class="contributors" id="project-contributors">
-      <h3 i18n="about.contributors">Project Contributors</h3>
-      <div class="wrapper">
-        <ng-template ngFor let-contributor [ngForOf]="contributors.regular">
-          <a [href]="'https://github.com/' + contributor.name" target="_blank" [title]="contributor.name">
-            <img class="image" [src]="'/api/v1/contributors/images/' + contributor.id" />
-            <span>{{ contributor.name }}</span>
-          </a>
-        </ng-template>
-      </div>
-    </div>
-
-    <div class="maintainers" *ngIf="contributors.core.length" id="project-members">
-      <h3 i18n="about.project_members">Project Members</h3>
-      <div class="wrapper">
-        <ng-template ngFor let-contributor [ngForOf]="contributors.core">
-          <a [href]="'https://github.com/' + contributor.name" target="_blank" [title]="contributor.name">
-            <img class="image" [src]="'/api/v1/contributors/images/' + contributor.id" />
-            <span>{{ contributor.name }}</span>
-          </a>
-        </ng-template>
-      </div>
-    </div>
-  </ng-container>
 
   <div class="maintainers" id="project-maintainers">
     <h3 i18n="about.maintainers">Project Maintainers</h3>

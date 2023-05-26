@@ -93,6 +93,7 @@
   }
 }
 
+// robbie: tx fees seperator
 .band-separator {
   width: 5%;
   @media (767px < width < 992px), (width < 576px) {
@@ -102,11 +103,11 @@
     height: 22px;
     background: repeating-linear-gradient(
       90deg,
-      rgb(45, 51, 72),
-      rgb(45, 51, 72) 2px,
-      rgb(29, 31, 49) 2px,
-      rgb(29, 31, 49) 4px
-    );  
+      rgb(26, 26, 26),
+      rgb(26, 26, 26) 2px,
+      rgb(13, 13, 13) 2px,
+      rgb(13, 13, 13) 4px
+    );
   }
 }
 

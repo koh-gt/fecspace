@@ -2,7 +2,7 @@
 
 $body-bg: #1d1f31;
 $body-color: #fff;
-$gray-800: #1d1f31;
+$gray-800: #0d0d0d; // robbie: nav bar background
 $gray-700: #fff;
 
 $nav-tabs-link-active-bg: #11131f;
@@ -10,7 +10,7 @@ $nav-tabs-link-active-bg: #11131f;
 $primary: #105fb0;
 $secondary: #2d3348;
 $success: #1a9436;
-$info: #1bd8f4;
+$info: #4c92ff;
 
 $h5-font-size: 1.15rem !default;
 
@@ -19,7 +19,7 @@ $pagination-border-color: $gray-800;
 $pagination-disabled-bg:           #FFF;
 $pagination-disabled-border-color: #1d1f31;
 $pagination-active-color:          #fff;
-$pagination-active-bg:             #653b9c;
+$pagination-active-bg:             #4c92ff; // robbie: active pagination button
 $pagination-hover-bg:              #12131e;
 $pagination-hover-border-color:     #1d1f31;
 $pagination-disabled-bg:          #1d1f31;
@@ -31,9 +31,9 @@ $custom-select-indicator-color: #FFF;
   border: 1px solid #20263e !important;
 }
 
-$link-color:                #1bd8f4;
+$link-color:                #4c92ff; // robbie: link text color
 $link-decoration:           none !default;
-$link-hover-color:          darken($link-color, 15%) !default;
+$link-hover-color:          #2368d9 !default; // robbie: link text hover color
 $link-hover-decoration:     underline !default;
 
 $dropdown-bg: #1d1f31;
@@ -53,7 +53,7 @@ html, body {
 }
 
 body {
-  background-color: #11131f;
+  background-color: #000000; // robbie: main background colour
   min-width: 375px;
   padding-bottom: 60px;
 }
@@ -82,10 +82,11 @@ main {
   position: relative;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #24273e;
+  background-color: #0d0d0d; // robbie: block info boxes
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   box-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.075);
+  border-radius: 0.25rem;
 }
 
 .preview-box {
@@ -117,20 +118,25 @@ main {
 
 .form-control {
   color: #fff;
-  background-color: #2d3348;
+  background-color: #1a1a1a; // robbie: search bar
   border: 1px solid rgba(17, 19, 31, 0.2);
+}
+
+.form-control::placeholder {
+  color: white;
 }
 
 .form-control:focus {
   color: #fff;
-  background-color: #2d3348;
+  background-color: #1a1a1a;
 }
 
-.btn-purple {
-  background-color: #653b9c;
-  border-color: #653b9c;
+.btn-purple { // robbie: search button
+  background-color: #4c92ff;
+  border-color: #4c92ff;
 }
 
+// loshy
 .btn-purple:not(:disabled):not(.disabled):active, .btn-purple:not(:disabled):not(.disabled).active, .show > .btn-purple.dropdown-toggle {
   color: #fff;
   background-color: #4d2d77;
@@ -152,8 +158,8 @@ main {
 
 .form-control.form-control-secondary {
   color: #fff;
-  background-color: #2d3348;
-  border: 1px solid #2d3348;
+  background-color: #1a1a1a;
+  border: 1px solid #1a1a1a;
 }
 .form-control.form-control-secondary:focus {
   color: #fff;
@@ -306,7 +312,7 @@ main {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #181b2d;
+  background-color: #1a1a1a; // robbie: table lines
 }
 
 .bordertop {
@@ -673,20 +679,12 @@ h1, h2, h3 {
   text-align: center;
 }
 
-.progress-mempool {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #105fb0 0%, #9339f4 100%);
+.progress-mempool { // robbie: latest blocks progress bar
+  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #2368d9 0%, #2396d9 100%);
 }
 
 .progress-mempool.testnet {
   background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #1d486f 0%, #183550 100%);
-}
-
-.progress-mempool.signet {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #6f1d5d 0%, #471850 100%);
-}
-
-.progress-mempool.liquid {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #116761 0%, #183550 100%);
 }
 
 .progress-dark {
@@ -1091,7 +1089,7 @@ th {
   display: inline-block;
   width: 100%;
   justify-content: space-between;
-  background: #1d1f31;
+  background: #0d0d0d; // loshy
   margin: 0;
   @media (min-width: 550px) {
     width: auto;

@@ -88,7 +88,7 @@
   position:absolute;
   top: calc(-0.192 * var(--block-size));
   left: calc(-0.16 * var(--block-size));
-  background-color: #232838;
+  background-color: #3e3c3c; // robbie: block cube (top)
   transform:skew(40deg);
   transform-origin:top;
 }
@@ -100,7 +100,7 @@
   position: absolute;
   top: calc(-0.096 * var(--block-size));
   left: calc(-0.16 * var(--block-size));
-  background-color: #191c27;
+  background-color: #2b2b2b; // robbie: block cube (left)
 
   transform: skewY(50deg);
   transform-origin: top;

@@ -17,7 +17,7 @@
 }
 
 code {
-  background-color: #1d1f31;
+  background-color: #1a1a1a;
   font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
 }
 
@@ -196,8 +196,8 @@ h3 {
 
 .endpoint-container .section-header {
   display: block;
-  background-color: #2d3348;
-  color: #1bd8f4;
+  background-color: #1a1a1a; // robbie: api header bg
+  color: #4c92ff; // robbie: api header text
   padding: 1rem 1.3rem 1rem 1.3rem;
   font-weight: bold;
   border-radius: 0.25rem;
@@ -211,7 +211,7 @@ h3 {
 
 .endpoint-container .section-header span {
   color: #fff;
-  background-color: #653b9c;
+  background-color: #4c92ff; // robbie: api header button
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 400;
@@ -269,7 +269,7 @@ h3 {
 }
 
 #disclaimer {
-  background-color: #1d1f31;
+  background-color: #1a1a1a;
   padding: 24px;
   margin: 24px 0;
 }

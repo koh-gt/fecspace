@@ -1,4 +1,4 @@
-export const mempoolFeeColors = [
+export const mempoolFeeColors = [ // robbie: mempool block colours
   '557d00',
   '5d7d01',
   '637d02',
