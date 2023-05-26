@@ -81,7 +81,7 @@
       right: -5px;
       top: 0;
       transform: translateY(-50%);
-      background: #105fb0;
+      background: #2368d9;
       border-radius: 5px;
     }
     &.first-node {
@@ -133,7 +133,7 @@
 
       &.selected {
         .shape-border {
-          background: #9339f4;
+          background: #2396d9;
         }
       }
 
@@ -157,7 +157,7 @@
           width: calc(1em + 16px);
 
           .shape {
-            border: solid 4px #9339f4;
+            border: solid 4px #2396d9;
           }
 
           &:hover {
@@ -181,11 +181,11 @@
         width: 20px;
         height: 108px;
         bottom: 50%;
-        border-right: solid 10px #105fb0;
+        border-right: solid 10px #2368d9;
       }
 
       .corner {
-        border-bottom: solid 10px #105fb0;
+        border-bottom: solid 10px #2368d9;
         border-bottom-right-radius: 10px;
       }
     }

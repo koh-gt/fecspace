@@ -1,14 +1,14 @@
 /* Bootstrap */
 
-$body-bg: #1d1f31;
+$body-bg: #0d0d0d;
 $body-color: #fff;
 $gray-800: #0d0d0d; // robbie: nav bar background
 $gray-700: #fff;
 
 $nav-tabs-link-active-bg: #11131f;
 
-$primary: #105fb0;
-$secondary: #2d3348;
+$primary: #2368d9;
+$secondary: #4d4d4d;
 $success: #1a9436;
 $info: #4c92ff;
 
@@ -17,12 +17,12 @@ $h5-font-size: 1.15rem !default;
 $pagination-bg: $body-bg;
 $pagination-border-color: $gray-800;
 $pagination-disabled-bg:           #FFF;
-$pagination-disabled-border-color: #1d1f31;
+$pagination-disabled-border-color: #0d0d0d;
 $pagination-active-color:          #fff;
 $pagination-active-bg:             #4c92ff; // robbie: active pagination button
 $pagination-hover-bg:              #12131e;
-$pagination-hover-border-color:     #1d1f31;
-$pagination-disabled-bg:          #1d1f31;
+$pagination-hover-border-color:     #0d0d0d;
+$pagination-disabled-bg:          #0d0d0d;
 
 $custom-select-indicator-color: #FFF;
 
@@ -36,7 +36,7 @@ $link-decoration:           none !default;
 $link-hover-color:          #2368d9 !default; // robbie: link text hover color
 $link-hover-decoration:     underline !default;
 
-$dropdown-bg: #1d1f31;
+$dropdown-bg: #0d0d0d;
 $dropdown-link-color: #fff;
 
 $dropdown-link-hover-color: #fff;
@@ -524,7 +524,7 @@ html:lang(ru) .card-title {
 
 .fees-wrapper-tooltip-chart-advanced,
 .tx-wrapper-tooltip-chart-advanced {
-  background: rgba(#1d1f31, 0.98);
+  background: rgba(#0d0d0d, 0.98);
   width: 275px;
 
   thead {
@@ -680,15 +680,15 @@ h1, h2, h3 {
 }
 
 .progress-mempool { // robbie: latest blocks progress bar
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #2368d9 0%, #2396d9 100%);
+  background: repeating-linear-gradient(to right, #4d4d4d, #4d4d4d 0%, #2368d9 0%, #2396d9 100%);
 }
 
 .progress-mempool.testnet {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #1d486f 0%, #183550 100%);
+  background: repeating-linear-gradient(to right, #4d4d4d, #4d4d4d 0%, #1d486f 0%, #183550 100%);
 }
 
 .progress-dark {
-  background-color: #181b2d;
+  background-color: #1a1a1a;
 }
 
 .progress-darklight {
@@ -700,12 +700,12 @@ h1, h2, h3 {
 }
 
 .progress.progress-health {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #105fb0 0%, #1a9436 100%);
+  background: repeating-linear-gradient(to right, #4d4d4d, #4d4d4d 0%, #2368d9 0%, #1a9436 100%);
   justify-content: flex-end;
 }
 
 .progress-bar.progress-bar-health {
-  background: #2d3348;
+  background: #4d4d4d;
 }
 
 .mt-2-5, .my-2-5 {
@@ -714,7 +714,7 @@ h1, h2, h3 {
 
 .alert-mempool {
   color: #ffffff;
-  background-color: #653b9c;
+  background-color: #4c92ff;
   border-color: #3a1c61;
   width: 100%;
   display: inline-flex;
@@ -1070,7 +1070,7 @@ th {
     }
 
     .collapsed {
-      background-color: #2d3348;
+      background-color: #4d4d4d;
       color: #1bd8f4;
     }
   }

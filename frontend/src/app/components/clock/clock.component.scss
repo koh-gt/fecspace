@@ -24,7 +24,7 @@
     height: 15.625%;
     z-index: 2;
     // overflow: hidden;
-    // background: #1d1f31;
+    // background: #0d0d0d;
     // box-shadow: 0 0 15px #000;
   }
 
@@ -154,23 +154,23 @@
     }
 
     .side.top {
-      transform: rotateX(90deg); 
+      transform: rotateX(90deg);
       margin-top: var(--neg-half-side);
     }
 
     .side.bottom {
-      background: #105fb0;
-      transform: rotateX(-90deg); 
+      background: #2368d9;
+      transform: rotateX(-90deg);
       margin-top: var(--half-side);
     }
 
     .side.right {
-      transform: rotateY(90deg); 
+      transform: rotateY(90deg);
       margin-left: var(--half-side);
     }
 
     .side.left {
-      transform: rotateY(-90deg); 
+      transform: rotateY(-90deg);
       margin-left: var(--neg-half-side);
     }
 

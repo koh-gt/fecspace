@@ -82,12 +82,12 @@ export class TxBowtieGraphComponent implements OnInit, OnChanges {
   refreshOutspends$: ReplaySubject<string> = new ReplaySubject();
 
   gradientColors = {
-    '': ['#9339f4', '#105fb0', '#9339f400'],
+    '': ['#2396d9', '#2368d9', '#2396d900'],
     // testnet: ['#1d486f', '#183550'],
     testnet: ['#4edf77', '#10a0af', '#4edf7700'],
   };
 
-  gradient: string[] = ['#105fb0', '#105fb0'];
+  gradient: string[] = ['#2368d9', '#2368d9'];
 
   constructor(
     private router: Router,

@@ -158,7 +158,7 @@ ul.no-bull.block-audit code{
   top: 20px;
   overflow-y: auto;
   height: calc(100vh - 50px);
-  scrollbar-color: #2d3348 #11131f;
+  scrollbar-color: #4d4d4d #11131f;
   scrollbar-width: thin;
 }
 ::-webkit-scrollbar {
@@ -168,7 +168,7 @@ ul.no-bull.block-audit code{
   background: #11131f;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #2d3348;
+  background-color: #4d4d4d;
   border-radius: 5px;
   border: none;
 }
@@ -243,7 +243,7 @@ h3 {
 }
 
 #doc-nav-mobile > div {
-  background-color: #2d3348;
+  background-color: #4d4d4d;
   z-index: 100;
   border-radius: 0 0 0.5rem 0.5rem;
   height: 55vh;
@@ -252,9 +252,9 @@ h3 {
 
 #doc-nav-mobile button {
   width: 100%;
-  background-color: #105fb0;
+  background-color: #2368d9;
   color: #fff;
-  border-color: #105fb0;
+  border-color: #2368d9;
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
