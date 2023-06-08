@@ -2,7 +2,7 @@
 
 $body-bg: #0d0d0d;
 $body-color: #fff;
-$gray-800: #0d0d0d; // robbie: nav bar background
+$gray-800: #0d0d0d; // LTCbrand: nav bar background
 $gray-700: #fff;
 
 $nav-tabs-link-active-bg: #11131f;
@@ -19,7 +19,7 @@ $pagination-border-color: $gray-800;
 $pagination-disabled-bg:           #FFF;
 $pagination-disabled-border-color: #0d0d0d;
 $pagination-active-color:          #fff;
-$pagination-active-bg:             #4c92ff; // robbie: active pagination button
+$pagination-active-bg:             #4c92ff; // LTCbrand: active pagination button
 $pagination-hover-bg:              #12131e;
 $pagination-hover-border-color:     #0d0d0d;
 $pagination-disabled-bg:          #0d0d0d;
@@ -31,9 +31,9 @@ $custom-select-indicator-color: #FFF;
   border: 1px solid #20263e !important;
 }
 
-$link-color:                #4c92ff; // robbie: link text color
+$link-color:                #4c92ff; // LTCbrand: link text color
 $link-decoration:           none !default;
-$link-hover-color:          #2368d9 !default; // robbie: link text hover color
+$link-hover-color:          #2368d9 !default; // LTCbrand: link text hover color
 $link-hover-decoration:     underline !default;
 
 $dropdown-bg: #0d0d0d;
@@ -53,7 +53,7 @@ html, body {
 }
 
 body {
-  background-color: #000000; // robbie: main background colour
+  background-color: #000000; // LTCbrand: main background colour
   min-width: 375px;
   padding-bottom: 60px;
 }
@@ -82,7 +82,7 @@ main {
   position: relative;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #0d0d0d; // robbie: block info boxes
+  background-color: #0d0d0d; // LTCbrand: block info boxes
   background-clip: border-box;
   border: 1px solid rgba(0,0,0,.125);
   box-shadow: 0.125rem 0.125rem 0.25rem rgba(0,0,0,0.075);
@@ -118,7 +118,7 @@ main {
 
 .form-control {
   color: #fff;
-  background-color: #1a1a1a; // robbie: search bar
+  background-color: #1a1a1a; // LTCbrand: search bar
   border: 1px solid rgba(17, 19, 31, 0.2);
 }
 
@@ -131,12 +131,11 @@ main {
   background-color: #1a1a1a;
 }
 
-.btn-purple { // robbie: search button
+.btn-purple { // LTCbrand: search button
   background-color: #4c92ff;
   border-color: #4c92ff;
 }
 
-// loshy
 .btn-purple:not(:disabled):not(.disabled):active, .btn-purple:not(:disabled):not(.disabled).active, .show > .btn-purple.dropdown-toggle {
   color: #fff;
   background-color: #4d2d77;
@@ -169,7 +168,7 @@ main {
   padding-left: .65rem;
 }
 
-.skeleton-loader {
+.skeleton-loader { // LTCbrand: skeleton loader
   box-sizing: border-box;
   /**
   * `overflow` and `position` are required steps to make sure
@@ -180,7 +179,7 @@ main {
   position: relative;
 
   animation: progress 2s ease-in-out infinite;
-  background: #2e324e no-repeat;
+  background: #343434 no-repeat;
   background-image: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0),
@@ -312,7 +311,7 @@ main {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #1a1a1a; // robbie: table lines
+  background-color: #1a1a1a; // LTCbrand: table lines
 }
 
 .bordertop {
@@ -679,7 +678,7 @@ h1, h2, h3 {
   text-align: center;
 }
 
-.progress-mempool { // robbie: latest blocks progress bar
+.progress-mempool { // LTCbrand: latest blocks progress bar
   background: repeating-linear-gradient(to right, #4d4d4d, #4d4d4d 0%, #2368d9 0%, #2396d9 100%);
 }
 
@@ -1089,7 +1088,7 @@ th {
   display: inline-block;
   width: 100%;
   justify-content: space-between;
-  background: #0d0d0d; // loshy
+  background: #0d0d0d;
   margin: 0;
   @media (min-width: 550px) {
     width: auto;

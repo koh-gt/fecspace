@@ -58,9 +58,9 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   dividerBlockOffset: number = 205;
   blockPadding: number = 30;
 
-  gradientColors = { // robbie: current blocks gradient colors
+  gradientColors = { // LTCbrand: current blocks gradient colors
     '': ['#2396d9', '#2368d9'],
-    testnet: ['#1d486f', '#183550'],
+    testnet: ['#2396d9', '#2368d9'],
   };
 
   constructor(
@@ -296,7 +296,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
       addLeft = animateEnterFrom || 0;
     }
 
-    // robbie: block cube background
+    // LTCbrand: block cube background
     return {
       left: addLeft + this.blockOffset * index + 'px',
       background: `repeating-linear-gradient(
