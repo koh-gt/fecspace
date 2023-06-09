@@ -23,14 +23,14 @@
     stroke-linejoin: round;
 
     &.minute {
-      fill:#80C2E1;
-      stroke:#80C2E1;
+      fill:aliceblue;
+      stroke:aliceblue;
       stroke-width: 2px;
     }
 
     &.hour {
-      fill: #2368d9;
-      stroke: #2368d9;
+      fill: aquamarine;
+      stroke: aquamarine;
       stroke-width: 6px;
     }
   }

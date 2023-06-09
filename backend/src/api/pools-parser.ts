@@ -36,7 +36,7 @@ class PoolsParser {
 
   /**
    * Populate our db with updated mining pool definition
-   * @param pools 
+   * @param pools
    */
   public async migratePoolsJson(): Promise<void> {
     // We also need to wipe the backend cache to make sure we don't serve blocks with
@@ -62,7 +62,7 @@ class PoolsParser {
         if (poolDB.name !== pool.name) {
           // Pool has been renamed
           const newSlug = pool.name.replace(/[^a-z0-9]/gi, '').toLowerCase();
-          logger.warn(`Renaming ${poolDB.name} mining pool to ${pool.name}. Slug has been updated. Maybe you want to make a redirection from 'https://mempool.space/mining/pool/${poolDB.slug}' to 'https://mempool.space/mining/pool/${newSlug}`);
+          logger.warn(`Renaming ${poolDB.name} mining pool to ${pool.name}. Slug has been updated. Maybe you want to make a redirection from 'https://litepool.space/mining/pool/${poolDB.slug}' to 'https://litepool.space/mining/pool/${newSlug}`);
           await PoolsRepository.$renameMiningPool(poolDB.id, newSlug, pool.name);
         }
         if (poolDB.link !== pool.link) {
@@ -114,8 +114,8 @@ class PoolsParser {
 
   /**
    * Delete indexed blocks for an updated mining pool
-   * 
-   * @param pool 
+   *
+   * @param pool
    */
   private async $deleteBlocksForPool(pool: PoolTag): Promise<void> {
     // Get oldest blocks mined by the pool and assume pools-v2.json updates only concern most recent years
