@@ -54,7 +54,7 @@ const defaultEnv: Env = {
   'MEMPOOL_BLOCKS_AMOUNT': 8,
   'GIT_COMMIT_HASH': '',
   'PACKAGE_JSON_VERSION': '',
-  'MEMPOOL_WEBSITE_URL': 'https://mempool.space',
+  'MEMPOOL_WEBSITE_URL': 'https://litepool.space',
   'MINING_DASHBOARD': true,
   'LIGHTNING': false,
   'AUDIT': false,
@@ -176,7 +176,7 @@ export class StateService {
     this.hideAudit.subscribe((hide) => {
       this.storageService.setValue('audit-preference', hide ? 'hide' : 'show');
     });
-    
+
     const fiatPreference = this.storageService.getValue('fiat-preference');
     this.fiatCurrency$ = new BehaviorSubject<string>(fiatPreference || 'USD');
   }
