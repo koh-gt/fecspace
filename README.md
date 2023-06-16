@@ -1,4 +1,4 @@
-# litepool.space [![litepool]
+# LITE.POOL
 
 <br>
 
@@ -28,8 +28,8 @@ Mempool can be conveniently installed on the following full-node distros:
 
 ## Advanced Installation Methods
 
-Mempool can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
+Litepool can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
 
-- See the [`docker/`](./docker/) directory for instructions on deploying Mempool with Docker.
+- See the [`docker/`](./docker/) directory for instructions on deploying Litepool with Docker.
 - See the [`backend/`](./backend/) and [`frontend/`](./frontend/) directories for manual install instructions oriented for developers.
-- See the [`production/`](./production/) directory for guidance on setting up a more serious Mempool instance designed for high performance at scale.
+- See the [`production/`](./production/) directory for guidance on setting up a more serious Litepool instance designed for high performance at scale.
