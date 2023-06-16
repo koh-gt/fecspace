@@ -171,7 +171,8 @@
               <code>stats</code>.<br><br>Push transactions related to address:
               <code>{{ '{' }} 'track-address': '3PbJ...bF9B' {{ '}' }}</code> to receive all new transactions containing
               that address as input or output. Returns an array of transactions. <code>address-transactions</code> for
-              new mempool transactions, and <code>block-transactions</code> for new block confirmed transactions.</div>
+              new mempool transactions, and <code>block-transactions</code> for new block confirmed transactions.
+            </div>
           </div>
           <app-code-template [method]="'websocket'" [hostname]="hostname" [code]="wsDocs" [network]="network.val"
             [showCodeExample]="wsDocs.showJsExamples"></app-code-template>
@@ -207,7 +208,8 @@
 <ng-template type="what-is-a-mempool-explorer">
   <p>A mempool explorer is a tool that enables you to view real-time and historical information about a node's mempool,
     visualize its transactions, and search and view those transactions.</p>
-  <p>The mempool.space website invented the concept of visualizing a Litecoin node's mempool as <b>projected blocks</b>.
+  <p>The litepool.space website invented the concept of visualizing a Litecoin node's mempool as <b>projected
+      blocks</b>.
     These blocks are the inspiration for our half-filled block logo.</p>
   <p>Projected blocks are on the left of the dotted white line, and confirmed blocks are on the right.</p>
   <div class="blockchain-wrapper">
@@ -347,28 +349,31 @@
 </ng-template>
 
 <ng-template type="how-big-is-mempool-used-by-mempool-space">
-  <p>mempool.space uses multiple Bitcoin nodes to obtain data: some with the default 300MB mempool memory limit (call
+  <p>litepool.space uses multiple Litecoin nodes to obtain data: some with the default 300MB mempool memory limit (call
     these Small Nodes) and others with a much larger mempool memory limit (call these Big Nodes).</p>
-  <p>Many nodes on the Bitcoin network are configured to run with the default 300MB mempool memory setting. When all
+  <p>Many nodes on the Litecoin network are configured to run with the default 300MB mempool memory setting. When all
     300MB of memory are used up, such nodes will reject transactions below a certain threshold feerate. Running Small
-    Nodes allows mempool.space to tell you what this threshold feerate is—this is the "Purging" feerate that shows on
+    Nodes allows litepool.space to tell you what this threshold feerate is—this is the "Purging" feerate that shows on
     the front page when mempools are full, which you can use to be reasonably sure that your transaction will be widely
     propagated.</p>
   <p>Big Node mempools are so big that they don't need to reject (or purge) transactions. Such nodes allow for
-    mempool.space to provide you with information on any pending transaction it has received—no matter how congested the
+    litepool.space to provide you with information on any pending transaction it has received—no matter how congested
+    the
     mempool is, and no matter how low-feerate or low-priority the transaction is.</p>
 </ng-template>
 
 <ng-template type="what-is-memory-usage">
-  <p>Memory usage on the front page refers to the real-time amount of system memory used by a Bitcoin node's mempool.
+  <p>Memory usage on the front page refers to the real-time amount of system memory used by a Litecoin node's mempool.
     This memory usage number is always higher than the total size of all pending transactions in the mempool due to
-    indexes, pointers, and other overhead used by Bitcoin Core for storage and processing.</p>
-  <p>mempool.space shows the memory usage of a Bitcoin node that has a very high mempool memory limit. As a result, when
-    mempools fill up, you may notice memory usage on mempool.space go beyond 300MB. This is not a mistake—this memory
-    usage figure is high because it's for a Bitcoin node that isn't rejecting (or evicting) transactions. Consider it to
+    indexes, pointers, and other overhead used by Litecoin Core for storage and processing.</p>
+  <p>litepool.space shows the memory usage of a Litecoin node that has a very high mempool memory limit. As a result,
+    when
+    mempools fill up, you may notice memory usage on litepool.space go beyond 300MB. This is not a mistake—this memory
+    usage figure is high because it's for a Litecoin node that isn't rejecting (or evicting) transactions. Consider it
+    to
     be another data point to give you an idea of how congested the mempool is relative to the default memory limit of
     300MB.</p>
-  <p>A Bitcoin node running the default 300MB mempool memory limit, like most Raspberry Pi nodes, will never go past
+  <p>A Litecoin node running the default 300MB mempool memory limit, like most Raspberry Pi nodes, will never go past
     300MB of memory usage.</p>
 </ng-template>
 
@@ -385,7 +390,8 @@
     block preceding it. Without a central authority, it's impossible to know what the exact correct time is. Instead,
     the Litecoin protocol requires that a block's timestamp meet certain requirements. One of those requirements is that
     a block's timestamp cannot be older than the median timestamp of the 12 blocks that came before it. See more details
-    <a href="https://en.bitcoin.it/wiki/Block_timestamp" target="_blank">here</a>.</p>
+    <a href="https://en.bitcoin.it/wiki/Block_timestamp" target="_blank">here</a>.
+  </p>
   <p>As a result, timestamps are only accurate to within an hour or so, which sometimes results in blocks with
     timestamps that appear out of order.</p>
 </ng-template>
@@ -407,7 +413,8 @@
   <p>A block audit visually compares Mempool's expected block to the actual block for a particular block height.</p>
   <p>How is the expected block determined? Mempool monitors its view of the mempool and runs a re-implementation of
     Litecoin Core's transaction selection algorithm to determine the transactions it expects to see in upcoming blocks
-    (<a href="https://github.com/mempool/mempool/blob/master/backend/src/api/mempool-blocks.ts" target="_blank">source
+    (<a href="https://github.com/litecoin-foundation/litepool/blob/master/backend/src/api/mempool-blocks.ts"
+      target="_blank">source
       code here</a>). Since there is a continual flow of new transactions, this algorithm runs every 2 seconds, and as a
     result, you will see the transactions <a href="/mempool-block/0">projected to be in upcoming blocks</a> change in
     near real-time.</p>
@@ -459,7 +466,7 @@
   <p>See how results of the block audit are used to devise the block health score <a
       [routerLink]="['/docs/faq' | relativeUrl]" fragment="what-is-block-health">below</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official mempool.space instances.</p>
+    official litepool.space instances.</p>
 </ng-template>
 
 <ng-template type="what-is-block-health">
@@ -472,7 +479,8 @@
       class='math'>s<sub>expected</sub></span> and <span class='math'>s<sub>actual</sub></span>.</p>
   <p>Furthermore, let <span class='math'>r</span> be the number of transactions Mempool deduces were <a
       [routerLink]="['/docs/faq' | relativeUrl]" fragment="how-do-block-audits-work">intentionally excluded</a> from
-    <span class='math'>s<sub>actual</sub></span>.</p>
+    <span class='math'>s<sub>actual</sub></span>.
+  </p>
   <p>Block health is calculated as <span class='math'>n / ( n + r</span> ).</p>
   <p>The number of transactions appearing in both <span class='math'>s<sub>expected</sub></span> and <span
       class='math'>s<sub>actual</sub></span> is used (instead of a block's full transaction count) in order to minimize
@@ -491,11 +499,11 @@
   <p>See more context in our FAQ on <a [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="how-do-block-audits-work">block audits</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official mempool.space instances.</p>
+    official litepool.space instances.</p>
 </ng-template>
 
 <ng-template type="who-runs-this-website">
-  The official mempool.space website is operated by The Mempool Open Source Project. See more information on our <a
+  The official litepool.space website is operated by Litecoin Foundation. See more information on our <a
     [routerLink]="['/about']">About page</a>. There are also many unofficial instances of this website operated by
   individual members of the Litecoin community.
 </ng-template>
@@ -512,7 +520,8 @@
 
 <ng-template type="install-mempool-with-docker">
   Yes, we publish Docker images (or you can build your own). Check out <a
-    href="https://github.com/mempool/mempool/tree/master/docker" target="_blank">the documentation</a> for details.
+    href="https://github.com/litecoin-foundation/litepool/tree/master/docker" target="_blank">the documentation</a> for
+  details.
 </ng-template>
 
 <ng-template type="address-lookup-issues">
@@ -520,15 +529,16 @@
   <p>Mempool uses an Electrum server to do address lookups. There are several implementations of the Electrum server
     protocol, and Mempool can use any of them, but the implementation you use affects performance:</p>
   <ol>
-    <li><a href="https://github.com/romanz/electrs" target="_blank">romanz/electrs</a>. This is a common choice for its
+    <li><a href="https://github.com/rust-litecoin/electrs-ltc" target="_blank">electrs-ltc</a>. This is a common choice
+      for its
       low resource requirements, and most full-node distros use it. But while this implementation works great for basic
       queries, it will struggle with heavier ones (e.g. looking up addresses with many transactions)—especially when
       running on low-power hardware like a Raspberry Pi.</li>
     <li><a href="https://github.com/cculianu/Fulcrum" target="_blank">Fulcrum</a>. Fulcrum requires more resources than
       romanz/electrs but it can still run on a Raspberry Pi, and it handles heavy queries much more efficiently. If
       you're having issues with romanz/electrs, Fulcrum is worth a try.</li>
-    <li><a href="https://github.com/Blockstream/electrs" target="_blank">blockstream/electrs</a>. If you have stronger
-      hardware, consider running Blockstream's electrs implementation. It's the backend mempool.space uses, and is also
-      what powers blockstream.info.</li>
+    <li><a href="https://github.com/rust-litecoin/electrs-ltc/tree/esplora" target="_blank">electrs-ltc-esplora</a>. If
+      you have stronger
+      hardware, consider running Blockstream's electrs implementation. It's the backend litepool.space uses.</li>
   </ol>
 </ng-template>

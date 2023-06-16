@@ -24,8 +24,8 @@ export class OpenGraphService {
     private activatedRoute: ActivatedRoute,
   ) {
     // save og:image tag from original template
-    const initialOgImageTag = metaService.getTag("property='og:image'");
-    this.defaultImageUrl = initialOgImageTag?.content || 'https://mempool.space/resources/mempool-space-preview.png';
+    const initialOgImageTag = metaService.getTag('property=\'og:image\'');
+    this.defaultImageUrl = initialOgImageTag?.content || 'https://litepool.space/resources/mempool-space-preview.png';
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
@@ -45,7 +45,7 @@ export class OpenGraphService {
 
     // expose routing method to global scope, so we can access it from the unfurler
     window['ogService'] = {
-      loadPage: (path) => { return this.loadPage(path) }
+      loadPage: (path) => { return this.loadPage(path); }
     };
   }
 
@@ -84,7 +84,7 @@ export class OpenGraphService {
     if (this.previewLoadingEvents[event]) {
       this.previewLoadingEvents[event]--;
       if (this.previewLoadingEvents[event] === 0 && this.previewLoadingCount > 0) {
-        delete this.previewLoadingEvents[event]
+        delete this.previewLoadingEvents[event];
         this.previewLoadingCount--;
       }
       if (this.previewLoadingCount === 0) {
@@ -102,10 +102,10 @@ export class OpenGraphService {
   resetLoading() {
     this.previewLoadingEvents = {};
     this.previewLoadingCount = 0;
-    this.metaService.removeTag("property='og:preview:loading'");
-    this.metaService.removeTag("property='og:preview:ready'");
-    this.metaService.removeTag("property='og:preview:fail'");
-    this.metaService.removeTag("property='og:meta:ready'");
+    this.metaService.removeTag('property=\'og:preview:loading\'');
+    this.metaService.removeTag('property=\'og:preview:ready\'');
+    this.metaService.removeTag('property=\'og:preview:fail\'');
+    this.metaService.removeTag('property=\'og:meta:ready\'');
   }
 
   loadPage(path) {
@@ -113,7 +113,7 @@ export class OpenGraphService {
       this.resetLoading();
       this.ngZone.run(() => {
         this.router.navigateByUrl(path);
-      })
+      });
     }
   }
 }

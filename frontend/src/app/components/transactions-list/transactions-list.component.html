@@ -33,7 +33,7 @@
                   </ng-template>
                   <ng-template #hasPrevout>
                     <ng-template [ngIf]="vin.is_pegin" [ngIfElse]="defaultPrevout">
-                      <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegInLink" [attr.href]="'https://mempool.space/tx/' + vin.txid" class="red">
+                      <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegInLink" [attr.href]="'https://litepool.space/tx/' + vin.txid" class="red">
                         <fa-icon [icon]="['fas', 'arrow-alt-circle-right']" [fixedWidth]="true"></fa-icon>
                       </a>
                       <ng-template #localPegInLink>
@@ -195,7 +195,7 @@
                     <ng-template [ngIf]="vout.pegout" [ngIfElse]="defaultscriptpubkey_type">
                       <ng-container i18n="transactions-list.peg-out-to">Peg-out to <ng-container *ngTemplateOutlet="pegOutLink"></ng-container></ng-container>
                       <ng-template #pegOutLink>
-                        <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegoutLink" [attr.href]="'https://mempool.space/address/' + vout.pegout.scriptpubkey_address" title="{{ vout.pegout.scriptpubkey_address }}">
+                        <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegoutLink" [attr.href]="'https://litepool.space/address/' + vout.pegout.scriptpubkey_address" title="{{ vout.pegout.scriptpubkey_address }}">
                           <app-truncate [text]="vout.pegout.scriptpubkey_address"></app-truncate>
                         </a>
                         <ng-template #localPegoutLink>

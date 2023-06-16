@@ -38,9 +38,9 @@ export class GroupComponent implements OnInit {
       this.selectedSocketIndex = val;
     });
 
-    this.seoService.setTitle(`Mempool.space Lightning Nodes`);
+    this.seoService.setTitle(`litepool.space Lightning Nodes`);
 
-    this.nodes$ = this.lightningApiService.getNodGroupNodes$('mempool.space')
+    this.nodes$ = this.lightningApiService.getNodGroupNodes$('litepool.space')
       .pipe(
         map((nodes) => {
           for (const node of nodes) {

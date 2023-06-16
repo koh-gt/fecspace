@@ -179,7 +179,7 @@ yarn add @mempool/mempool.js`;
   }
 
   wrapPythonTemplate(code: any) {
-    return ( ( this.network === 'testnet' ) ? ( code.codeTemplate.python.replace( 'wss://mempool.space/api/v1/ws', 'wss://mempool.space/' + this.network + '/api/v1/ws' ) ) : code.codeTemplate.python );
+    return ( ( this.network === 'testnet' ) ? ( code.codeTemplate.python.replace( 'wss://litepool.space/api/v1/ws', 'wss://litepool.space/' + this.network + '/api/v1/ws' ) ) : code.codeTemplate.python );
   }
 
   replaceJSPlaceholder(text: string, code: any) {

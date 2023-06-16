@@ -30,7 +30,7 @@ export class GroupPreviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.seoService.setTitle(`Mempool.Space Lightning Nodes`);
+    this.seoService.setTitle(`litepool.space Lightning Nodes`);
 
     this.nodes$ = this.activatedRoute.paramMap
       .pipe(
@@ -40,10 +40,10 @@ export class GroupPreviewComponent implements OnInit {
           this.openGraphService.waitFor('ln-group-data-' + this.slug);
 
           if (this.slug === 'the-mempool-open-source-project') {
-            this.groupId = 'mempool.space';
+            this.groupId = 'litepool.space';
             this.group = {
-              name: 'The Mempool Open Source Project',
-              description: 'These are the Lightning nodes operated by The Mempool Open Source Project that provide data for the mempool.space website. Connect to us!',
+              name: 'Litecoin Foundation',
+              description: 'These are the Lightning nodes operated by Litecoin Foundation that provide data for the litepool.space website. Connect to us!',
             };
           } else {
             this.group = {

@@ -1439,8 +1439,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4b137ec8bf73a47063740b75c0c40d5fd3c48015" datatype="html">
-        <source>The Mempool Open Source Project</source>
-        <target>Mempool avoimen lähdekoodin projekti</target>
+        <source>Litecoin Foundation</source>
+        <target>Litecoin Foundation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">12,13</context>
