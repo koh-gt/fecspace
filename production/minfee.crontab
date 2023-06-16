@@ -1,1 +1,1 @@
-@reboot /usr/local/bin/bitcoind >/dev/null 2>&1
+@reboot /usr/local/bin/litecoind >/dev/null 2>&1

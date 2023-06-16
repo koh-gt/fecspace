@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 PROTO=https
-HOSTNAME=mempool.ninja
+HOSTNAME=litepool.space
 URL_BASE=${PROTO}://${HOSTNAME}
 
 curltest()

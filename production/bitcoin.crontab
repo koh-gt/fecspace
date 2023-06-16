@@ -1,5 +1,3 @@
 @reboot screen -dmS mainnet /bitcoin/electrs/electrs-start-mainnet
 @reboot /usr/local/bin/bitcoind -testnet >/dev/null 2>&1
 @reboot screen -dmS testnet /bitcoin/electrs/electrs-start-testnet
-@reboot /usr/local/bin/bitcoind -signet >/dev/null 2>&1
-@reboot screen -dmS signet /bitcoin/electrs/electrs-start-signet

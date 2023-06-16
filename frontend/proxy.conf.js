@@ -21,21 +21,21 @@ try {
 PROXY_CONFIG = [
   {
     context: ["*", "/api/**", "!/api/v1/ws", "/testnet/api/**"],
-    target: "https://explorer.litecoin.net",
+    target: "https://litepool.space",
     ws: true,
     secure: false,
     changeOrigin: true,
   },
   {
     context: ["/api/v1/ws"],
-    target: "https://explorer.litecoin.net",
+    target: "https://litepool.space",
     ws: true,
     secure: false,
     changeOrigin: true,
   },
   {
     context: ["/resources/mining-pools/**"],
-    target: "https://explorer.litecoin.net",
+    target: "https://litepool.space",
     secure: false,
     changeOrigin: true,
   },
@@ -45,7 +45,7 @@ PROXY_CONFIG = [
       "/resources/assets.minimal.json",
       "/resources/worldmap.json",
     ],
-    target: "https://explorer.litecoin.net",
+    target: "https://litepool.space",
     secure: false,
     changeOrigin: true,
   },

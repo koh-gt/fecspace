@@ -1,30 +1,27 @@
 # Deploying an Enterprise Production Instance
 
-These instructions are for setting up a serious production Mempool website for Bitcoin (mainnet, testnet, signet), Liquid (mainnet, testnet), and Bisq.
+These instructions are for setting up a serious production Litepool website for Litecoin (mainnet, testnet).
 
 Again, this setup is no joke—home users should use [one of the other installation methods](../#installation-methods).
 
 ### Server Hardware
 
-Mempool v2 is powered by [blockstream/electrs](https://github.com/Blockstream/electrs), which is a beast. 
+Mempool v2 is powered by [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora), which is a beast.
 
 I recommend a beefy server:
 
-* 20-core CPU (more is better)
-* 64GB RAM (more is better)
-* 4TB SSD (NVMe is better)
+- 20-core CPU (more is better)
+- 64GB RAM (more is better)
+- 4TB SSD (NVMe is better)
 
 ### HDD vs SSD vs NVMe
 
 If you don't have a fast SSD or NVMe-backed disk, that's fine—go online and buy some fast new NVMe drives. When they arrive, install them, throw away your old HDDs, and then proceed with the rest of this guide.
 
-## FreeBSD 13
-
-The mempool.space site is powered by FreeBSD with ZFS root and ARC cache for maximum performance. Linux probably works fine too, but why settle?
-
 ### Filesystem
 
 For maximum performance, I use 2x 2TB NVMe SSDs in a RAID 0 using ZFS with lots of RAM for the ARC L2 cache.
+
 ```
 % zpool list -v
 NAME        SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
@@ -34,6 +31,7 @@ nvm        3.62T  1.25T  2.38T        -         -     2%    34%  1.00x    ONLINE
 ```
 
 For maximum flexibility of configuration, I recommend separate partitions for each data folder:
+
 ```
 Filesystem                             Size    Used   Avail Capacity  Mounted on
 nvm/bitcoin                          766G    648M    765G     0%    /bitcoin
@@ -59,6 +57,7 @@ tmpfs                                3.0G    1.9G    1.1G    63%    /bisq/statsn
 ### Build Dependencies
 
 You'll probably need these:
+
 ```
 pkg install -y zsh sudo git screen curl wget neovim rsync nginx openssl openssh-portable py38-pip py38-certbot-nginx boost-libs autoconf automake gmake gcc libevent libtool pkgconf mariadb105-server mariadb105-client
 ```
@@ -66,6 +65,7 @@ pkg install -y zsh sudo git screen curl wget neovim rsync nginx openssl openssh-
 ### Node.js + npm
 
 Build Node.js v16.16.0 and npm v8 from source using `nvm`:
+
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | zsh
 source $HOME/.zshrc
@@ -76,6 +76,7 @@ nvm alias default node
 ### Rust
 
 Build Rust from latest source:
+
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
@@ -83,12 +84,14 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ### Tor
 
 Install Tor add Bitcoin to the `_tor` group:
+
 ```
 pkg install -y tor
 pw user mod bitcoin -G _tor
 ```
 
 Then configure `/usr/local/etc/tor/torrc` as follows:
+
 ```
 RunAsDaemon 1
 SOCKSPort 9050
@@ -116,14 +119,12 @@ HiddenServiceVersion 3
 
 ### Bitcoin
 
-Build [Bitcoin Core](https://github.com/bitcoin/bitcoin) from source. Alternatively, install the OS packages:
-```
-pkg install -y bitcoin-daemon bitcoin-utils
-```
+Build [Litecoin Core](https://github.com/litecoin-project/litecoin) from source.
 
-Configure your `bitcoin.conf` like this:
+Configure your `litecoin.conf` like this:
+
 ```
-datadir=/bitcoin
+datadir=/litecoin
 server=1
 txindex=1
 listen=1
@@ -139,42 +140,37 @@ rpcuser=foo
 rpcpassword=bar
 
 [main]
-bind=127.0.0.1:8333
-rpcbind=127.0.0.1:8332
+bind=127.0.0.1:9333
+rpcbind=127.0.0.1:9332
 whitelist=bloomfilter@127.0.0.1
 
 [test]
 daemon=1
-bind=127.0.0.1:18333
-rpcbind=127.0.0.1:18332
-
-[signet]
-daemon=1
-bind=127.0.0.1:38333
-rpcbind=127.0.0.1:38332
+bind=127.0.0.1:19333
+rpcbind=127.0.0.1:19332
 ```
 
 ### Electrs
 
-Install [Electrs](https://github.com/Blockstream/electrs) from source:
+Install [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora) from source:
+
 ```
-git clone https://github.com/Blockstream/electrs
-cd electrs
-git checkout new-index
+git clone https://github.com/rust-litecoin/electrs-ltc/
+cd electrs-ltc
+git checkout esplora
 ```
 
 You'll need one instance per network. Build and run them one at a time:
+
 ```
 ./electrs-start-mainnet
 ./electrs-start-testnet
-./electrs-start-signet
-./electrs-start-liquid
-./electrs-start-liquidtestnet
 ```
 
 ### MariaDB
 
 Import the historical mempool fee database snapshot:
+
 ```
 mysql -u root
 create database mempool;
@@ -186,12 +182,14 @@ grant all on mempool_testnet.* to 'mempool_testnet'@'localhost' identified by 'm
 ### Mempool
 
 After all 3 electrs instances are fully indexed, install your 3 Mempool nodes:
+
 ```
 ./mempool-install-all
 ./mempool-upgrade-all
 ```
 
 Finally, start your 3 Mempool backends:
+
 ```
 ./mempool-start-all
 ```
@@ -199,11 +197,13 @@ Finally, start your 3 Mempool backends:
 ### Nginx
 
 Get an SSL certificate using `certbot`:
+
 ```
 certbot --nginx -d mempool.ninja
 ```
 
 Make a symlink from `/usr/local/etc/nginx/mempool` to `/mempool/mempool`, copy the `nginx.conf`, and edit as necessary. You probably only need to edit the top-level `nginx.conf` file.
+
 ```
 cd /usr/local/etc/nginx
 ln -s /mempool/mempool
@@ -212,10 +212,11 @@ vi nginx.conf
 ```
 
 Restart `nginx`:
+
 ```
 service nginx restart
 ```
 
 ### Done
 
-If everything went well, your site should look like the one at https://mempool.space/.
+If everything went well, your site should look like the one at https://litepool.space/.

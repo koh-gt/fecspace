@@ -225,8 +225,8 @@ const defaults: IConfig = {
     'PASSWORD': ''
   },
   'EXTERNAL_DATA_SERVER': {
-    'MEMPOOL_API': 'https://mempool.space/api/v1',
-    'MEMPOOL_ONION': 'http://mempoolhqx4isw62xs7abwphsq7ldayuidyx2v2oethdhhj6mlo2r6ad.onion/api/v1',
+    'MEMPOOL_API': 'https://litepool.space/api/v1',
+    'MEMPOOL_ONION': 'http://TODO: litecoin.onion/api/v1',
   },
   'MAXMIND': {
     'ENABLED': false,
@@ -278,7 +278,7 @@ class Config implements IConfig {
       });
       return next;
     });
-  }
+  };
 }
 
 export default new Config();
