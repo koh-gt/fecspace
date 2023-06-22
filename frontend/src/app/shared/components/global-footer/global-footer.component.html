@@ -63,7 +63,7 @@
     </div>
     <div class="row social-links">
       <div class="col-sm-12">
-        <a href="https://github.com/litecoin-foundation/litepool" target="_blank"><svg fill="#fff" role="img"
+        <a href="https://github.com/litecoin-foundation/ltcspace" target="_blank"><svg fill="#fff" role="img"
             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <title>GitHub</title>
             <path
@@ -81,11 +81,11 @@
       <div class="col-sm-12">
         <p *ngIf="officialMempoolSpace">{{ (backendInfo$ | async)?.hostname }} (v{{ (backendInfo$ | async )?.version }})
           [<a target="_blank"
-            href="https://github.com/litecoin-foundation/litepool/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{
+            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{
             (backendInfo$ | async )?.gitCommit | slice:0:8 }}</a>]</p>
 
         <p *ngIf="!officialMempoolSpace">v{{ packetJsonVersion }} [<a target="_blank"
-            href="https://github.com/litecoin-foundation/litepool/commit/{{ frontendGitCommitHash }}">{{
+            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{
             frontendGitCommitHash
             }}</a>]</p>
 

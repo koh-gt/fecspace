@@ -17,7 +17,7 @@ If you want to quickly improve the UI, fix typos, or make other updates that don
 Get the latest Litepool code:
 
 ```
-git clone https://github.com/litecoin-foundation/litepool
+git clone https://github.com/litecoin-foundation/ltcspace
 cd litepool
 ```
 

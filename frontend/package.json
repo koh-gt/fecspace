@@ -6,10 +6,10 @@
   "homepage": "https://litecoinspace.org",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/litecoin-foundation/litepool"
+    "url": "git+https://github.com/litecoin-foundation/ltcspace"
   },
   "bugs": {
-    "url": "https://github.com/litecoin-foundation/litepool/issues"
+    "url": "https://github.com/litecoin-foundation/ltcspace/issues"
   },
   "keywords": [
     "litecoin",

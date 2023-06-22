@@ -171,7 +171,7 @@ class Server {
     const { lang, path } = parseLanguageUrl(rawPath);
     const matchedRoute = matchRoute(this.network, path);
     let ogImageUrl = config.SERVER.HOST + (matchedRoute.staticImg || matchedRoute.fallbackImg);
-    let ogTitle = 'LITE.POOL';
+    let ogTitle = 'Litecoin Space';
 
     if (matchedRoute.render) {
       ogImageUrl = `${config.SERVER.HOST}/render/${lang || 'en'}/preview${path}`;
@@ -184,7 +184,7 @@ class Server {
       <head>
         <meta charset="utf-8">
         <title>${ogTitle}</title>
-        <meta name="description" content="LITE.POOL - Your Gateway to Explore Litecoin"/>
+        <meta name="description" content="Litecoin Space - Gateway to Explore Litecoin"/>
         <meta property="og:image" content="${ogImageUrl}"/>
         <meta property="og:image:type" content="image/png"/>
         <meta property="og:image:width" content="${matchedRoute.render ? 1200 : 1000}"/>

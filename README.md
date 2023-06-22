@@ -1,4 +1,4 @@
-# LITE.POOL
+# Litecoin Space
 
 <br>
 

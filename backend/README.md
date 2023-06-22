@@ -18,7 +18,7 @@ Jump to a section in this doc:
 Get the latest Litepool code:
 
 ```
-git clone https://github.com/litecoin-foundation/litepool
+git clone https://github.com/litecoin-foundation/ltcspace
 cd Litepool
 ```
 
