@@ -219,4 +219,4 @@ service nginx restart
 
 ### Done
 
-If everything went well, your site should look like the one at https://litepool.space/.
+If everything went well, your site should look like the one at https://litecoinspace.org/.

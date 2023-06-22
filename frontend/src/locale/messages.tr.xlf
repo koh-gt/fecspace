@@ -4370,7 +4370,7 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Your Gateway to explore Litecoin's Blockchain</source>
+        <source>Your Gateway to Explore Litecoin</source>
         <target>Bütün Litecoin ekosistemini incele</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
@@ -5361,8 +5361,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litepool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>litepool.space merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litepool.space merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>litepool.space sadece Bitcoin ağı ile ilgili bilgi sağlar. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Kayıp gönderilerinize ulaşmanız veya işlemleri hızlandırmanız gibi istekleriniz için size çözüm sağlayamaz.</target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org sadece Bitcoin ağı ile ilgili bilgi sağlar. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> Kayıp gönderilerinize ulaşmanız veya işlemleri hızlandırmanız gibi istekleriniz için size çözüm sağlayamaz.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>

@@ -8,7 +8,7 @@
   "BLOCK_WEIGHT_UNITS": 4000000,
   "MEMPOOL_BLOCKS_AMOUNT": 8,
   "BASE_MODULE": "mempool",
-  "MEMPOOL_WEBSITE_URL": "https://litepool.space",
+  "MEMPOOL_WEBSITE_URL": "https://litecoinspace.org",
   "MINING_DASHBOARD": true,
   "AUDIT": false,
   "MAINNET_BLOCK_AUDIT_START_HEIGHT": 0,

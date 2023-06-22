@@ -38,9 +38,9 @@ export class GroupComponent implements OnInit {
       this.selectedSocketIndex = val;
     });
 
-    this.seoService.setTitle(`litepool.space Lightning Nodes`);
+    this.seoService.setTitle(`litecoinspace.org Lightning Nodes`);
 
-    this.nodes$ = this.lightningApiService.getNodGroupNodes$('litepool.space')
+    this.nodes$ = this.lightningApiService.getNodGroupNodes$('litecoinspace.org')
       .pipe(
         map((nodes) => {
           for (const node of nodes) {
@@ -81,7 +81,7 @@ export class GroupComponent implements OnInit {
           }
           const sumLiquidity = nodes.reduce((partialSum, a) => partialSum + parseInt(a.capacity, 10), 0);
           const sumChannels = nodes.reduce((partialSum, a) => partialSum + a.opened_channel_count, 0);
-          
+
           return {
             nodes: nodes,
             sumLiquidity: sumLiquidity,

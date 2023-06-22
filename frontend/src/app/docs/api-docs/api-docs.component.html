@@ -16,7 +16,8 @@
               <td><app-svg-images name="warning" class="disclaimer-warning" viewBox="0 0 304 304" fill="#ffc107"
                   width="50" height="50"></app-svg-images></td>
               <td>
-                <p i18n="faq.big-disclaimer"><b>litepool.space merely provides data about the Litecoin network.</b> It
+                <p i18n="faq.big-disclaimer"><b>litecoinspace.org merely provides data about the Litecoin network.</b>
+                  It
                   cannot help you with retrieving funds, confirming your transaction quicker, etc.</p>
                 <p>For any such requests, you need to get in touch with the entity that helped make the transaction
                   (wallet software, exchange company, etc).</p>
@@ -25,7 +26,7 @@
           </table>
           <div *ngIf="mobileViewport"><app-svg-images name="warning" class="disclaimer-warning" viewBox="0 0 304 304"
               fill="#ffc107" width="50" height="50"></app-svg-images>
-            <p i18n="faq.big-disclaimer"><b>litepool.space merely provides data about the Litecoin network.</b> It
+            <p i18n="faq.big-disclaimer"><b>litecoinspace.org merely provides data about the Litecoin network.</b> It
               cannot help you with retrieving funds, confirming your transaction quicker, etc.</p>
             <p>For any such requests, you need to get in touch with the entity that helped make the transaction (wallet
               software, exchange company, etc).</p>
@@ -208,7 +209,7 @@
 <ng-template type="what-is-a-mempool-explorer">
   <p>A mempool explorer is a tool that enables you to view real-time and historical information about a node's mempool,
     visualize its transactions, and search and view those transactions.</p>
-  <p>The litepool.space website invented the concept of visualizing a Litecoin node's mempool as <b>projected
+  <p>The litecoinspace.org website invented the concept of visualizing a Litecoin node's mempool as <b>projected
       blocks</b>.
     These blocks are the inspiration for our half-filled block logo.</p>
   <p>Projected blocks are on the left of the dotted white line, and confirmed blocks are on the right.</p>
@@ -349,15 +350,17 @@
 </ng-template>
 
 <ng-template type="how-big-is-mempool-used-by-mempool-space">
-  <p>litepool.space uses multiple Litecoin nodes to obtain data: some with the default 300MB mempool memory limit (call
+  <p>litecoinspace.org uses multiple Litecoin nodes to obtain data: some with the default 300MB mempool memory limit
+    (call
     these Small Nodes) and others with a much larger mempool memory limit (call these Big Nodes).</p>
   <p>Many nodes on the Litecoin network are configured to run with the default 300MB mempool memory setting. When all
     300MB of memory are used up, such nodes will reject transactions below a certain threshold feerate. Running Small
-    Nodes allows litepool.space to tell you what this threshold feerate is—this is the "Purging" feerate that shows on
+    Nodes allows litecoinspace.org to tell you what this threshold feerate is—this is the "Purging" feerate that shows
+    on
     the front page when mempools are full, which you can use to be reasonably sure that your transaction will be widely
     propagated.</p>
   <p>Big Node mempools are so big that they don't need to reject (or purge) transactions. Such nodes allow for
-    litepool.space to provide you with information on any pending transaction it has received—no matter how congested
+    litecoinspace.org to provide you with information on any pending transaction it has received—no matter how congested
     the
     mempool is, and no matter how low-feerate or low-priority the transaction is.</p>
 </ng-template>
@@ -366,9 +369,10 @@
   <p>Memory usage on the front page refers to the real-time amount of system memory used by a Litecoin node's mempool.
     This memory usage number is always higher than the total size of all pending transactions in the mempool due to
     indexes, pointers, and other overhead used by Litecoin Core for storage and processing.</p>
-  <p>litepool.space shows the memory usage of a Litecoin node that has a very high mempool memory limit. As a result,
+  <p>litecoinspace.org shows the memory usage of a Litecoin node that has a very high mempool memory limit. As a result,
     when
-    mempools fill up, you may notice memory usage on litepool.space go beyond 300MB. This is not a mistake—this memory
+    mempools fill up, you may notice memory usage on litecoinspace.org go beyond 300MB. This is not a mistake—this
+    memory
     usage figure is high because it's for a Litecoin node that isn't rejecting (or evicting) transactions. Consider it
     to
     be another data point to give you an idea of how congested the mempool is relative to the default memory limit of
@@ -466,7 +470,7 @@
   <p>See how results of the block audit are used to devise the block health score <a
       [routerLink]="['/docs/faq' | relativeUrl]" fragment="what-is-block-health">below</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official litepool.space instances.</p>
+    official litecoinspace.org instances.</p>
 </ng-template>
 
 <ng-template type="what-is-block-health">
@@ -499,11 +503,11 @@
   <p>See more context in our FAQ on <a [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="how-do-block-audits-work">block audits</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official litepool.space instances.</p>
+    official litecoinspace.org instances.</p>
 </ng-template>
 
 <ng-template type="who-runs-this-website">
-  The official litepool.space website is operated by Litecoin Foundation. See more information on our <a
+  The official litecoinspace.org website is operated by Litecoin Foundation. See more information on our <a
     [routerLink]="['/about']">About page</a>. There are also many unofficial instances of this website operated by
   individual members of the Litecoin community.
 </ng-template>
@@ -539,6 +543,6 @@
       you're having issues with romanz/electrs, Fulcrum is worth a try.</li>
     <li><a href="https://github.com/rust-litecoin/electrs-ltc/tree/esplora" target="_blank">electrs-ltc-esplora</a>. If
       you have stronger
-      hardware, consider running Blockstream's electrs implementation. It's the backend litepool.space uses.</li>
+      hardware, consider running Blockstream's electrs implementation. It's the backend litecoinspace.org uses.</li>
   </ol>
 </ng-template>

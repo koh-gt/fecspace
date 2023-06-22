@@ -34,7 +34,7 @@ PROXY_CONFIG.push(
     },
     {
       context: ["/api/**"],
-      target: `https://litepool.space`,
+      target: `https://litecoinspace.org`,
       secure: false,
       changeOrigin: true,
       proxyTimeout: 30000,

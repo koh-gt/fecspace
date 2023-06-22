@@ -1,6 +1,6 @@
 {
   "SERVER": {
-    "HOST": "https://litepool.space",
+    "HOST": "https://litecoinspace.org",
     "HTTP_PORT": 8001
   },
   "MEMPOOL": {

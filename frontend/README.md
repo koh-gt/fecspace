@@ -10,7 +10,7 @@ Jump to a section in this doc:
 
 ## Quick Setup for Frontend Development
 
-If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Litepool frontend locally and proxy to the litepool.space backend.
+If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Litepool frontend locally and proxy to the litecoinspace.org backend.
 
 ### 1. Clone Litepool Repository
 
@@ -23,7 +23,7 @@ cd litepool
 
 ### 2. Specify Website
 
-The same frontend codebase is used for https://litepool.space and https://explorer.litepool.space.
+The same frontend codebase is used for https://litecoinspace.org and https://explorer.litecoinspace.org.
 
 Configure the frontend for the site you want by running the corresponding command:
 
@@ -42,7 +42,7 @@ $ npm install
 $ npm run serve:local-prod
 ```
 
-The frontend will be available at http://localhost:4200/ and all API requests will be proxied to the production server at https://litepool.space.
+The frontend will be available at http://localhost:4200/ and all API requests will be proxied to the production server at https://litecoinspace.org.
 
 ### 4. Test
 

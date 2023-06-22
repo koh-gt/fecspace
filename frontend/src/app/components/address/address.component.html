@@ -20,7 +20,8 @@
               <tr *ngIf="addressInfo && addressInfo.unconfidential">
                 <td i18n="address.unconfidential">Unconfidential</td>
                 <td>
-                  <app-truncate [text]="addressInfo.unconfidential" [lastChars]="8" [link]="['/address/' | relativeUrl, addressInfo.unconfidential]">
+                  <app-truncate [text]="addressInfo.unconfidential" [lastChars]="8"
+                    [link]="['/address/' | relativeUrl, addressInfo.unconfidential]">
                     <app-clipboard [text]="addressInfo.unconfidential"></app-clipboard>
                   </app-truncate>
                 </td>
@@ -28,16 +29,20 @@
               <ng-template [ngIf]="!address.electrum">
                 <tr>
                   <td i18n="address.total-received">Total received</td>
-                  <td *ngIf="address.chain_stats.funded_txo_sum !== undefined; else confidentialTd"><app-amount [satoshis]="received" [noFiat]="true"></app-amount></td>
+                  <td *ngIf="address.chain_stats.funded_txo_sum !== undefined; else confidentialTd"><app-amount
+                      [satoshis]="received" [noFiat]="true"></app-amount></td>
                 </tr>
                 <tr>
                   <td i18n="address.total-sent">Total sent</td>
-                  <td *ngIf="address.chain_stats.spent_txo_sum !== undefined; else confidentialTd"><app-amount [satoshis]="sent" [noFiat]="true"></app-amount></td>
+                  <td *ngIf="address.chain_stats.spent_txo_sum !== undefined; else confidentialTd"><app-amount
+                      [satoshis]="sent" [noFiat]="true"></app-amount></td>
                 </tr>
               </ng-template>
               <tr>
                 <td i18n="address.balance">Balance</td>
-                <td *ngIf="address.chain_stats.funded_txo_sum !== undefined; else confidentialTd"><app-amount [satoshis]="received - sent" [noFiat]="true"></app-amount> <span class="fiat"><app-fiat [value]="received - sent"></app-fiat></span></td>
+                <td *ngIf="address.chain_stats.funded_txo_sum !== undefined; else confidentialTd"><app-amount
+                    [satoshis]="received - sent" [noFiat]="true"></app-amount> <span class="fiat"><app-fiat
+                      [value]="received - sent"></app-fiat></span></td>
               </tr>
             </tbody>
           </table>
@@ -56,12 +61,15 @@
     <div class="title-tx">
       <h2 class="text-left">
         <ng-template [ngIf]="!transactions?.length">&nbsp;</ng-template>
-        <ng-template i18n="X of X Address Transaction" [ngIf]="transactions?.length === 1">{{ (transactions?.length | number) || '?' }} of {{ txCount | number }} transaction</ng-template>
-        <ng-template i18n="X of X Address Transactions (Plural)" [ngIf]="transactions?.length > 1">{{ (transactions?.length | number) || '?' }} of {{ txCount | number }} transactions</ng-template>
+        <ng-template i18n="X of X Address Transaction" [ngIf]="transactions?.length === 1">{{ (transactions?.length |
+          number) || '?' }} of {{ txCount | number }} transaction</ng-template>
+        <ng-template i18n="X of X Address Transactions (Plural)" [ngIf]="transactions?.length > 1">{{
+          (transactions?.length | number) || '?' }} of {{ txCount | number }} transactions</ng-template>
       </h2>
     </div>
 
-    <app-transactions-list [transactions]="transactions" [showConfirmations]="true" [address]="address.address" (loadMore)="loadMore()"></app-transactions-list>
+    <app-transactions-list [transactions]="transactions" [showConfirmations]="true" [address]="address.address"
+      (loadMore)="loadMore()"></app-transactions-list>
 
     <div class="text-center">
       <ng-template [ngIf]="isLoadingTransactions">
@@ -69,7 +77,8 @@
         <ng-container *ngIf="addressLoadingStatus$ as addressLoadingStatus">
           <div class="header-bg box" style="padding: 12px; margin-bottom: 10px;">
             <div class="progress progress-dark">
-              <div class="progress-bar progress-light" role="progressbar" [ngStyle]="{'width': addressLoadingStatus + '%' }"></div>
+              <div class="progress-bar progress-light" role="progressbar"
+                [ngStyle]="{'width': addressLoadingStatus + '%' }"></div>
             </div>
           </div>
         </ng-container>
@@ -89,7 +98,8 @@
 
       <ng-template [ngIf]="retryLoadMore">
         <br>
-        <button type="button" class="btn btn-outline-info btn-sm" (click)="loadMore()"><fa-icon [icon]="['fas', 'redo-alt']" [fixedWidth]="true"></fa-icon></button>
+        <button type="button" class="btn btn-outline-info btn-sm" (click)="loadMore()"><fa-icon
+            [icon]="['fas', 'redo-alt']" [fixedWidth]="true"></fa-icon></button>
       </ng-template>
     </div>
 
@@ -129,14 +139,17 @@
       <span i18n="address.error.loading-address-data">Error loading address data.</span>
       <br>
       <ng-template #displayServerError><i class="small">({{ error.error }})</i></ng-template>
-      <ng-template [ngIf]="error.status === 413 || error.status === 405 || error.status === 504" [ngIfElse]="displayServerError">
+      <ng-template [ngIf]="error.status === 413 || error.status === 405 || error.status === 504"
+        [ngIfElse]="displayServerError">
         <ng-container i18n="Electrum server limit exceeded error">
-          <i>There many transactions on this address, more than your backend can handle. See more on <a href="/docs/faq#address-lookup-issues">setting up a stronger backend</a>.</i>
+          <i>There many transactions on this address, more than your backend can handle. See more on <a
+              href="/docs/faq#address-lookup-issues">setting up a stronger backend</a>.</i>
           <br><br>
           Consider viewing this address on the official Mempool website instead:
         </ng-container>
         <br>
-        <a href="https://litepool.space/address/{{ addressString }}" target="_blank">https://litepool.space/address/{{ addressString }}</a>
+        <a href="https://litecoinspace.org/address/{{ addressString }}"
+          target="_blank">https://litecoinspace.org/address/{{ addressString }}</a>
         <br>
         <br><br>
         <i class="small">({{ error.error }})</i>

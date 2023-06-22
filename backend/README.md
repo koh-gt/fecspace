@@ -42,7 +42,7 @@ rpcpassword=mempool
 
 ### 3. Configure Electrum Server
 
-[Pick an Electrum Server implementation](https://litepool.space/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
+[Pick an Electrum Server implementation](https://litecoinspace.org/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
 
 **This step is optional.** You can run Litepool without configuring an Electrum Server for it, but address lookups will be disabled.
 

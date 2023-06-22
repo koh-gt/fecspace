@@ -96,7 +96,7 @@ describe('Mempool Backend Config', () => {
       });
 
       expect(config.EXTERNAL_DATA_SERVER).toStrictEqual({
-        MEMPOOL_API: 'https://litepool.space/api/v1',
+        MEMPOOL_API: 'https://litecoinspace.org/api/v1',
         MEMPOOL_ONION: 'http://TODO: litecoin.onion/api/v1',
       });
 

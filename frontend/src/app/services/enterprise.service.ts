@@ -8,7 +8,7 @@ import { StateService } from './state.service';
   providedIn: 'root'
 })
 export class EnterpriseService {
-  exclusiveHostName = '.litepool.space';
+  exclusiveHostName = '.litecoinspace.org';
   subdomain: string | null = null;
   info: object = {};
 
@@ -39,7 +39,7 @@ export class EnterpriseService {
     },
     (error) => {
       if (error.status === 404) {
-        window.location.href = 'https://litepool.space' + window.location.pathname;
+        window.location.href = 'https://litecoinspace.org' + window.location.pathname;
       }
     });
   }

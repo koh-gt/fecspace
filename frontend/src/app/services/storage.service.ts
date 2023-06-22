@@ -14,7 +14,7 @@ export class StorageService {
     const graphWindowPreference: string = this.getValue(key);
     const fragment = window.location.hash.replace('#', '');
 
-    if (graphWindowPreference === null) { // First visit to litepool.space
+    if (graphWindowPreference === null) { // First visit to litecoinspace.org
       if (window.location.pathname.includes('graphs') && key === 'graphWindowPreference' ||
         window.location.pathname.includes('pools') && key === 'miningWindowPreference'
       ) {

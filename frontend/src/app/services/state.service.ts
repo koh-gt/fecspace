@@ -54,7 +54,7 @@ const defaultEnv: Env = {
   'MEMPOOL_BLOCKS_AMOUNT': 8,
   'GIT_COMMIT_HASH': '',
   'PACKAGE_JSON_VERSION': '',
-  'MEMPOOL_WEBSITE_URL': 'https://litepool.space',
+  'MEMPOOL_WEBSITE_URL': 'https://litecoinspace.org',
   'MINING_DASHBOARD': true,
   'LIGHTNING': false,
   'AUDIT': false,

@@ -86,7 +86,7 @@ def on_open(ws):
     ws.send(json.dumps(message))
 
 if __name__ == "__main__":
-    ws = websocket.WebSocketApp("wss://litepool.space/api/v1/ws",
+    ws = websocket.WebSocketApp("wss://litecoinspace.org/api/v1/ws",
                               on_open=on_open,
                               on_message=on_message,
                               on_error=on_error,
@@ -8864,7 +8864,7 @@ export const faqData = [
     category: "advanced",
     showConditions: bitcoinNetworks,
     fragment: "how-big-is-mempool-used-by-mempool-space",
-    title: "How big is the mempool used by litepool.space?",
+    title: "How big is the mempool used by litecoinspace.org?",
     options: { officialOnly: true },
   },
   {

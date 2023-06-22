@@ -62,7 +62,7 @@ class PoolsParser {
         if (poolDB.name !== pool.name) {
           // Pool has been renamed
           const newSlug = pool.name.replace(/[^a-z0-9]/gi, '').toLowerCase();
-          logger.warn(`Renaming ${poolDB.name} mining pool to ${pool.name}. Slug has been updated. Maybe you want to make a redirection from 'https://litepool.space/mining/pool/${poolDB.slug}' to 'https://litepool.space/mining/pool/${newSlug}`);
+          logger.warn(`Renaming ${poolDB.name} mining pool to ${pool.name}. Slug has been updated. Maybe you want to make a redirection from 'https://litecoinspace.org/mining/pool/${poolDB.slug}' to 'https://litecoinspace.org/mining/pool/${newSlug}`);
           await PoolsRepository.$renameMiningPool(poolDB.id, newSlug, pool.name);
         }
         if (poolDB.link !== pool.link) {
