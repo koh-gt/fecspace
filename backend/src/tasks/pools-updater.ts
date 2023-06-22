@@ -128,13 +128,13 @@ class PoolsUpdater {
 
     if (response !== undefined) {
       for (const file of response['tree']) {
-        if (file['path'] === 'pools-v2.json') {
+        if (file['path'] === 'pools.json') {
           return file['sha'];
         }
       }
     }
 
-    logger.err(`Cannot find "pools-v2.json" in git tree (${this.treeUrl})`, logger.tags.mining);
+    logger.err(`Cannot find "pools.json" in git tree (${this.treeUrl})`, logger.tags.mining);
     return null;
   }
 
