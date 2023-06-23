@@ -20,7 +20,7 @@
       </tr>
       <tr>
         <td class="td-width" i18n="transaction.fee|Transaction fee">Fee</td>
-        <td>{{ fee | number }} <span class="symbol" i18n="shared.sat|sat">sat</span> &nbsp; <span class="fiat"><app-fiat [blockConversion]="blockConversion" [value]="fee"></app-fiat></span></td>
+        <td>{{ fee | number }} <span class="symbol" i18n="shared.sat|lit">lit</span> &nbsp; <span class="fiat"><app-fiat [blockConversion]="blockConversion" [value]="fee"></app-fiat></span></td>
       </tr>
       <tr>
         <td class="td-width" i18n="transaction.fee-rate|Transaction fee rate">Fee rate</td>
@@ -31,7 +31,7 @@
       <tr *ngIf="effectiveRate && effectiveRate !== feeRate">
         <td class="td-width" i18n="transaction.effective-fee-rate|Effective transaction fee rate">Effective fee rate</td>
         <td>
-          {{ effectiveRate | feeRounding }} <span class="symbol" i18n="shared.sat-vbyte|sat/vB">sat/vB</span>
+          {{ effectiveRate | feeRounding }} <span class="symbol" i18n="shared.sat-vbyte|lit/vB">lit/vB</span>
         </td>
       </tr>
       <tr>

@@ -4338,7 +4338,7 @@
       </trans-unit>
       <trans-unit id="31443c29cb161e8aa661eb5035f675746ef95b45" datatype="html">
         <source>lits/tx</source>
-        <target>satoshi/giao dịch</target>
+        <target>lits/giao dịch</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/reward-stats/reward-stats.component.html</context>
           <context context-type="linenumber">33,36</context>
@@ -4451,7 +4451,7 @@
       </trans-unit>
       <trans-unit id="75c20c8a9cd9723d45bee0230dd582d7c2e4ecbc" datatype="html">
         <source>Mempool by vBytes (lit/vByte)</source>
-        <target>Mempool theo vBytes (sat / vByte)</target>
+        <target>Mempool theo vBytes (lit / vByte)</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/statistics/statistics.component.html</context>
           <context context-type="linenumber">7</context>
@@ -5483,8 +5483,8 @@
         <note priority="1" from="description">lightning.base-fee</note>
       </trans-unit>
       <trans-unit id="6acd06bd5a3af583cd46c6d9f7954d7a2b44095e" datatype="html">
-        <source>mSats</source>
-        <target>mSats</target>
+        <source>mLits</source>
+        <target>mLits</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/channel/channel-box/channel-box.component.html</context>
           <context context-type="linenumber">35</context>
@@ -5958,7 +5958,7 @@
         <note priority="1" from="description">channels.id</note>
       </trans-unit>
       <trans-unit id="e4b2d9e6a2ab9e6ca34027ec03beaac42b7badd4" datatype="html">
-        <source>sats</source>
+        <source>lits</source>
         <target>satoshi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/channels-list/channels-list.component.html</context>

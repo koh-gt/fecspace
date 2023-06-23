@@ -40,7 +40,8 @@
     </div>
     <div class="stats top right">
       <p class="label" i18n="clock.priority-rate|priority fee rate">priority rate</p>
-      <p *ngIf="recommendedFees$ | async as recommendedFees;" i18n="shared.sat-vbyte|sat/vB">{{ recommendedFees.fastestFee }} sat/vB</p>
+      <p *ngIf="recommendedFees$ | async as recommendedFees;" i18n="shared.sat-vbyte|lit/vB">{{
+        recommendedFees.fastestFee }} lit/vB</p>
     </div>
     <div *ngIf="mode !== 'mempool' && block" class="stats bottom left">
       <p [innerHTML]="block.size | bytes: 2"></p>
@@ -48,9 +49,12 @@
     </div>
     <div *ngIf="mode !== 'mempool' && block" class="stats bottom right">
       <p class="force-wrap">
-        <ng-container *ngTemplateOutlet="block.tx_count === 1 ? transactionsSingular : transactionsPlural; context: {$implicit: block.tx_count | number}"></ng-container>
-        <ng-template #transactionsSingular let-i i18n="shared.transaction-count.singular">{{ i }} <span class="label">transaction</span></ng-template>
-        <ng-template #transactionsPlural let-i i18n="shared.transaction-count.plural">{{ i }} <span class="label">transactions</span></ng-template>
+        <ng-container
+          *ngTemplateOutlet="block.tx_count === 1 ? transactionsSingular : transactionsPlural; context: {$implicit: block.tx_count | number}"></ng-container>
+        <ng-template #transactionsSingular let-i i18n="shared.transaction-count.singular">{{ i }} <span
+            class="label">transaction</span></ng-template>
+        <ng-template #transactionsPlural let-i i18n="shared.transaction-count.plural">{{ i }} <span
+            class="label">transactions</span></ng-template>
       </p>
     </div>
     <ng-container *ngIf="mempoolInfo$ | async as mempoolInfo;">

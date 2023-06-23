@@ -204,7 +204,7 @@ Mine blocks to the previously generated address. You need at least 101 blocks be
 litecoin-cli -regtest generatetoaddress 101 $address
 ```
 
-Send 0.1 BTC at 5 sat/vB to another address:
+Send 0.1 BTC at 5 lit/vB to another address:
 
 ```
 litecoin-cli -named -regtest sendtoaddress address=$(litecoin-cli -regtest getnewaddress) amount=0.1 fee_rate=5

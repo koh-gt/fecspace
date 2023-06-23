@@ -1,10 +1,5 @@
-<div
-  #tooltip
-  *ngIf="rbfInfo && tooltipPosition !== null"
-  class="rbf-tooltip"
-  [style.left]="tooltipPosition.x + 'px'"
-  [style.top]="tooltipPosition.y + 'px'"
->
+<div #tooltip *ngIf="rbfInfo && tooltipPosition !== null" class="rbf-tooltip" [style.left]="tooltipPosition.x + 'px'"
+  [style.top]="tooltipPosition.y + 'px'">
   <table>
     <tbody>
       <tr>
@@ -19,7 +14,7 @@
       </tr>
       <tr>
         <td class="td-width" i18n="transaction.fee|Transaction fee">Fee</td>
-        <td>{{ rbfInfo.tx.fee | number }} <span class="symbol" i18n="shared.sat|sat">sat</span></td>
+        <td>{{ rbfInfo.tx.fee | number }} <span class="symbol" i18n="shared.sat|lit">lit</span></td>
       </tr>
       <tr>
         <td class="td-width" i18n="transaction.vsize|Transaction Virtual Size">Virtual size</td>
@@ -28,8 +23,10 @@
       <tr>
         <td class="td-width" i18n="transaction.status|Transaction Status">Status</td>
         <td>
-          <span *ngIf="rbfInfo.tx.rbf; else rbfDisabled" class="badge badge-success" i18n="rbfInfo-features.tag.rbf|RBF">RBF</span>
-          <ng-template #rbfDisabled><span class="badge badge-danger mr-1"><del i18n="rbfInfo-features.tag.rbf|RBF">RBF</del></span></ng-template>
+          <span *ngIf="rbfInfo.tx.rbf; else rbfDisabled" class="badge badge-success"
+            i18n="rbfInfo-features.tag.rbf|RBF">RBF</span>
+          <ng-template #rbfDisabled><span class="badge badge-danger mr-1"><del
+                i18n="rbfInfo-features.tag.rbf|RBF">RBF</del></span></ng-template>
           <span *ngIf="rbfInfo.tx.mined" class="badge badge-success" i18n="transaction.rbf.mined">Mined</span>
         </td>
       </tr>

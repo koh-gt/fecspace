@@ -1,9 +1,9 @@
 <div class="widget-toggler">
-  <a href="" (click)="switchMode('avg')" class="toggler-option"
-    [ngClass]="{'inactive': mode === 'avg'}"><small i18n="statistics.average-small">avg</small></a>
+  <a href="" (click)="switchMode('avg')" class="toggler-option" [ngClass]="{'inactive': mode === 'avg'}"><small
+      i18n="statistics.average-small">avg</small></a>
   <span style="color: #ffffff66; font-size: 8px"> | </span>
-  <a href="" (click)="switchMode('med')" class="toggler-option"
-    [ngClass]="{'inactive': mode === 'med'}"><small i18n="statistics.median-small">med</small></a>
+  <a href="" (click)="switchMode('med')" class="toggler-option" [ngClass]="{'inactive': mode === 'med'}"><small
+      i18n="statistics.median-small">med</small></a>
 </div>
 
 <div class="fee-estimation-wrapper" *ngIf="statistics$ | async as statistics; else loadingReward">
@@ -17,7 +17,7 @@
           <span i18n="shared.sats">sats</span>
         </div>
         <span class="fiat" *ngIf="statistics.previous">
-          <app-fiat [value]="statistics.latest?.avg_capacity" digitsInfo="1.0-0" ></app-fiat>
+          <app-fiat [value]="statistics.latest?.avg_capacity" digitsInfo="1.0-0"></app-fiat>
         </span>
       </div>
     </div>
@@ -32,7 +32,8 @@
           <span i18n="lightning.ppm">ppm</span>
         </div>
         <span class="fiat" *ngIf="statistics.previous">
-          <app-change [current]="statistics.latest?.avg_fee_rate" [previous]="statistics.previous?.avg_fee_rate"></app-change>
+          <app-change [current]="statistics.latest?.avg_fee_rate"
+            [previous]="statistics.previous?.avg_fee_rate"></app-change>
         </span>
       </div>
     </div>
@@ -44,10 +45,11 @@
         <div class="card-text">
           <div class="fee-text" [class]="!statistics.previous ? 'no-border' : ''">
             {{ statistics.latest?.avg_base_fee_mtokens || 0 | number: '1.0-0' }}
-            <span i18n="shared.m-sats">mSats</span>
+            <span i18n="shared.m-sats">mLits</span>
           </div>
           <span class="fiat" *ngIf="statistics.previous">
-            <app-change [current]="statistics.latest?.avg_base_fee_mtokens" [previous]="statistics.previous?.avg_base_fee_mtokens"></app-change>
+            <app-change [current]="statistics.latest?.avg_base_fee_mtokens"
+              [previous]="statistics.previous?.avg_base_fee_mtokens"></app-change>
           </span>
         </div>
       </div>
@@ -63,7 +65,7 @@
           <span i18n="shared.sats">sats</span>
         </div>
         <span class="fiat" *ngIf="statistics.previous">
-          <app-fiat [value]="statistics.latest?.med_capacity" digitsInfo="1.0-0" ></app-fiat>
+          <app-fiat [value]="statistics.latest?.med_capacity" digitsInfo="1.0-0"></app-fiat>
         </span>
       </div>
     </div>
@@ -78,7 +80,8 @@
           <span i18n="lightning.ppm">ppm</span>
         </div>
         <span class="fiat" *ngIf="statistics.previous">
-          <app-change [current]="statistics.latest?.med_fee_rate" [previous]="statistics.previous?.med_fee_rate"></app-change>
+          <app-change [current]="statistics.latest?.med_fee_rate"
+            [previous]="statistics.previous?.med_fee_rate"></app-change>
         </span>
       </div>
     </div>
@@ -90,11 +93,12 @@
         <div class="card-text">
           <div class="fee-text" [class]="!statistics.previous ? 'no-border' : ''">
             {{ statistics.latest?.med_base_fee_mtokens || 0 | number: '1.0-0' }}
-            <span i18n="shared.m-sats">mSats</span>
+            <span i18n="shared.m-sats">mLits</span>
           </div>
         </div>
         <span class="fiat" *ngIf="statistics.previous">
-          <app-change [current]="statistics.latest?.med_base_fee_mtokens" [previous]="statistics.previous?.med_base_fee_mtokens"></app-change>
+          <app-change [current]="statistics.latest?.med_base_fee_mtokens"
+            [previous]="statistics.previous?.med_base_fee_mtokens"></app-change>
         </span>
       </div>
     </div>

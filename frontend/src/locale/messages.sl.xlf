@@ -5407,7 +5407,7 @@
         <note priority="1" from="description">lightning.base-fee</note>
       </trans-unit>
       <trans-unit id="6acd06bd5a3af583cd46c6d9f7954d7a2b44095e" datatype="html">
-        <source>mSats</source>
+        <source>mLits</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/channel/channel-box/channel-box.component.html</context>
           <context context-type="linenumber">35</context>
@@ -5849,7 +5849,7 @@
         <note priority="1" from="description">channels.id</note>
       </trans-unit>
       <trans-unit id="e4b2d9e6a2ab9e6ca34027ec03beaac42b7badd4" datatype="html">
-        <source>sats</source>
+        <source>lits</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/lightning/channels-list/channels-list.component.html</context>
           <context context-type="linenumber">63,68</context>
