@@ -64,7 +64,7 @@ export class DifficultyMiningComponent implements OnInit {
         }
 
         const blocksUntilHalving = 840000 - (block.height % 840000);
-        const timeUntilHalving = new Date().getTime() + (blocksUntilHalving * 600000);
+        const timeUntilHalving = new Date().getTime() + (blocksUntilHalving * 150000);
 
         const data = {
           base: `${da.progressPercent.toFixed(2)}%`,
