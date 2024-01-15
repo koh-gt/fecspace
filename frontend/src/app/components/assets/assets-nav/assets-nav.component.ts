@@ -18,7 +18,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class AssetsNavComponent implements OnInit {
   @ViewChild('instance', {static: true}) instance: NgbTypeahead;
-  nativeAssetId = this.stateService.network === 'liquidtestnet' ? environment.nativeTestAssetId : environment.nativeAssetId;
+  nativeAssetId = environment.nativeAssetId;
   searchForm: UntypedFormGroup;
   assetsCache: AssetExtended[];
 
@@ -40,6 +40,7 @@ export class AssetsNavComponent implements OnInit {
 
   ngOnInit(): void {
     this.seoService.setTitle($localize`:@@ee8f8008bae6ce3a49840c4e1d39b4af23d4c263:Assets`);
+    this.seoService.setDescription($localize`:@@meta.description.liquid.assets:Explore all the assets issued on the Liquid network like L-BTC, L-CAD, USDT, and more.`);
     this.typeaheadSearchFn = this.typeaheadSearch;
 
     this.searchForm = this.formBuilder.group({

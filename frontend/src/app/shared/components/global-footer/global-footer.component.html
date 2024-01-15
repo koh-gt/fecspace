@@ -1,95 +1,88 @@
-<footer>
+<footer [class]="{'services': isServicesPage}">
   <div class="container-fluid">
-    <div class="row main">
-      <div class="offset-lg-1 col-lg-4 col align-self-center branding">
-        <h5><ng-container i18n="about.about-the-project">Litecoin Explorer</ng-container><ng-template
-            [ngIf]="locale.substr(0, 2) === 'en'"></ng-template></h5>
-        <p><ng-container i18n="@@7deec1c1520f06170e1f8e8ddfbe4532312f638f">Your Gateway to explore Litecoin's
-            Blockchain</ng-container><ng-template [ngIf]="locale.substr(0, 2) === 'en'"></ng-template></p>
-        <div class="selector">
-          <app-language-selector></app-language-selector>
+
+    <div class="row main" [class]="{'services': isServicesPage}">
+      <div class="col-md-12 branding mt-2">
+        <div class="main-logo" [class]="{'services': isServicesPage}">
+          <app-svg-images *ngIf="officialMempoolSpace" name="officialMempoolSpace" viewBox="0 0 500 126"></app-svg-images>
+          <app-svg-images *ngIf="!officialMempoolSpace" name="mempoolSpace" viewBox="0 0 500 126"></app-svg-images>
         </div>
-        <div class="selector">
-          <app-fiat-selector></app-fiat-selector>
+        <div class="site-options language-selector d-flex justify-content-center align-items-center" [class]="{'services': isServicesPage}">
+          <div class="selector">
+            <app-language-selector></app-language-selector>
+          </div>
+          <div class="selector">
+            <app-fiat-selector></app-fiat-selector>
+          </div>
+          <div class="selector">
+            <app-rate-unit-selector></app-rate-unit-selector>
+          </div>
+          <a *ngIf="servicesEnabled" class="btn btn-purple sponsor d-none d-sm-flex justify-content-center" [routerLink]="['/login' | relativeUrl]">
+            <span *ngIf="loggedIn" i18n="shared.my-account">My Account</span>
+            <span *ngIf="!loggedIn" i18n="shared.sign-in">Sign In</span>
+          </a>
         </div>
-        <ng-template #temporaryHidden>
-          <a *ngIf="officialMempoolSpace" class="cta btn btn-purple sponsor"
-            [routerLink]="['/signup' | relativeUrl]">Support the Project</a>
-          <p *ngIf="officialMempoolSpace && env.BASE_MODULE === 'mempool'" class="cta-secondary"><a
-              [routerLink]="['/signin' | relativeUrl]" i18n="shared.broadcast-transaction|Broadcast Transaction">Sign
-              In</a></p>
+        <a *ngIf="servicesEnabled" class="btn btn-purple sponsor d-flex d-sm-none justify-content-center ml-auto mr-auto mt-0 mb-2" [routerLink]="['/login' | relativeUrl]">
+          <span *ngIf="loggedIn" i18n="shared.my-account">My Account</span>
+          <span *ngIf="!loggedIn" i18n="shared.sign-in">Sign In</span>
+        </a>
+      </div>
+    </div>
+    <div class="row col-md-12 link-tree" [class]="{'services': isServicesPage}">
+        <div class="links">
+          <p class="category" i18n="footer.explore">Explore</p>
+          <p><a [routerLink]="['/mining' | relativeUrl]" i18n="mining.mining-dashboard">Mining Dashboard</a></p>
+          <p><a *ngIf="env.LIGHTNING" [routerLink]="['/lightning' | relativeUrl]" i18n="master-page.lightning">Lightning Explorer</a></p>
+          <p><a [routerLink]="['/blocks' | relativeUrl]" i18n="dashboard.recent-blocks">Recent Blocks</a></p>
+          <p><a [routerLink]="['/tx/push' | relativeUrl]" i18n="shared.broadcast-transaction|Broadcast Transaction">Broadcast Transaction</a></p>
+          <p *ngIf="officialMempoolSpace"><a [routerLink]="['/lightning/group/the-mempool-open-source-project' | relativeUrl]" i18n="footer.connect-to-our-nodes">Connect to our Nodes</a></p>
+          <p><a [routerLink]="['/docs/api' | relativeUrl]" i18n="footer.api-documentation">API Documentation</a></p>
+        </div>
+        <div class="links">
+          <p class="category" i18n="footer.learn">Learn</p>
+          <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-mempool" i18n="faq.what-is-a-mempool">What is a mempool?</a></p>
+          <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-block-explorer" i18n="faq.what-is-a-block-exlorer">What is a block explorer?</a></p>
+          <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-mempool-explorer" i18n="faq.what-is-a-mempool-exlorer">What is a mempool explorer?</a></p>
+          <p><a [routerLink]="['/docs/faq']" fragment="why-is-transaction-stuck-in-mempool" i18n="faq.why-isnt-my-transaction-confirming">Why isn't my transaction confirming?</a></p>
+          <p><a [routerLink]="['/docs/faq' | relativeUrl]" i18n="faq.more-faq">More FAQs &raquo;</a></p>
+        </div>
+
+        <div class="links" *ngIf="officialMempoolSpace || env.TESTNET_ENABLED else toolBox" >
+          <p class="category" i18n="footer.networks">Networks</p>
+          <p *ngIf="(officialMempoolSpace || (env.BASE_MODULE === 'mempool')) && (currentNetwork !== '') && (currentNetwork !== 'mainnet')"><a [href]="networkLink('mainnet')" i18n="footer.mainnet-explorer">Mainnet Explorer</a></p>
+          <p *ngIf="(officialMempoolSpace || (env.BASE_MODULE === 'mempool')) && (currentNetwork !== 'testnet') && env.TESTNET_ENABLED"><a [href]="networkLink('testnet')" i18n="footer.testnet-explorer">Testnet Explorer</a></p>
+        </div>
+        <ng-template #toolBox>
+        <div class="links">
+          <p class="category" i18n="footer.tools">Tools</p>
+          <p><a [routerLink]="['/clock/mempool/0']" i18n="footer.clock-mempool">Clock (Mempool)</a></p>
+          <p><a [routerLink]="['/clock/mined/0']" i18n="footer.clock-mined">Clock (Mined)</a></p>
+          <p><a [routerLink]="['/tools/calculator']" i18n="shared.calculator">Calculator</a></p>
+        </div>
         </ng-template>
-        <p class="cta-secondary"><a [routerLink]="['/tx/push' | relativeUrl]"
-            i18n="shared.broadcast-transaction|Broadcast Transaction">Broadcast Transaction</a></p>
-        <p *ngIf="officialMempoolSpace && env.LIGHTNING" class="cta-secondary"><a
-            [routerLink]="['/lightning/group/the-mempool-open-source-project' | relativeUrl]"
-            i18n="footer.connect-to-our-nodes">Connect to our Nodes</a></p>
-      </div>
-      <div class="col-lg-6 col-md-10 offset-md-1 links outer">
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="category">Explore</p>
-            <p><a [routerLink]="['/mining' | relativeUrl]">Mining Dashboard</a></p>
-            <!-- <p><a [routerLink]="['/lightning' | relativeUrl]">Lightning Dashboard</a></p> -->
-            <p><a [routerLink]="['/blocks' | relativeUrl]">Recent Blocks</a></p>
-            <p><a [routerLink]="['/docs/api' | relativeUrl]">API Documentation</a></p>
-          </div>
-          <div class="col-lg-6 links">
-            <p class="category">Learn</p>
-            <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-mempool">What is a mempool?</a></p>
-            <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-block-explorer">What is a block explorer?</a></p>
-            <p><a [routerLink]="['/docs/faq']" fragment="what-is-a-mempool-explorer">What is a mempool explorer?</a></p>
-            <p><a [routerLink]="['/docs/faq']" fragment="why-is-transaction-stuck-in-mempool">Why isn't my transaction
-                confirming?</a></p>
-            <p><a [routerLink]="['/docs/faq' | relativeUrl]">More FAQs ›</a></p>
-          </div>
+        <div class="links">
+          <p class="category" i18n="footer.legal">Legal</p>
+          <p><a [routerLink]="['/terms-of-service']" i18n="shared.terms-of-service|Terms of Service">Terms of Service</a></p>
+          <p><a [routerLink]="['/privacy-policy']" i18n="shared.privacy-policy|Privacy Policy">Privacy Policy</a></p>
+          <p><a [routerLink]="['/trademark-policy']" i18n="shared.trademark-policy|Trademark Policy">Trademark Policy</a></p>
         </div>
-        <div class="row">
-          <!-- <div class="col-lg-6 links">
-            <p class="category">More Networks</p>
-            <p *ngIf="currentNetwork !== '' && currentNetwork !== 'mainnet'"><a [href]="networkLink('mainnet')">Mainnet
-                Explorer</a></p>
-            <p *ngIf="currentNetwork !== 'testnet'"><a [href]="networkLink('testnet')">Testnet Explorer</a></p>
-          </div> -->
-          <div class="col-lg-6 links">
-            <p class="category">Legal</p>
-            <p><a [routerLink]="['/terms-of-service']" i18n="shared.terms-of-service|Terms of Service">Terms of
-                Service</a></p>
-            <p><a [routerLink]="['/privacy-policy']" i18n="shared.privacy-policy|Privacy Policy">Privacy Policy</a></p>
-            <p><a [routerLink]="['/trademark-policy']">Trademark Policy</a></p>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="row social-links">
       <div class="col-sm-12">
-        <a href="https://github.com/litecoin-foundation/ltcspace" target="_blank"><svg fill="#fff" role="img"
-            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <title>GitHub</title>
-            <path
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-          </svg></a>
-        <a href="https://twitter.com/ltcfoundation" target="_blank"><svg fill="#fff" role="img" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <title>Twitter</title>
-            <path
-              d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-          </svg></a>
+        <a href="https://github.com/litecoin-foundation/ltcspace" target="_blank"><svg fill="#fff" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        <a href="https://twitter.com/ltcfoundation" target="_blank"><svg fill="#fff" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter</title><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+        <a href="https://youtube.com/@ltcfoundation" target="_blank"><svg fill="#fff" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>YouTube</title><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
       </div>
     </div>
-    <div class="row version">
+    <div class="row version" [style]="{'background-color': isServicesPage ? '#1d1f31' : ''}">
       <div class="col-sm-12">
-        <p *ngIf="officialMempoolSpace">{{ (backendInfo$ | async)?.hostname }} (v{{ (backendInfo$ | async )?.version }})
-          [<a target="_blank"
-            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{
-            (backendInfo$ | async )?.gitCommit | slice:0:8 }}</a>]</p>
-
-        <p *ngIf="!officialMempoolSpace">v{{ packetJsonVersion }} [<a target="_blank"
-            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{
-            frontendGitCommitHash
-            }}</a>]</p>
-
+        <p *ngIf="officialMempoolSpace">
+          <span>{{ (backendInfo$ | async)?.hostname }} (v{{ (backendInfo$ | async )?.version }}) [<a target="_blank" href="https://github.comlitecoin-foundation/ltcspace/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}</a>]</span>
+          <span *ngIf="stateService.env.GIT_COMMIT_HASH_MEMPOOL_SPACE"> - (v{{ (servicesBackendInfo$ | async )?.version }}) [{{ (servicesBackendInfo$ | async )?.gitCommit | slice:0:8 }}]</span>
+        </p>
+        <p *ngIf="!officialMempoolSpace">v{{ packetJsonVersion }} [<a target="_blank" href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{ frontendGitCommitHash }}</a>]</p>
       </div>
     </div>
   </div>
+
 </footer>

@@ -11,12 +11,13 @@ const BROWSER_TIMEOUT = 8000;
 const maxAgeMs = (config.PUPPETEER.MAX_PAGE_AGE || (24 * 60 * 60)) * 1000;
 const maxConcurrency = config.PUPPETEER.CLUSTER_SIZE;
 
-interface RepairablePage extends puppeteer.Page {
+export interface RepairablePage extends puppeteer.Page {
   repairRequested?: boolean;
   language?: string | null;
   createdAt?: number;
   free?: boolean;
   index?: number;
+  clusterGroup?: string;
 }
 
 interface ResourceData {
@@ -76,7 +77,7 @@ export default class ReusablePage extends ConcurrencyImplementation {
     for (let i = 0; i < maxConcurrency; i++) {
       const newPage = await this.initPage();
       newPage.index = this.pages.length;
-      logger.info(`initialized page ${newPage.index}`);
+      logger.info(`initialized page ${newPage.clusterGroup}:${newPage.index}`);
       this.pages.push(newPage);
     }
   }
@@ -87,30 +88,24 @@ export default class ReusablePage extends ConcurrencyImplementation {
 
   protected async initPage(): Promise<RepairablePage> {
     const page = await (this.browser as puppeteer.Browser).newPage() as RepairablePage;
+    page.clusterGroup = 'unfurler';
     page.language = null;
     page.createdAt = Date.now();
     let defaultUrl
-    if (config.MEMPOOL.NETWORK !== 'bisq') {
-      // preload the preview module
-      defaultUrl = mempoolHost + '/preview/block/1';
-    } else {
-      // no preview module implemented yet for bisq
-      defaultUrl = mempoolHost;
-    }
+    // preload the preview module
+    defaultUrl = mempoolHost + '/preview/block/1';
     page.on('pageerror', (err) => {
       page.repairRequested = true;
     });
-    if (config.MEMPOOL.NETWORK !== 'bisq') {
-      try {
-        await page.goto(defaultUrl, { waitUntil: "load" });
-        await Promise.race([
-          page.waitForSelector('meta[property="og:preview:ready"]', { timeout: config.PUPPETEER.RENDER_TIMEOUT || 3000 }).then(() => true),
-          page.waitForSelector('meta[property="og:preview:fail"]', { timeout: config.PUPPETEER.RENDER_TIMEOUT || 3000 }).then(() => false)
-        ])
-      } catch (e) {
-        logger.err(`failed to load frontend during page initialization: ` + (e instanceof Error ? e.message : `${e}`));
-        page.repairRequested = true;
-      }
+    try {
+      await page.goto(defaultUrl, { waitUntil: "load" });
+      await Promise.race([
+        page.waitForSelector('meta[property="og:preview:ready"]', { timeout: config.PUPPETEER.RENDER_TIMEOUT || 3000 }).then(() => true),
+        page.waitForSelector('meta[property="og:preview:fail"]', { timeout: config.PUPPETEER.RENDER_TIMEOUT || 3000 }).then(() => false)
+      ])
+    } catch (e) {
+      logger.err(`failed to load frontend during page initialization  ${page.clusterGroup}:${page.index}: ` + (e instanceof Error ? e.message : `${e}`));
+      page.repairRequested = true;
     }
     page.free = true;
     return page
@@ -129,6 +124,7 @@ export default class ReusablePage extends ConcurrencyImplementation {
 
   protected async repairPage(page) {
     // create a new page
+    logger.info(`Repairing page ${page.clusterGroup}:${page.index}`);
     const newPage = await this.initPage();
     newPage.free = true;
     // replace the old page
@@ -138,9 +134,10 @@ export default class ReusablePage extends ConcurrencyImplementation {
     try {
       await page.goto('about:blank', {timeout: 200}); // prevents memory leak (maybe?)
     } catch (e) {
-      logger.err('unexpected page repair error');
+      logger.err(`unexpected page repair error ${page.clusterGroup}:${page.index}`);
+    } finally {
+      await page.close();
     }
-    await page.close();
     return newPage;
   }
 

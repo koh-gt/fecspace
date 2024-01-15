@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow: hidden;
 
   --chain-height: 60px;
   --clock-width: 300px;
@@ -62,6 +63,7 @@
     .label {
       font-size: calc(0.04 * var(--clock-width));
       line-height: calc(0.05 * var(--clock-width));
+      text-transform: lowercase;
     }
 
     &.top {

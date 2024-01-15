@@ -2,20 +2,20 @@
 
 This directory contains the Dockerfiles used to build and release the official images, as well as a `docker-compose.yml` to configure environment variables and other settings.
 
-If you are looking to use these Docker images to deploy your own instance of Mempool, note that they only containerize Mempool's frontend and backend. You will still need to deploy and configure Bitcoin Core and an Electrum Server separately, along with any other utilities specific to your use case (e.g., a reverse proxy, etc). Such configuration is mostly beyond the scope of the Mempool project, so please only proceed if you know what you're doing.
+If you are looking to use these Docker images to deploy your own instance of Litecoin Space, note that they only containerize Mempool's frontend and backend. You will still need to deploy and configure Litecoin Core and an Electrum Server separately, along with any other utilities specific to your use case (e.g., a reverse proxy, etc). Such configuration is mostly beyond the scope of the Litecoin Space project, so please only proceed if you know what you're doing.
 
 See a video guide of this installation method by k3tan [on BitcoinTV.com](https://bitcointv.com/w/8fpAx6rf5CQ16mMhospwjg).
 
 Jump to a section in this doc:
-- [Configure with Bitcoin Core Only](#configure-with-bitcoin-core-only)
-- [Configure with Bitcoin Core + Electrum Server](#configure-with-bitcoin-core--electrum-server)
+- [Configure with Litecoin Core Only](#configure-with-bitcoin-core-only)
+- [Configure with Litecoin Core + Electrum Server](#configure-with-bitcoin-core--electrum-server)
 - [Further Configuration](#further-configuration)
 
-## Configure with Bitcoin Core Only
+## Configure with Litecoin Core Only
 
 _Note: address lookups require an Electrum Server and will not work with this configuration. [Add an Electrum Server](#configure-with-bitcoin-core--electrum-server) to your backend for full functionality._
 
-The default Docker configuration assumes you have the following configuration in your `bitcoin.conf` file:
+The default Docker configuration assumes you have the following configuration in your `litecoin.conf` file:
 
 ```ini
 txindex=1
@@ -31,15 +31,15 @@ If you want to use different credentials, specify them in the `docker-compose.ym
     environment:
       MEMPOOL_BACKEND: "none"
       CORE_RPC_HOST: "172.27.0.1"
-      CORE_RPC_PORT: "8332"
+      CORE_RPC_PORT: "9332"
       CORE_RPC_USERNAME: "customuser"
       CORE_RPC_PASSWORD: "custompassword"
       CORE_RPC_TIMEOUT: "60000"
 ```
 
-The IP address in the example above refers to Docker's default gateway IP address so that the container can hit the `bitcoind` instance running on the host machine. If your setup is different, update it accordingly.
+The IP address in the example above refers to Docker's default gateway IP address so that the container can hit the `litecoind` instance running on the host machine. If your setup is different, update it accordingly.
 
-Make sure `bitcoind` is running and synced.
+Make sure `litecoind` is running and synced.
 
 Now, run:
 
@@ -49,9 +49,9 @@ docker-compose up
 
 Your Mempool instance should be running at http://localhost. The graphs will be populated as new transactions are detected.
 
-## Configure with Bitcoin Core + Electrum Server
+## Configure with Litecoin Core + Electrum Server
 
-First, configure `bitcoind` as specified above, and make sure your Electrum Server is running and synced. See [this FAQ](https://mempool.space/docs/faq#address-lookup-issues) if you need help picking an Electrum Server implementation.
+First, configure `litecoind` as specified above, and make sure your Electrum Server is running and synced. See [this FAQ](https://litecoinspace.org/docs/faq#address-lookup-issues) if you need help picking an Electrum Server implementation.
 
 Then, set the following variables in `docker-compose.yml` so Mempool can connect to your Electrum Server:
 
@@ -71,7 +71,7 @@ Eligible values for `MEMPOOL_BACKEND`:
 
 Of course, if your Docker host IP address is different, update accordingly.
 
-With `bitcoind` and Electrum Server set up, run Mempool with:
+With `litecoind` and Electrum Server set up, run Mempool with:
 
 ```bash
 docker-compose up
@@ -113,7 +113,8 @@ Below we list all settings from `mempool-config.json` and the corresponding over
     "ADVANCED_GBT_MEMPOOL": false,
     "CPFP_INDEXING": false,
     "MAX_BLOCKS_BULK_QUERY": 0,
-    "DISK_CACHE_BLOCK_INTERVAL": 6
+    "DISK_CACHE_BLOCK_INTERVAL": 6,
+    "PRICE_UPDATES_PER_HOUR": 1
   },
 ```
 
@@ -123,7 +124,7 @@ Corresponding `docker-compose.yml` overrides:
     environment:
       MEMPOOL_NETWORK: ""
       MEMPOOL_BACKEND: ""
-      MEMPOOL_HTTP_PORT: ""
+      BACKEND_HTTP_PORT: ""
       MEMPOOL_SPAWN_CLUSTER_PROCS: ""
       MEMPOOL_API_URL_PREFIX: ""
       MEMPOOL_POLL_RATE_MS: ""
@@ -144,8 +145,9 @@ Corresponding `docker-compose.yml` overrides:
       MEMPOOL_ADVANCED_GBT_AUDIT: ""
       MEMPOOL_ADVANCED_GBT_MEMPOOL: ""
       MEMPOOL_CPFP_INDEXING: ""
-      MAX_BLOCKS_BULK_QUERY: ""
-      DISK_CACHE_BLOCK_INTERVAL: ""
+      MEMPOOL_MAX_BLOCKS_BULK_QUERY: ""
+      MEMPOOL_DISK_CACHE_BLOCK_INTERVAL: ""
+      MEMPOOL_PRICE_UPDATES_PER_HOUR: ""
       ...
 ```
 
@@ -159,10 +161,12 @@ Corresponding `docker-compose.yml` overrides:
 ```json
   "CORE_RPC": {
     "HOST": "127.0.0.1",
-    "PORT": 8332,
+    "PORT": 9332,
     "USERNAME": "mempool",
     "PASSWORD": "mempool",
-    "TIMEOUT": 60000
+    "TIMEOUT": 60000,
+    "COOKIE": false,
+    "COOKIE_PATH": ""
   },
 ```
 
@@ -175,6 +179,8 @@ Corresponding `docker-compose.yml` overrides:
       CORE_RPC_USERNAME: ""
       CORE_RPC_PASSWORD: ""
       CORE_RPC_TIMEOUT: 60000
+      CORE_RPC_COOKIE: false
+      CORE_RPC_COOKIE_PATH: ""
       ...
 ```
 
@@ -226,10 +232,12 @@ Corresponding `docker-compose.yml` overrides:
 ```json
   "SECOND_CORE_RPC": {
     "HOST": "127.0.0.1",
-    "PORT": 8332,
+    "PORT": 9332,
     "USERNAME": "mempool",
     "PASSWORD": "mempool",
-    "TIMEOUT": 60000
+    "TIMEOUT": 60000,
+    "COOKIE": false,
+    "COOKIE_PATH": ""
   },
 ```
 
@@ -242,6 +250,8 @@ Corresponding `docker-compose.yml` overrides:
       SECOND_CORE_RPC_USERNAME: ""
       SECOND_CORE_RPC_PASSWORD: ""
       SECOND_CORE_RPC_TIMEOUT: ""
+      SECOND_CORE_RPC_COOKIE: false
+      SECOND_CORE_RPC_COOKIE_PATH: ""
       ...
 ```
 
@@ -321,25 +331,6 @@ Corresponding `docker-compose.yml` overrides:
 
 `mempool-config.json`:
 ```json
-  "BISQ": {
-    "ENABLED": false,
-    "DATA_PATH": "/bisq/statsnode-data/btc_mainnet/db"
-  }
-```
-
-Corresponding `docker-compose.yml` overrides:
-```yaml
-  api:
-    environment:
-      BISQ_ENABLED: ""
-      BISQ_DATA_PATH: ""
-      ...
-```
-
-<br/>
-
-`mempool-config.json`:
-```json
   "SOCKS5PROXY": {
     "ENABLED": false,
     "HOST": "127.0.0.1",
@@ -358,25 +349,6 @@ Corresponding `docker-compose.yml` overrides:
       SOCKS5PROXY_PORT: ""
       SOCKS5PROXY_USERNAME: ""
       SOCKS5PROXY_PASSWORD: ""
-      ...
-```
-
-<br/>
-
-`mempool-config.json`:
-```json
-  "PRICE_DATA_SERVER": {
-    "TOR_URL": "http://wizpriceje6q5tdrxkyiazsgu7irquiqjy2dptezqhrtu7l2qelqktid.onion/getAllMarketPrices",
-    "CLEARNET_URL": "https://price.bisq.wiz.biz/getAllMarketPrices"
-  }
-```
-
-Corresponding `docker-compose.yml` overrides:
-```yaml
-  api:
-    environment:
-      PRICE_DATA_SERVER_TOR_URL: ""
-      PRICE_DATA_SERVER_CLEARNET_URL: ""
       ...
 ```
 

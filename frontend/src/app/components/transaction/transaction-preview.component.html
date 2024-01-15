@@ -6,7 +6,7 @@
     <div class="title-wrapper">
       <h1 class="title truncated"><app-truncate [text]="txId"></app-truncate></h1>
     </div>
-    <div *ngIf="network !== 'liquid' && network !== 'liquidtestnet'" class="features">
+    <div class="features">
       <app-tx-features [tx]="tx"></app-tx-features>
       <span
         *ngIf="cpfpInfo && (cpfpInfo?.bestDescendant || cpfpInfo?.descendants?.length || cpfpInfo?.ancestors?.length)"
@@ -17,8 +17,6 @@
   </div>
   <div class="top-data row">
     <span class="field col-sm-4 text-left">
-      <ng-template [ngIf]="isLiquid && haveBlindedOutputValues(tx)" [ngIfElse]="defaultAmount"
-        i18n="shared.confidential">Confidential</ng-template>
       <ng-template #defaultAmount>
         <app-amount [satoshis]="totalValue"></app-amount>
       </ng-template>
@@ -38,16 +36,16 @@
         <span [innerHTML]="'&lrm;' + (tx.weight | wuBytes: 2)"></span>
       </p>
       <p class="field" *ngIf="!isCoinbase(tx)">
-        {{ tx.feePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-vbyte|lit/vB">lit/vB</span>
+        <app-fee-rate [fee]="tx.feePerVsize"></app-fee-rate>
       </p>
     </div>
     <div class="overlaid">
       <ng-container [ngSwitch]="extraData">
         <div class="opreturns" *ngSwitchCase="'coinbase'">
-          <div class="opreturn-row">
-            <span class="label">Coinbase</span>
-            <span class="message">{{ tx.vin[0].scriptsig | hex2ascii }}</span>
-          </div>
+            <div class="opreturn-row">
+              <span class="label" i18n="transactions-list.coinbase">Coinbase</span>
+              <span class="message">{{ tx.vin[0].scriptsig | hex2ascii }}</span>
+            </div>
         </div>
         <div class="opreturns" *ngSwitchCase="'opreturn'">
           <ng-container *ngFor="let vout of opReturns.slice(0,3)">

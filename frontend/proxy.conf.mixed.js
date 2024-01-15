@@ -38,9 +38,34 @@ PROXY_CONFIG.push(
       secure: false,
       changeOrigin: true,
       proxyTimeout: 30000,
-    },
-  ]
-);
+    }
+  ]);
+
+PROXY_CONFIG.push(...[
+  {
+    context: ['/api/v1/services/**'],
+    target: `http://localhost:9000`,
+    secure: false,
+    ws: true,
+    changeOrigin: true,
+    proxyTimeout: 30000,
+  },
+  {
+    context: ['/api/v1/**'],
+    target: `http://localhost:8999`,
+    secure: false,
+    ws: true,
+    changeOrigin: true,
+    proxyTimeout: 30000,
+  },
+  {
+    context: ['/api/**'],
+    target: `https://litecoinspace.org`,
+    secure: false,
+    changeOrigin: true,
+    proxyTimeout: 30000,
+  }
+]);
 
 console.log(PROXY_CONFIG);
 

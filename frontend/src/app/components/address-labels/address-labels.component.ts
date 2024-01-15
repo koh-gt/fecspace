@@ -44,11 +44,6 @@ export class AddressLabelsComponent implements OnChanges {
   handleVin() {
     if (this.vin.inner_witnessscript_asm) {
       if (this.vin.inner_witnessscript_asm.indexOf('OP_DEPTH OP_PUSHNUM_12 OP_EQUAL OP_IF OP_PUSHNUM_11') === 0) {
-        if (this.vin.witness.length > 11) {
-          this.label = 'Liquid Peg Out';
-        } else {
-          this.label = 'Emergency Liquid Peg Out';
-        }
         return;
       }
 

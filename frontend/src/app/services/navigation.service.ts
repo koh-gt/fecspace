@@ -61,7 +61,7 @@ export class NavigationService {
       }
       if (route.url?.length) {
         path = [path, ...route.url.map(segment => segment.path).filter(path => {
-          return path.length && !['testnet', 'signet'].includes(path);
+          return path.length && !['testnet'].includes(path);
         })].join('/');
       }
       route = route.firstChild;

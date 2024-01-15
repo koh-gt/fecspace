@@ -12,15 +12,16 @@ import {
   tap
 } from 'rxjs/operators';
 import { Transaction } from '../../interfaces/electrs.interface';
-import { of, merge, Subscription, Observable, Subject, timer, from, throwError } from 'rxjs';
+import { of, merge, Subscription, Observable, Subject, from, throwError } from 'rxjs';
 import { StateService } from '../../services/state.service';
 import { CacheService } from '../../services/cache.service';
 import { WebsocketService } from '../../services/websocket.service';
 import { AudioService } from '../../services/audio.service';
 import { ApiService } from '../../services/api.service';
 import { SeoService } from '../../services/seo.service';
-import { BlockExtended, CpfpInfo, RbfTree, MempoolPosition } from '../../interfaces/node-api.interface';
-import { LiquidUnblinding } from './liquid-ublinding';
+import { StorageService } from '../../services/storage.service';
+import { seoDescriptionNetwork } from '../../shared/common.utils';
+import { BlockExtended, CpfpInfo, RbfTree, MempoolPosition, DifficultyAdjustment, Acceleration } from '../../interfaces/node-api.interface';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url/relative-url.pipe';
 import { Price, PriceService } from '../../services/price.service';
 import { isFeatureActive } from '../../bitcoin.utils';
@@ -39,6 +40,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoadingTx = true;
   error: any = undefined;
   errorUnblinded: any = undefined;
+  loadingCachedTx = false;
   waitingForTransaction = false;
   latestBlock: BlockExtended;
   transactionTime = -1;
@@ -46,27 +48,31 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   fetchCpfpSubscription: Subscription;
   fetchRbfSubscription: Subscription;
   fetchCachedTxSubscription: Subscription;
+  fetchAccelerationSubscription: Subscription;
   txReplacedSubscription: Subscription;
   txRbfInfoSubscription: Subscription;
   mempoolPositionSubscription: Subscription;
-  blocksSubscription: Subscription;
   queryParamsSubscription: Subscription;
   urlFragmentSubscription: Subscription;
   mempoolBlocksSubscription: Subscription;
+  blocksSubscription: Subscription;
   fragmentParams: URLSearchParams;
   rbfTransaction: undefined | Transaction;
   replaced: boolean = false;
   rbfReplaces: string[];
   rbfInfo: RbfTree;
   cpfpInfo: CpfpInfo | null;
+  accelerationInfo: Acceleration | null = null;
+  sigops: number | null;
+  adjustedVsize: number | null;
   showCpfpDetails = false;
   fetchCpfp$ = new Subject<string>();
   fetchRbfHistory$ = new Subject<string>();
   fetchCachedTx$ = new Subject<string>();
+  fetchAcceleration$ = new Subject<string>();
   isCached: boolean = false;
   now = Date.now();
-  timeAvg$: Observable<number>;
-  liquidUnblinding = new LiquidUnblinding();
+  da$: Observable<DifficultyAdjustment>;
   inputIndex: number;
   outputIndex: number;
   graphExpanded: boolean = false;
@@ -86,6 +92,11 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   segwitEnabled: boolean;
   rbfEnabled: boolean;
   taprootEnabled: boolean;
+  hasEffectiveFeeRate: boolean;
+  accelerateCtaType: 'alert' | 'button' = 'button';
+  acceleratorAvailable: boolean = this.stateService.env.OFFICIAL_MEMPOOL_SPACE && this.stateService.env.ACCELERATOR && this.stateService.network === '';
+  showAccelerationSummary = false;
+  scrollIntoAccelPreview = false;
 
   @ViewChild('graphContainer')
   graphContainer: ElementRef;
@@ -95,20 +106,28 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private relativeUrlPipe: RelativeUrlPipe,
     private electrsApiService: ElectrsApiService,
-    private stateService: StateService,
+    public stateService: StateService,
     private cacheService: CacheService,
     private websocketService: WebsocketService,
     private audioService: AudioService,
     private apiService: ApiService,
     private seoService: SeoService,
     private priceService: PriceService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
+    this.acceleratorAvailable = this.stateService.env.OFFICIAL_MEMPOOL_SPACE && this.stateService.env.ACCELERATOR && this.stateService.network === '';
+
     this.websocketService.want(['blocks', 'mempool-blocks']);
     this.stateService.networkChanged$.subscribe(
-      (network) => (this.network = network)
+      (network) => {
+        this.network = network;
+        this.acceleratorAvailable = this.stateService.env.OFFICIAL_MEMPOOL_SPACE && this.stateService.env.ACCELERATOR && this.stateService.network === '';
+      }
     );
+
+    this.accelerateCtaType = (this.storageService.getValue('accel-cta-type') as 'alert' | 'button') ?? 'button';
 
     this.setFlowEnabled();
     this.flowPrefSubscription = this.stateService.hideFlow.subscribe((hide) => {
@@ -116,11 +135,11 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       this.setFlowEnabled();
     });
 
-    this.timeAvg$ = timer(0, 1000)
-      .pipe(
-        switchMap(() => this.stateService.difficultyAdjustment$),
-        map((da) => da.timeAvg)
-      );
+    this.da$ = this.stateService.difficultyAdjustment$.pipe(
+      tap(() => {
+        this.now = Date.now();
+      })
+    );
 
     this.urlFragmentSubscription = this.route.fragment.subscribe((fragment) => {
       this.fragmentParams = new URLSearchParams(fragment || '');
@@ -128,6 +147,10 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       const vout = parseInt(this.fragmentParams.get('vout'), 10);
       this.inputIndex = (!isNaN(vin) && vin >= 0) ? vin : null;
       this.outputIndex = (!isNaN(vout) && vout >= 0) ? vout : null;
+    });
+
+    this.blocksSubscription = this.stateService.blocks$.subscribe((blocks) => {
+      this.latestBlock = blocks[0];
     });
 
     this.fetchCpfpSubscription = this.fetchCpfp$
@@ -155,25 +178,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       )
       .subscribe((cpfpInfo) => {
-        if (!cpfpInfo || !this.tx) {
-          this.cpfpInfo = null;
-          return;
-        }
-        // merge ancestors/descendants
-        const relatives = [...(cpfpInfo.ancestors || []), ...(cpfpInfo.descendants || [])];
-        if (cpfpInfo.bestDescendant && !cpfpInfo.descendants?.length) {
-          relatives.push(cpfpInfo.bestDescendant);
-        }
-        let totalWeight =
-          this.tx.weight +
-          relatives.reduce((prev, val) => prev + val.weight, 0);
-        let totalFees =
-          this.tx.fee +
-          relatives.reduce((prev, val) => prev + val.fee, 0);
-
-        this.tx.effectiveFeePerVsize = totalFees / (totalWeight / 4);
-
-        this.cpfpInfo = cpfpInfo;
+        this.setCpfpInfo(cpfpInfo);
       });
 
     this.fetchRbfSubscription = this.fetchRbfHistory$
@@ -192,6 +197,9 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.fetchCachedTxSubscription = this.fetchCachedTx$
     .pipe(
+      tap(() => {
+        this.loadingCachedTx = true;
+      }),
       switchMap((txId) =>
         this.apiService
           .getRbfCachedTx$(txId)
@@ -200,9 +208,12 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
         return of(null);
       })
     ).subscribe((tx) => {
+      this.loadingCachedTx = false;
       if (!tx) {
+        this.seoService.logSoft404();
         return;
       }
+      this.seoService.clearSoft404();
 
       if (!this.tx) {
         this.tx = tx;
@@ -228,14 +239,40 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
+    this.fetchAccelerationSubscription = this.fetchAcceleration$.pipe(
+      filter(() => this.stateService.env.ACCELERATOR === true),
+      tap(() => {
+        this.accelerationInfo = null;
+      }),
+      switchMap((blockHash: string) => {
+        return this.apiService.getAccelerationHistory$({ blockHash });
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    ).subscribe((accelerationHistory) => {
+      for (const acceleration of accelerationHistory) {
+        if (acceleration.txid === this.txId && (acceleration.status === 'completed' || acceleration.status === 'mined') && acceleration.feePaid > 0) {
+          acceleration.actualFeeDelta = Math.max(acceleration.effectiveFee, acceleration.effectiveFee + acceleration.feePaid - acceleration.baseFee - acceleration.vsizeFee);
+          this.accelerationInfo = acceleration;
+        }
+      }
+    });
+
     this.mempoolPositionSubscription = this.stateService.mempoolTxPosition$.subscribe(txPosition => {
+      this.now = Date.now();
       if (txPosition && txPosition.txid === this.txId && txPosition.position) {
         this.mempoolPosition = txPosition.position;
         if (this.tx && !this.tx.status.confirmed) {
           this.stateService.markBlock$.next({
+            txid: txPosition.txid,
             mempoolPosition: this.mempoolPosition
           });
           this.txInBlockIndex = this.mempoolPosition.block;
+
+          if (txPosition.cpfp !== undefined) {
+            this.setCpfpInfo(txPosition.cpfp);
+          }
         }
       } else {
         this.mempoolPosition = null;
@@ -299,23 +336,16 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           );
         }),
         switchMap((tx) => {
-          if (this.network === 'liquid' || this.network === 'liquidtestnet') {
-            return from(this.liquidUnblinding.checkUnblindedTx(tx))
-              .pipe(
-                catchError((error) => {
-                  this.errorUnblinded = error;
-                  return of(tx);
-                })
-              );
-          }
           return of(tx);
         })
       )
       .subscribe((tx: Transaction) => {
           if (!tx) {
             this.fetchCachedTx$.next(this.txId);
+            this.seoService.logSoft404();
             return;
           }
+          this.seoService.clearSoft404();
 
           this.tx = tx;
           this.setFeatures();
@@ -323,9 +353,14 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           if (tx.fee === undefined) {
             this.tx.fee = 0;
           }
+          if (this.tx.sigops != null) {
+            this.sigops = this.tx.sigops;
+            this.adjustedVsize = Math.max(this.tx.weight / 4, this.sigops * 5);
+          }
           this.tx.feePerVsize = tx.fee / (tx.weight / 4);
           this.isLoadingTx = false;
           this.error = undefined;
+          this.loadingCachedTx = false;
           this.waitingForTransaction = false;
           this.websocketService.startTrackTransaction(tx.txid);
           this.graphExpanded = false;
@@ -338,6 +373,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
               this.getTransactionTime();
             }
           } else {
+            this.fetchAcceleration$.next(tx.status.block_hash);
             this.transactionTime = 0;
           }
 
@@ -349,6 +385,7 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           } else {
             if (tx.cpfpChecked) {
               this.stateService.markBlock$.next({
+                txid: tx.txid,
                 txFeePerVSize: tx.effectiveFeePerVsize,
                 mempoolPosition: this.mempoolPosition,
               });
@@ -356,6 +393,8 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
                 ancestors: tx.ancestors,
                 bestDescendant: tx.bestDescendant,
               };
+              const hasRelatives = !!(tx.ancestors?.length || tx.bestDescendant);
+              this.hasEffectiveFeeRate = hasRelatives || (tx.effectiveFeePerVsize && (Math.abs(tx.effectiveFeePerVsize - tx.feePerVsize) > 0.01));
             } else {
               this.fetchCpfp$.next(this.tx.txid);
             }
@@ -367,19 +406,18 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
               this.blockConversion = price;
             })
           ).subscribe();
-      
+
           setTimeout(() => { this.applyFragment(); }, 0);
         },
         (error) => {
           this.error = error;
+          this.seoService.logSoft404();
           this.isLoadingTx = false;
         }
       );
 
-    this.blocksSubscription = this.stateService.blocks$.subscribe(([block, txConfirmed]) => {
-      this.latestBlock = block;
-
-      if (txConfirmed && this.tx && !this.tx.status.confirmed) {
+    this.stateService.txConfirmed$.subscribe(([txConfirmed, block]) => {
+      if (txConfirmed && this.tx && !this.tx.status.confirmed && txConfirmed === this.tx.txid) {
         this.tx.status = {
           confirmed: true,
           block_height: block.height,
@@ -387,17 +425,25 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           block_time: block.timestamp,
         };
         this.stateService.markBlock$.next({ blockHeight: block.height });
-        this.audioService.playSound('magic');
+        if (this.tx.acceleration || (this.accelerationInfo && ['accelerating', 'mined', 'completed'].includes(this.accelerationInfo.status))) {
+          this.audioService.playSound('wind-chimes-harp-ascend');
+        } else {
+          this.audioService.playSound('magic');
+        }
+        this.fetchAcceleration$.next(block.id);
       }
     });
 
     this.txReplacedSubscription = this.stateService.txReplaced$.subscribe((rbfTransaction) => {
       if (!this.tx) {
         this.error = new Error();
+        this.loadingCachedTx = false;
         this.waitingForTransaction = false;
       }
       this.rbfTransaction = rbfTransaction;
       this.replaced = true;
+      this.stateService.markBlock$.next({});
+
       if (rbfTransaction && !this.tx) {
         this.fetchCachedTx$.next(this.txId);
       }
@@ -422,11 +468,11 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.mempoolBlocksSubscription = this.stateService.mempoolBlocks$.subscribe((mempoolBlocks) => {
+      this.now = Date.now();
+
       if (!this.tx || this.mempoolPosition) {
         return;
       }
-
-      this.now = Date.now();
 
       const txFeePerVSize =
         this.tx.effectiveFeePerVsize || this.tx.fee / (this.tx.weight / 4);
@@ -454,12 +500,27 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.setGraphSize();
   }
 
+  dismissAccelAlert(): void {
+    this.storageService.setValue('accel-cta-type', 'button');
+    this.accelerateCtaType = 'button';
+  }
+
+  onAccelerateClicked() {
+    if (!this.txId) {
+      return;
+    }
+    this.showAccelerationSummary = true && this.acceleratorAvailable;
+    this.scrollIntoAccelPreview = !this.scrollIntoAccelPreview;
+    return false;
+  }
+
   handleLoadElectrsTransactionError(error: any): Observable<any> {
     if (error.status === 404 && /^[a-fA-F0-9]{64}$/.test(this.txId)) {
       this.websocketService.startMultiTrackTransaction(this.txId);
       this.waitingForTransaction = true;
     }
     this.error = error;
+    this.seoService.logSoft404();
     this.isLoadingTx = false;
     return of(false);
   }
@@ -472,6 +533,41 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
           this.transactionTime = transactionTimes[0];
         }
       });
+  }
+
+  setCpfpInfo(cpfpInfo: CpfpInfo): void {
+    if (!cpfpInfo || !this.tx) {
+      this.cpfpInfo = null;
+      this.hasEffectiveFeeRate = false;
+      return;
+    }
+    // merge ancestors/descendants
+    const relatives = [...(cpfpInfo.ancestors || []), ...(cpfpInfo.descendants || [])];
+    if (cpfpInfo.bestDescendant && !cpfpInfo.descendants?.length) {
+      relatives.push(cpfpInfo.bestDescendant);
+    }
+    const hasRelatives = !!relatives.length;
+    if (!cpfpInfo.effectiveFeePerVsize && hasRelatives) {
+      const totalWeight =
+        this.tx.weight +
+        relatives.reduce((prev, val) => prev + val.weight, 0);
+      const totalFees =
+        this.tx.fee +
+        relatives.reduce((prev, val) => prev + val.fee, 0);
+      this.tx.effectiveFeePerVsize = totalFees / (totalWeight / 4);
+    } else {
+      this.tx.effectiveFeePerVsize = cpfpInfo.effectiveFeePerVsize;
+    }
+    if (cpfpInfo.acceleration) {
+      this.tx.acceleration = cpfpInfo.acceleration;
+    }
+
+    this.cpfpInfo = cpfpInfo;
+    if (this.cpfpInfo.adjustedVsize && this.cpfpInfo.sigops != null) {
+      this.sigops = this.cpfpInfo.sigops;
+      this.adjustedVsize = this.cpfpInfo.adjustedVsize;
+    }
+    this.hasEffectiveFeeRate = hasRelatives || (this.tx.effectiveFeePerVsize && (Math.abs(this.tx.effectiveFeePerVsize - this.tx.feePerVsize) > 0.01));
   }
 
   setFeatures(): void {
@@ -497,9 +593,13 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.replaced = false;
     this.transactionTime = -1;
     this.cpfpInfo = null;
+    this.adjustedVsize = null;
+    this.sigops = null;
+    this.hasEffectiveFeeRate = false;
     this.rbfInfo = null;
     this.rbfReplaces = [];
     this.showCpfpDetails = false;
+    this.accelerationInfo = null;
     this.txInBlockIndex = null;
     this.mempoolPosition = null;
     document.body.scrollTo(0, 0);
@@ -548,10 +648,14 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
   // simulate normal anchor fragment behavior
   applyFragment(): void {
     const anchor = Array.from(this.fragmentParams.entries()).find(([frag, value]) => value === '');
-    if (anchor) {
-      const anchorElement = document.getElementById(anchor[0]);
-      if (anchorElement) {
-        anchorElement.scrollIntoView();
+    if (anchor?.length) {
+      if (anchor[0] === 'accelerate') {
+        setTimeout(this.onAccelerateClicked.bind(this), 100);
+      } else {
+        const anchorElement = document.getElementById(anchor[0]);
+        if (anchorElement) {
+          anchorElement.scrollIntoView();
+        }
       }
     }
   }
@@ -575,15 +679,16 @@ export class TransactionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.fetchCpfpSubscription.unsubscribe();
     this.fetchRbfSubscription.unsubscribe();
     this.fetchCachedTxSubscription.unsubscribe();
+    this.fetchAccelerationSubscription.unsubscribe();
     this.txReplacedSubscription.unsubscribe();
     this.txRbfInfoSubscription.unsubscribe();
-    this.blocksSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.flowPrefSubscription.unsubscribe();
     this.urlFragmentSubscription.unsubscribe();
     this.mempoolBlocksSubscription.unsubscribe();
     this.mempoolPositionSubscription.unsubscribe();
     this.mempoolBlocksSubscription.unsubscribe();
+    this.blocksSubscription.unsubscribe();
     this.leaveTransaction();
   }
 }

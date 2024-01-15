@@ -39,8 +39,9 @@ export class GroupComponent implements OnInit {
     });
 
     this.seoService.setTitle(`litecoinspace.org Lightning Nodes`);
+    this.seoService.setDescription(`See all Lightning nodes run by litecoinspace.org -- these are the nodes that provide the data on the litecoinspace.org Lightning dashboard.`);
 
-    this.nodes$ = this.lightningApiService.getNodGroupNodes$('litecoinspace.org')
+    this.nodes$ = this.lightningApiService.getNodeGroup$('litecoinspace.org')
       .pipe(
         map((nodes) => {
           for (const node of nodes) {

@@ -13,20 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        module: ["mempool", "liquid", "bisq"]
+        module: ["mempool"]
         include:
           - module: "mempool"
             spec: |
               cypress/e2e/mainnet/*.spec.ts
-              cypress/e2e/signet/*.spec.ts
               cypress/e2e/testnet/*.spec.ts
-          - module: "liquid"
-            spec: |
-              cypress/e2e/liquid/liquid.spec.ts
-              cypress/e2e/liquidtestnet/liquidtestnet.spec.ts
-          - module: "bisq"
-            spec: |
-              cypress/e2e/bisq/bisq.spec.ts
 
     name: E2E tests for ${{ matrix.module }}
     steps:
@@ -38,7 +30,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.15.0
+          node-version: 20
           cache: "npm"
           cache-dependency-path: ${{ matrix.module }}/frontend/package-lock.json
 

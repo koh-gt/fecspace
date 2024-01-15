@@ -27,6 +27,7 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() minimal: boolean = false;
   @Input() blockWidth: number = 125;
   @Input() spotlight: number = 0;
+  @Input() getHref?: (index, block) => string = (index, block) => `/block/${block.id}`;
 
   specialBlocks = specialBlocks;
   network = '';
@@ -35,11 +36,13 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   emptyBlocks: BlockExtended[] = this.mountEmptyBlocks();
   markHeight: number;
   chainTip: number;
+  pendingMarkBlock: { animate: boolean, newBlockFromLeft: boolean };
   blocksSubscription: Subscription;
   blockPageSubscription: Subscription;
   networkSubscription: Subscription;
   tabHiddenSubscription: Subscription;
   markBlockSubscription: Subscription;
+  txConfirmedSubscription: Subscription;
   loadingBlocks$: Observable<boolean>;
   blockStyles = [];
   emptyBlockStyles = [];
@@ -72,15 +75,14 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   enabledMiningInfoIfNeeded(url) {
-    this.showMiningInfo = url.indexOf('/mining') !== -1;
+    this.showMiningInfo = url.includes('/mining') || url.includes('/acceleration');
     this.cd.markForCheck(); // Need to update the view asap
   }
 
   ngOnInit() {
-    this.chainTip = this.stateService.latestBlockHeight;
     this.dynamicBlocksAmount = Math.min(8, this.stateService.env.KEEP_BLOCKS_AMOUNT);
 
-    if (['', 'testnet', 'signet'].includes(this.stateService.network)) {
+    if (['', 'testnet'].includes(this.stateService.network)) {
       this.enabledMiningInfoIfNeeded(this.location.path());
       this.location.onUrlChange((url) => this.enabledMiningInfoIfNeeded(url));
     }
@@ -90,37 +92,30 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
       this.cd.markForCheck();
     });
 
-    if (this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet') {
-      this.feeRounding = '1.0-1';
-    }
     this.emptyBlocks.forEach((b) => this.emptyBlockStyles.push(this.getStyleForEmptyBlock(b)));
     this.loadingBlocks$ = this.stateService.isLoadingWebSocket$;
     this.networkSubscription = this.stateService.networkChanged$.subscribe((network) => this.network = network);
     this.tabHiddenSubscription = this.stateService.isTabHidden$.subscribe((tabHidden) => this.tabHidden = tabHidden);
     if (!this.static) {
       this.blocksSubscription = this.stateService.blocks$
-        .subscribe(([block, txConfirmed]) => {
-          if (this.blocks.some((b) => b.height === block.height)) {
+        .subscribe((blocks) => {
+          if (!blocks?.length) {
             return;
           }
+          const latestHeight = blocks[0].height;
+          const animate = this.chainTip != null && latestHeight > this.chainTip;
 
-          if (this.blocks.length && block.height !== this.blocks[0].height + 1) {
-            this.blocks = [];
-            this.blocksFilled = false;
+          for (const block of blocks) {
+            if (block?.extras) {
+              block.extras.minFee = this.getMinBlockFee(block);
+              block.extras.maxFee = this.getMaxBlockFee(block);
+            }
           }
 
-          this.blocks.unshift(block);
-          this.blocks = this.blocks.slice(0, this.dynamicBlocksAmount);
-
-          if (txConfirmed && block.height > this.chainTip) {
-            this.markHeight = block.height;
-            this.moveArrowToPosition(true, true);
-          } else {
-            this.moveArrowToPosition(true, false);
-          }
+          this.blocks = blocks;
 
           this.blockStyles = [];
-          if (this.blocksFilled && block.height > this.chainTip) {
+          if (animate) {
             this.blocks.forEach((b, i) => this.blockStyles.push(this.getStyleForBlock(b, i, i ? -this.blockOffset : -this.dividerBlockOffset)));
             setTimeout(() => {
               this.blockStyles = [];
@@ -131,13 +126,23 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
             this.blocks.forEach((b, i) => this.blockStyles.push(this.getStyleForBlock(b, i)));
           }
 
-          if (this.blocks.length === this.dynamicBlocksAmount) {
-            this.blocksFilled = true;
-          }
+          this.chainTip = latestHeight;
 
-          this.chainTip = Math.max(this.chainTip, block.height);
+          if (this.pendingMarkBlock) {
+            this.moveArrowToPosition(this.pendingMarkBlock.animate, this.pendingMarkBlock.newBlockFromLeft);
+            this.pendingMarkBlock = null;
+          }
           this.cd.markForCheck();
         });
+
+      this.txConfirmedSubscription = this.stateService.txConfirmed$.subscribe(([txid, block]) => {
+        if (txid) {
+          this.markHeight = block.height;
+          this.moveArrowToPosition(true, true);
+        } else {
+          this.moveArrowToPosition(true, false);
+        }
+      })
     } else {
       this.blockPageSubscription = this.cacheService.loadedBlocks$.subscribe((block) => {
         if (block.height <= this.height && block.height > this.height - this.count) {
@@ -156,9 +161,9 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
         this.cd.markForCheck();
       });
 
-      if (this.static) {
-        this.updateStaticBlocks();
-      }
+    if (this.static) {
+      this.updateStaticBlocks();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -182,6 +187,9 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
     if (this.blockPageSubscription) {
       this.blockPageSubscription.unsubscribe();
     }
+    if (this.txConfirmedSubscription) {
+      this.txConfirmedSubscription.unsubscribe();
+    }
     this.networkSubscription.unsubscribe();
     this.tabHiddenSubscription.unsubscribe();
     this.markBlockSubscription.unsubscribe();
@@ -193,6 +201,9 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
     if (this.markHeight === undefined) {
       this.arrowVisible = false;
       return;
+    }
+    if (this.chainTip == null) {
+      this.pendingMarkBlock = { animate, newBlockFromLeft };
     }
     const blockindex = this.blocks.findIndex((b) => b.height === this.markHeight);
     if (blockindex > -1) {
@@ -235,6 +246,10 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
       if (height >= 0) {
         this.cacheService.loadBlock(height);
         block = this.cacheService.getCachedBlock(height) || null;
+        if (block?.extras) {
+          block.extras.minFee = this.getMinBlockFee(block);
+          block.extras.maxFee = this.getMaxBlockFee(block);
+        }
       }
       this.blocks.push(block || {
         placeholder: height < 0,
@@ -273,6 +288,10 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
   onBlockLoaded(block: BlockExtended) {
     const blockIndex = this.height - block.height;
     if (blockIndex >= 0 && blockIndex < this.blocks.length) {
+      if (block?.extras) {
+        block.extras.minFee = this.getMinBlockFee(block);
+        block.extras.maxFee = this.getMaxBlockFee(block);
+      }
       this.blocks[blockIndex] = block;
       this.blockStyles[blockIndex] = this.getStyleForBlock(block, blockIndex);
     }
@@ -361,5 +380,24 @@ export class BlockchainBlocksComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
     return emptyBlocks;
+  }
+
+  getMinBlockFee(block: BlockExtended): number {
+    if (block?.extras?.feeRange) {
+      // heuristic to check if feeRange is adjusted for effective rates
+      if (block.extras.medianFee === block.extras.feeRange[3]) {
+        return block.extras.feeRange[1];
+      } else {
+        return block.extras.feeRange[0];
+      }
+    }
+    return 0;
+  }
+
+  getMaxBlockFee(block: BlockExtended): number {
+    if (block?.extras?.feeRange) {
+      return block.extras.feeRange[block.extras.feeRange.length - 1];
+    }
+    return 0;
   }
 }

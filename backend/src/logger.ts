@@ -154,4 +154,6 @@ class Logger {
   }
 }
 
+export type LogLevel = 'emerg' | 'alert' | 'crit' | 'err' | 'warn' | 'notice' | 'info' | 'debug';
+
 export default new Logger();

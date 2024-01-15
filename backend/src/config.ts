@@ -5,13 +5,14 @@ const configFromFile = require(
 interface IConfig {
   MEMPOOL: {
     ENABLED: boolean;
-    NETWORK: 'mainnet' | 'testnet' | 'signet' | 'liquid' | 'liquidtestnet';
+    NETWORK: 'mainnet' | 'testnet';
     BACKEND: 'esplora' | 'electrum' | 'none';
     HTTP_PORT: number;
     SPAWN_CLUSTER_PROCS: number;
     API_URL_PREFIX: string;
     POLL_RATE_MS: number;
     CACHE_DIR: string;
+    CACHE_ENABLED: boolean;
     CLEAR_PROTECTION_MINUTES: number;
     RECOMMENDED_FEE_PERCENTILE: number;
     BLOCK_WEIGHT_UNITS: number;
@@ -31,14 +32,22 @@ interface IConfig {
     AUDIT: boolean;
     ADVANCED_GBT_AUDIT: boolean;
     ADVANCED_GBT_MEMPOOL: boolean;
+    RUST_GBT: boolean;
     CPFP_INDEXING: boolean;
     MAX_BLOCKS_BULK_QUERY: number;
     DISK_CACHE_BLOCK_INTERVAL: number;
+    MAX_PUSH_TX_SIZE_WEIGHT: number;
+    ALLOW_UNREACHABLE: boolean;
+    PRICE_UPDATES_PER_HOUR: number;
   };
   ESPLORA: {
     REST_API_URL: string;
     UNIX_SOCKET_PATH: string | void | null;
+    BATCH_QUERY_BASE_SIZE: number;
     RETRY_UNIX_SOCKET_AFTER: number;
+    REQUEST_TIMEOUT: number;
+    FALLBACK_TIMEOUT: number;
+    FALLBACK: string[];
   };
   LIGHTNING: {
     ENABLED: boolean;
@@ -70,6 +79,8 @@ interface IConfig {
     USERNAME: string;
     PASSWORD: string;
     TIMEOUT: number;
+    COOKIE: boolean;
+    COOKIE_PATH: string;
   };
   SECOND_CORE_RPC: {
     HOST: string;
@@ -77,6 +88,8 @@ interface IConfig {
     USERNAME: string;
     PASSWORD: string;
     TIMEOUT: number;
+    COOKIE: boolean;
+    COOKIE_PATH: string;
   };
   DATABASE: {
     ENABLED: boolean;
@@ -87,6 +100,7 @@ interface IConfig {
     USERNAME: string;
     PASSWORD: string;
     TIMEOUT: number;
+    PID_DIR: string;
   };
   SYSLOG: {
     ENABLED: boolean;
@@ -117,6 +131,21 @@ interface IConfig {
     GEOLITE2_ASN: string;
     GEOIP2_ISP: string;
   },
+  REPLICATION: {
+    ENABLED: boolean;
+    AUDIT: boolean;
+    AUDIT_START_HEIGHT: number;
+    SERVERS: string[];
+  },
+  MEMPOOL_SERVICES: {
+    API: string;
+    ACCELERATIONS: boolean;
+  },
+  REDIS: {
+    ENABLED: boolean;
+    UNIX_SOCKET_PATH: string;
+    BATCH_QUERY_BASE_SIZE: number;
+  },
 }
 
 const defaults: IConfig = {
@@ -129,6 +158,7 @@ const defaults: IConfig = {
     'API_URL_PREFIX': '/api/v1/',
     'POLL_RATE_MS': 2000,
     'CACHE_DIR': './cache',
+    'CACHE_ENABLED': true,
     'CLEAR_PROTECTION_MINUTES': 20,
     'RECOMMENDED_FEE_PERCENTILE': 50,
     'BLOCK_WEIGHT_UNITS': 4000000,
@@ -148,14 +178,22 @@ const defaults: IConfig = {
     'AUDIT': false,
     'ADVANCED_GBT_AUDIT': false,
     'ADVANCED_GBT_MEMPOOL': false,
+    'RUST_GBT': false,
     'CPFP_INDEXING': false,
     'MAX_BLOCKS_BULK_QUERY': 0,
     'DISK_CACHE_BLOCK_INTERVAL': 6,
+    'MAX_PUSH_TX_SIZE_WEIGHT': 400000,
+    'ALLOW_UNREACHABLE': true,
+    'PRICE_UPDATES_PER_HOUR': 1,
   },
   'ESPLORA': {
     'REST_API_URL': 'http://127.0.0.1:3000',
     'UNIX_SOCKET_PATH': null,
+    'BATCH_QUERY_BASE_SIZE': 1000,
     'RETRY_UNIX_SOCKET_AFTER': 30000,
+    'REQUEST_TIMEOUT': 10000,
+    'FALLBACK_TIMEOUT': 5000,
+    'FALLBACK': [],
   },
   'ELECTRUM': {
     'HOST': '127.0.0.1',
@@ -164,17 +202,21 @@ const defaults: IConfig = {
   },
   'CORE_RPC': {
     'HOST': '127.0.0.1',
-    'PORT': 8332,
+    'PORT': 9332,
     'USERNAME': 'mempool',
     'PASSWORD': 'mempool',
     'TIMEOUT': 60000,
+    'COOKIE': false,
+    'COOKIE_PATH': '/bitcoin/.cookie'
   },
   'SECOND_CORE_RPC': {
     'HOST': '127.0.0.1',
-    'PORT': 8332,
+    'PORT': 9332,
     'USERNAME': 'mempool',
     'PASSWORD': 'mempool',
     'TIMEOUT': 60000,
+    'COOKIE': false,
+    'COOKIE_PATH': '/bitcoin/.cookie'
   },
   'DATABASE': {
     'ENABLED': true,
@@ -185,6 +227,7 @@ const defaults: IConfig = {
     'USERNAME': 'mempool',
     'PASSWORD': 'mempool',
     'TIMEOUT': 180000,
+    'PID_DIR': '',
   },
   'SYSLOG': {
     'ENABLED': true,
@@ -234,6 +277,21 @@ const defaults: IConfig = {
     'GEOLITE2_ASN': '/usr/local/share/GeoIP/GeoLite2-ASN.mmdb',
     'GEOIP2_ISP': '/usr/local/share/GeoIP/GeoIP2-ISP.mmdb'
   },
+  'REPLICATION': {
+    'ENABLED': false,
+    'AUDIT': false,
+    'AUDIT_START_HEIGHT': 774000,
+    'SERVERS': [],
+  },
+  'MEMPOOL_SERVICES': {
+    'API': '',
+    'ACCELERATIONS': false,
+  },
+  'REDIS': {
+    'ENABLED': false,
+    'UNIX_SOCKET_PATH': '',
+    'BATCH_QUERY_BASE_SIZE': 5000,
+  },
 };
 
 class Config implements IConfig {
@@ -251,6 +309,9 @@ class Config implements IConfig {
   SOCKS5PROXY: IConfig['SOCKS5PROXY'];
   EXTERNAL_DATA_SERVER: IConfig['EXTERNAL_DATA_SERVER'];
   MAXMIND: IConfig['MAXMIND'];
+  REPLICATION: IConfig['REPLICATION'];
+  MEMPOOL_SERVICES: IConfig['MEMPOOL_SERVICES'];
+  REDIS: IConfig['REDIS'];
 
   constructor() {
     const configs = this.merge(configFromFile, defaults);
@@ -268,6 +329,9 @@ class Config implements IConfig {
     this.SOCKS5PROXY = configs.SOCKS5PROXY;
     this.EXTERNAL_DATA_SERVER = configs.EXTERNAL_DATA_SERVER;
     this.MAXMIND = configs.MAXMIND;
+    this.REPLICATION = configs.REPLICATION;
+    this.MEMPOOL_SERVICES = configs.MEMPOOL_SERVICES;
+    this.REDIS = configs.REDIS;
   }
 
   merge = (...objects: object[]): IConfig => {

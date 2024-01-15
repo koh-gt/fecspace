@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { WebsocketResponse, IBackendInfo } from '../interfaces/websocket.interface';
+import { WebsocketResponse } from '../interfaces/websocket.interface';
 import { StateService } from './state.service';
 import { Transaction } from '../interfaces/electrs.interface';
 import { Subscription } from 'rxjs';
 import { ApiService } from './api.service';
 import { take } from 'rxjs/operators';
 import { TransferState, makeStateKey } from '@angular/platform-browser';
-import { BlockExtended } from '../interfaces/node-api.interface';
+import { CacheService } from './cache.service';
 
 const OFFLINE_RETRY_AFTER_MS = 2000;
 const OFFLINE_PING_CHECK_AFTER_MS = 30000;
@@ -28,7 +28,9 @@ export class WebsocketService {
   private isTrackingTx = false;
   private trackingTxId: string;
   private isTrackingMempoolBlock = false;
-  private isTrackingRbf = false;
+  private isTrackingRbf: 'all' | 'fullRbf' | false = false;
+  private isTrackingRbfSummary = false;
+  private isTrackingAddress: string | false = false;
   private trackingMempoolBlock: number;
   private latestGitCommit = '';
   private onlineCheckTimeout: number;
@@ -40,6 +42,7 @@ export class WebsocketService {
     private stateService: StateService,
     private apiService: ApiService,
     private transferState: TransferState,
+    private cacheService: CacheService,
   ) {
     if (!this.stateService.isBrowser) {
       // @ts-ignore
@@ -70,15 +73,20 @@ export class WebsocketService {
 
         this.stateService.resetChainTip();
 
-        this.websocketSubject.complete();
-        this.subscription.unsubscribe();
-        this.websocketSubject = webSocket<WebsocketResponse>(
-          this.webSocketUrl.replace('{network}', this.network ? '/' + this.network : '')
-        );
-
-        this.startSubscription();
+        this.reconnectWebsocket();
       });
     }
+  }
+
+  reconnectWebsocket(retrying = false, hasInitData = false) {
+    console.log('reconnecting websocket');
+    this.websocketSubject.complete();
+    this.subscription.unsubscribe();
+    this.websocketSubject = webSocket<WebsocketResponse>(
+      this.webSocketUrl.replace('{network}', this.network ? '/' + this.network : '')
+    );
+
+    this.startSubscription(retrying, hasInitData);
   }
 
   startSubscription(retrying = false, hasInitData = false) {
@@ -105,10 +113,19 @@ export class WebsocketService {
           if (this.isTrackingMempoolBlock) {
             this.startTrackMempoolBlock(this.trackingMempoolBlock);
           }
+          if (this.isTrackingRbf) {
+            this.startTrackRbf(this.isTrackingRbf);
+          }
+          if (this.isTrackingRbfSummary) {
+            this.startTrackRbfSummary();
+          }
+          if (this.isTrackingAddress) {
+            this.startTrackAddress(this.isTrackingAddress);
+          }
           this.stateService.connectionState$.next(2);
         }
 
-        if (this.stateService.connectionState$.value === 1) {
+        if (this.stateService.connectionState$.value !== 2) {
           this.stateService.connectionState$.next(2);
         }
 
@@ -146,10 +163,12 @@ export class WebsocketService {
 
   startTrackAddress(address: string) {
     this.websocketSubject.next({ 'track-address': address });
+    this.isTrackingAddress = address;
   }
 
   stopTrackingAddress() {
     this.websocketSubject.next({ 'track-address': 'stop' });
+    this.isTrackingAddress = false;
   }
 
   startTrackAsset(asset: string) {
@@ -161,24 +180,38 @@ export class WebsocketService {
   }
 
   startTrackMempoolBlock(block: number) {
-    this.websocketSubject.next({ 'track-mempool-block': block });
-    this.isTrackingMempoolBlock = true;
-    this.trackingMempoolBlock = block;
+    // skip duplicate tracking requests
+    if (this.trackingMempoolBlock !== block) {
+      this.websocketSubject.next({ 'track-mempool-block': block });
+      this.isTrackingMempoolBlock = true;
+      this.trackingMempoolBlock = block;
+    }
   }
 
   stopTrackMempoolBlock() {
     this.websocketSubject.next({ 'track-mempool-block': -1 });
     this.isTrackingMempoolBlock = false;
+    this.trackingMempoolBlock = null;
   }
 
   startTrackRbf(mode: 'all' | 'fullRbf') {
     this.websocketSubject.next({ 'track-rbf': mode });
-    this.isTrackingRbf = true;
+    this.isTrackingRbf = mode;
   }
 
   stopTrackRbf() {
     this.websocketSubject.next({ 'track-rbf': 'stop' });
     this.isTrackingRbf = false;
+  }
+
+  startTrackRbfSummary() {
+    this.websocketSubject.next({ 'track-rbf-summary': true });
+    this.isTrackingRbfSummary = true;
+  }
+
+  stopTrackRbfSummary() {
+    this.websocketSubject.next({ 'track-rbf-summary': false });
+    this.isTrackingRbfSummary = false;
   }
 
   fetchStatistics(historicalDate: string) {
@@ -202,7 +235,7 @@ export class WebsocketService {
     this.goneOffline = true;
     this.stateService.connectionState$.next(0);
     window.setTimeout(() => {
-      this.startSubscription(true);
+      this.reconnectWebsocket(true);
     }, retryDelay);
   }
 
@@ -224,15 +257,12 @@ export class WebsocketService {
   }
 
   handleResponse(response: WebsocketResponse) {
+    let reinitBlocks = false;
+
     if (response.blocks && response.blocks.length) {
       const blocks = response.blocks;
-      let maxHeight = 0;
-      blocks.forEach((block: BlockExtended) => {
-        if (block.height > this.stateService.latestBlockHeight) {
-          maxHeight = Math.max(maxHeight, block.height);
-          this.stateService.blocks$.next([block, false]);
-        }
-      });
+      this.stateService.resetBlocks(blocks);
+      const maxHeight = blocks.reduce((max, block) => Math.max(max, block.height), this.stateService.latestBlockHeight);
       this.stateService.updateChainTip(maxHeight);
     }
 
@@ -245,9 +275,12 @@ export class WebsocketService {
     }
 
     if (response.block) {
-      if (response.block.height > this.stateService.latestBlockHeight) {
+      if (response.block.height === this.stateService.latestBlockHeight + 1) {
         this.stateService.updateChainTip(response.block.height);
-        this.stateService.blocks$.next([response.block, !!response.txConfirmed]);
+        this.stateService.addBlock(response.block);
+        this.stateService.txConfirmed$.next([response.txConfirmed, response.block]);
+      } else if (response.block.height > this.stateService.latestBlockHeight + 1) {
+        reinitBlocks = true;
       }
 
       if (response.txConfirmed) {
@@ -269,6 +302,10 @@ export class WebsocketService {
 
     if (response.rbfLatest) {
       this.stateService.rbfLatest$.next(response.rbfLatest);
+    }
+
+    if (response.rbfLatestSummary) {
+      this.stateService.rbfLatestSummary$.next(response.rbfLatestSummary);
     }
 
     if (response.txReplaced) {
@@ -319,6 +356,12 @@ export class WebsocketService {
       });
     }
 
+    if (response['address-removed-transactions']) {
+      response['address-removed-transactions'].forEach((addressTransaction: Transaction) => {
+        this.stateService.mempoolRemovedTransactions$.next(addressTransaction);
+      });
+    }
+
     if (response['block-transactions']) {
       response['block-transactions'].forEach((addressTransaction: Transaction) => {
         this.stateService.blockTransactions$.next(addressTransaction);
@@ -341,6 +384,11 @@ export class WebsocketService {
 
     if (response.loadingIndicators) {
       this.stateService.loadingIndicators$.next(response.loadingIndicators);
+      if (response.loadingIndicators.mempool != null && response.loadingIndicators.mempool < 100) {
+        this.stateService.isLoadingMempool$.next(true);
+      } else {
+        this.stateService.isLoadingMempool$.next(false);
+      }
     }
 
     if (response.mempoolInfo) {
@@ -357,6 +405,10 @@ export class WebsocketService {
 
     if (response['git-commit']) {
       this.stateService.backendInfo$.next(response['git-commit']);
+    }
+
+    if (reinitBlocks) {
+      this.websocketSubject.next({'refresh-blocks': true});
     }
   }
 }
