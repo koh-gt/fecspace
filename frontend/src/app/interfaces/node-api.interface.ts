@@ -2,6 +2,7 @@ import { Block, Transaction } from "./electrs.interface";
 
 export interface OptimizedMempoolStats {
   added: number;
+  count: number;
   vbytes_per_second: number;
   total_fee: number;
   mempool_byte_weight: number;
@@ -24,6 +25,10 @@ export interface CpfpInfo {
   ancestors: Ancestor[];
   descendants?: Ancestor[];
   bestDescendant?: BestDescendant | null;
+  effectiveFeePerVsize?: number;
+  sigops?: number;
+  adjustedVsize?: number;
+  acceleration?: boolean;
 }
 
 export interface RbfInfo {
@@ -36,6 +41,7 @@ export interface RbfTree extends RbfInfo {
   mined?: boolean;
   fullRbf: boolean;
   replaces: RbfTree[];
+  replacedBy?: RbfTransaction;
 }
 
 export interface DifficultyAdjustment {
@@ -88,6 +94,7 @@ export interface SinglePoolStats {
   logo: string;
   slug: string;
   avgMatchRate: number;
+  avgFeeDelta: number;
 }
 export interface PoolsStats {
   blockCount: number;
@@ -105,6 +112,8 @@ export interface PoolInfo {
   regexes: string; // JSON array
   addresses: string; // JSON array
   emptyBlocks: number;
+  slug: string;
+  poolUniqueId: number;
 }
 export interface PoolStat {
   pool: PoolInfo;
@@ -126,10 +135,15 @@ export interface PoolStat {
 export interface BlockExtension {
   totalFees?: number;
   medianFee?: number;
+  minFee?: number;
+  maxFee?: number;
   feeRange?: number[];
   reward?: number;
   coinbaseRaw?: string;
   matchRate?: number;
+  expectedFees?: number;
+  expectedWeight?: number;
+  feeDelta?: number;
   similarity?: number;
   pool?: {
     id: number;
@@ -145,7 +159,16 @@ export interface BlockExtended extends Block {
 export interface BlockAudit extends BlockExtended {
   missingTxs: string[],
   addedTxs: string[],
+  freshTxs: string[],
+  sigopTxs: string[],
+  fullrbfTxs: string[],
+  acceleratedTxs: string[],
   matchRate: number,
+  expectedFees: number,
+  expectedWeight: number,
+  feeDelta?: number,
+  weightDelta?: number,
+  txDelta?: number,
   template: TransactionStripped[],
   transactions: TransactionStripped[],
 }
@@ -155,16 +178,22 @@ export interface TransactionStripped {
   fee: number;
   vsize: number;
   value: number;
-  status?: 'found' | 'missing' | 'sigop' | 'fresh' | 'added' | 'censored' | 'selected';
+  rate?: number; // effective fee rate
+  acc?: boolean;
+  flags?: number | null;
+  status?: 'found' | 'missing' | 'sigop' | 'fresh' | 'freshcpfp' | 'added' | 'censored' | 'selected' | 'rbf' | 'accelerated';
+  context?: 'projected' | 'actual';
 }
 
-interface RbfTransaction extends TransactionStripped {
+export interface RbfTransaction extends TransactionStripped {
   rbf?: boolean;
   mined?: boolean,
+  fullRbf?: boolean,
 }
 export interface MempoolPosition {
   block: number,
   vsize: number,
+  accelerated?: boolean
 }
 
 export interface RewardStats {
@@ -249,6 +278,7 @@ export interface IChannel {
   closing_transaction_id: string;
   closing_reason: string;
   updated_at: string;
+  closing_date?: string;
   created: string;
   status: number;
   node_left: INode,
@@ -272,4 +302,29 @@ export interface INode {
   latitude: number;
   funding_balance?: number;
   closing_balance?: number;
+}
+
+export interface Acceleration {
+  txid: string;
+  status: 'requested' | 'accelerating' | 'mined' | 'completed' | 'failed';
+  pools: number[];
+  feePaid: number;
+  added: number; // timestamp
+  lastUpdated: number; // timestamp
+  baseFee: number;
+  vsizeFee: number;
+  effectiveFee: number;
+  effectiveVsize: number;
+  feeDelta: number;
+  blockHash: string;
+  blockHeight: number;
+
+  actualFeeDelta?: number;
+}
+
+export interface AccelerationHistoryParams {
+  timeframe?: string,
+  status?: string,
+  pool?: string,
+  blockHash?: string,
 }

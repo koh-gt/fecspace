@@ -20,7 +20,7 @@ import { moveDec } from '../../bitcoin.utils';
 })
 export class AssetComponent implements OnInit, OnDestroy {
   network = '';
-  nativeAssetId = this.stateService.network === 'liquidtestnet' ? environment.nativeTestAssetId : environment.nativeAssetId;
+  nativeAssetId = environment.nativeAssetId;
 
   asset: Asset;
   blindedIssuance: boolean;
@@ -86,6 +86,7 @@ export class AssetComponent implements OnInit, OnDestroy {
                   catchError((err) => {
                     this.isLoadingAsset = false;
                     this.error = err;
+                    this.seoService.logSoft404();
                     console.log(err);
                     return of(null);
                   })
@@ -153,6 +154,7 @@ export class AssetComponent implements OnInit, OnDestroy {
       (error) => {
         console.log(error);
         this.error = error;
+        this.seoService.logSoft404();
         this.isLoadingAsset = false;
       });
 

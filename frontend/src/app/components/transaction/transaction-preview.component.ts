@@ -12,8 +12,8 @@ import { CacheService } from '../../services/cache.service';
 import { OpenGraphService } from '../../services/opengraph.service';
 import { ApiService } from '../../services/api.service';
 import { SeoService } from '../../services/seo.service';
+import { seoDescriptionNetwork } from '../../shared/common.utils';
 import { CpfpInfo } from '../../interfaces/node-api.interface';
-import { LiquidUnblinding } from './liquid-ublinding';
 
 @Component({
   selector: 'app-transaction-preview',
@@ -32,8 +32,6 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
   cpfpInfo: CpfpInfo | null;
   showCpfpDetails = false;
   fetchCpfp$ = new Subject<string>();
-  liquidUnblinding = new LiquidUnblinding();
-  isLiquid = false;
   totalValue: number;
   opReturns: Vout[];
   extraData: 'none' | 'coinbase' | 'opreturn';
@@ -69,6 +67,111 @@ export class TransactionPreviewComponent implements OnInit, OnDestroy {
         this.cpfpInfo = cpfpInfo;
         this.openGraphService.waitOver('cpfp-data-' + this.txId);
       });
+
+    this.subscription = this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) => {
+          const urlMatch = (params.get('id') || '').split(':');
+          this.txId = urlMatch[0];
+          this.openGraphService.waitFor('tx-data-' + this.txId);
+          this.openGraphService.waitFor('tx-time-' + this.txId);
+          this.seoService.setTitle(
+            $localize`:@@bisq.transaction.browser-title:Transaction: ${this.txId}:INTERPOLATION:`
+          );
+          this.seoService.setDescription($localize`:@@meta.description.bitcoin.transaction:Get real-time status, addresses, fees, script info, and more for Litecoin${seoDescriptionNetwork(this.stateService.network)} transaction with txid ${this.txId}.`);
+          this.resetTransaction();
+          return merge(
+            of(true),
+            this.stateService.connectionState$.pipe(
+              filter(
+                (state) => state === 2 && this.tx && !this.tx.status.confirmed
+              )
+            )
+          );
+        }),
+        switchMap(() => {
+          let transactionObservable$: Observable<Transaction>;
+          const cached = this.cacheService.getTxFromCache(this.txId);
+          if (cached && cached.fee !== -1) {
+            transactionObservable$ = of(cached);
+          } else {
+            transactionObservable$ = this.electrsApiService
+              .getTransaction$(this.txId)
+              .pipe(
+                catchError(error => {
+                  this.error = error;
+                  this.isLoadingTx = false;
+                  return of(null);
+                })
+              );
+          }
+          return merge(
+            transactionObservable$,
+            this.stateService.mempoolTransactions$
+          );
+        }),
+        switchMap((tx) => {
+          return of(tx);
+        })
+      )
+      .subscribe((tx: Transaction) => {
+          if (!tx) {
+            this.seoService.logSoft404();
+            this.openGraphService.fail('tx-data-' + this.txId);
+            return;
+          }
+
+          this.tx = tx;
+          if (tx.fee === undefined) {
+            this.tx.fee = 0;
+          }
+          this.tx.feePerVsize = tx.fee / (tx.weight / 4);
+          this.isLoadingTx = false;
+          this.error = undefined;
+          this.totalValue = this.tx.vout.reduce((acc, v) => v.value + acc, 0);
+          this.opReturns = this.getOpReturns(this.tx);
+          this.extraData = this.chooseExtraData();
+
+          if (tx.status.confirmed) {
+            this.transactionTime = tx.status.block_time;
+            this.openGraphService.waitOver('tx-time-' + this.txId);
+          } else if (!tx.status.confirmed && tx.firstSeen) {
+            this.transactionTime = tx.firstSeen;
+            this.openGraphService.waitOver('tx-time-' + this.txId);
+          } else {
+            this.getTransactionTime();
+          }
+
+          if (this.tx.status.confirmed) {
+            this.stateService.markBlock$.next({
+              blockHeight: tx.status.block_height,
+            });
+            this.openGraphService.waitFor('cpfp-data-' + this.txId);
+            this.fetchCpfp$.next(this.tx.txid);
+          } else {
+            if (tx.cpfpChecked) {
+              this.stateService.markBlock$.next({
+                txFeePerVSize: tx.effectiveFeePerVsize,
+              });
+              this.cpfpInfo = {
+                ancestors: tx.ancestors,
+                bestDescendant: tx.bestDescendant,
+              };
+            } else {
+              this.openGraphService.waitFor('cpfp-data-' + this.txId);
+              this.fetchCpfp$.next(this.tx.txid);
+            }
+          }
+
+          this.openGraphService.waitOver('tx-data-' + this.txId);
+        },
+        (error) => {
+          this.seoService.logSoft404();
+          this.openGraphService.fail('tx-data-' + this.txId);
+          this.error = error;
+          this.isLoadingTx = false;
+        }
+      );
   }
 
   getTransactionTime() {

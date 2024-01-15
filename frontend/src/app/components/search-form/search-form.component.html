@@ -1,11 +1,8 @@
-<form [formGroup]="searchForm" (submit)="searchForm.valid && search()" novalidate>
+<form [class]="{hamburgerOpen: hamburgerOpen}" [formGroup]="searchForm" (submit)="searchForm.valid && search()" novalidate>
   <div class="d-flex">
     <div class="search-box-container mr-2">
-      <input autofocus (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
-        formControlName="searchText" type="text" class="form-control"
-        i18n-placeholder="search-form.searchbar-placeholder" placeholder="Your Gateway to Explore Litecoin">
-      <app-search-results #searchResults [hidden]="dropdownHidden" [results]="typeAhead$ | async"
-        (selectedResult)="selectedResult($event)"></app-search-results>
+      <input #searchInput (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" formControlName="searchText" type="text" class="form-control" i18n-placeholder="search-form.searchbar-placeholder" placeholder="Your Gateway to Explore Litecoin">
+      <app-search-results #searchResults [hidden]="dropdownHidden" [results]="typeAhead$ | async" (selectedResult)="selectedResult($event)"></app-search-results>
     </div>
     <div>
       <button [disabled]="isSearching" type="submit" class="btn btn-block btn-purple">

@@ -1,10 +1,10 @@
-# Litepool Backend
+# Litecoin Space Backend
 
 These instructions are mostly intended for developers.
 
-If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Litepool does not provide support for custom setups.
+If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Litecoin Space does not provide support for custom setups.
 
-See other ways to set up Litepool on [the main README](/../../#installation-methods).
+See other ways to set up Litecoin Space on [the main README](/../../#installation-methods).
 
 Jump to a section in this doc:
 
@@ -13,19 +13,19 @@ Jump to a section in this doc:
 
 ## Setup
 
-### 1. Clone Litepool Repository
+### 1. Clone Litecoin Space Repository
 
-Get the latest Litepool code:
+Get the latest Litecoin Space code:
 
 ```
 git clone https://github.com/litecoin-foundation/ltcspace
-cd Litepool
+cd ltcspace
 ```
 
 Check out the latest release:
 
 ```
-latestrelease=$(curl -s https://api.github.com/repos/litecoin-foundation/litepool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/litecoin-foundation/ltcspace/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
 git checkout $latestrelease
 ```
 
@@ -44,11 +44,11 @@ rpcpassword=mempool
 
 [Pick an Electrum Server implementation](https://litecoinspace.org/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
 
-**This step is optional.** You can run Litepool without configuring an Electrum Server for it, but address lookups will be disabled.
+**This step is optional.** You can run Litecoin Space without configuring an Electrum Server for it, but address lookups will be disabled.
 
 ### 4. Configure MariaDB
 
-_Litepool needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
+_Litecoin Space needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
 
 Get MariaDB from your operating system's package manager:
 
@@ -74,17 +74,19 @@ MariaDB [(none)]> grant all privileges on mempool.* to 'mempool'@'%' identified 
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-### 5. Prepare Litepool Backend
+### 5. Prepare Litecoin Space Backend
 
 #### Build
 
 _Make sure to use Node.js 16.10 and npm 7._
 
+_The build process requires [Rust](https://www.rust-lang.org/tools/install) to be installed._
+
 Install dependencies with `npm` and build the backend:
 
 ```
 cd backend
-npm install
+npm install --no-install-links # npm@9.4.2 and later can omit the --no-install-links
 npm run build
 ```
 
@@ -106,9 +108,9 @@ In particular, make sure:
   - "esplora" if you're using [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora)
   - "none" if you're not using any Electrum Server
 
-### 6. Run Litepool Backend
+### 6. Run Litecoin Space Backend
 
-Run the Litepool backend:
+Run the Litecoin Space backend:
 
 ```
 npm run start
@@ -144,15 +146,15 @@ Mempool updated in 0.243 seconds
 Updating mempool
 ```
 
-### 7. Set Up Litepool Frontend
+### 7. Set Up Litecoin Space Frontend
 
-With the backend configured and running, proceed to set up the [Litepool frontend](../frontend#manual-setup).
+With the backend configured and running, proceed to set up the [Litecoin Space frontend](../frontend#manual-setup).
 
 ## Development Tips
 
 ### Set Up Backend Watchers
 
-The litepool backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server.
+The Litecoin Space backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server.
 
 As a result, for development purposes, you may find it helpful to set up backend watchers to avoid the manual shutdown/recompile/restart command-line cycle.
 

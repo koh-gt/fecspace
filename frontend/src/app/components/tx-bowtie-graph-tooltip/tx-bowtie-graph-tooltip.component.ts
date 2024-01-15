@@ -36,7 +36,7 @@ export class TxBowtieGraphTooltipComponent implements OnChanges {
   tooltipPosition = { x: 0, y: 0 };
   blockConversion: Price;
 
-  nativeAssetId = this.stateService.network === 'liquidtestnet' ? environment.nativeTestAssetId : environment.nativeAssetId;
+  nativeAssetId = environment.nativeAssetId;
 
   @ViewChild('tooltip') tooltipElement: ElementRef<HTMLCanvasElement>;
 

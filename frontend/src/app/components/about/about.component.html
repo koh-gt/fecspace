@@ -1,12 +1,10 @@
 <div class="container-xl about-page">
 
   <div class="intro">
-    <span style="margin-left: auto; margin-right: -20px; margin-bottom: -20px"></span>
     <img class="logo" src="/resources/mempool-space-logo-bigger.png" />
     <div class="version">
-      v{{ packetJsonVersion }} [<a
-        href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{
-        frontendGitCommitHash }}</a>]
+      <span>v{{ packetJsonVersion }} [<a href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{ frontendGitCommitHash }}</a>]</span>
+      <span *ngIf="stateService.env.GIT_COMMIT_HASH_MEMPOOL_SPACE">[{{ stateService.env.GIT_COMMIT_HASH_MEMPOOL_SPACE }}]</span>
     </div>
   </div>
 
@@ -33,31 +31,21 @@
   <div class="copyright">
     <div class="title">
       Copyright &copy; 2019-2023<br>
-      The Mempool Open Source Project
+      Mempool Space K.K.<br>
+      and other shadowy super-coders
     </div>
     <div class="title">
       Copyright &copy; 2023<br>
       Litecoin Foundation
     </div>
     <p>
-      <a href="https://github.com/litecoin-foundation/ltcspace">Litecoin Space</a> is free software; you can
-      redistribute it and/or modify it under the terms of (at your option) either:<br>
+      <a href="https://github.com/litecoin-foundation/ltcspace">Litecoin Space</a> is free software; you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0-standalone.html">GNU Affero General Public License</a> as published by the Free Software Foundation, either version 3 of the License or any later version approved by a proxy statement published on &lt;https://litecoinspace.org/about&gt;.<br>
     </p>
-    <ul>
-      <li>
-        1) the <a href="https://www.gnu.org/licenses/agpl-3.0-standalone.html">GNU Affero General Public License</a> as
-        published by the Free Software Foundation, either version 3 of the License or any later version approved by a
-        proxy statement published on &lt;https://litecoinspace.org/about&gt;; or<br>
-      </li>
-      <li>
-        2) the <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GNU General Public License</a> as
-        published by the Free Software Foundation, either version 3 of the License or any later version approved by a
-        proxy statement published on &lt;https://litecoinspace.org/about&gt;.<br>
-      </li>
-    </ul>
     <p>
-      This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the full license terms for more details.<br>
+      This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the full license terms for more details.<br>
+    </p>
+    <p>
+      This program incorporates software and other components licensed from third parties. See the full list of <a href="https://litecoinspace.org/3rdpartylicenses.txt">Third-Party Licenses</a> for legal notices from those projects.
     </p>
   </div>
 

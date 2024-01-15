@@ -45,8 +45,8 @@ $dropdown-link-hover-bg: #11131f;
 $dropdown-link-active-color: #fff;
 $dropdown-link-active-bg: #11131f;
 
-@import "~bootstrap/scss/bootstrap";
-@import '~tlite/tlite.css';
+@import "bootstrap/scss/bootstrap";
+@import 'tlite/tlite.css';
 
 html, body {
   height: 100%;
@@ -100,20 +100,8 @@ main {
   }
 }
 
-.navbar-nav.liquid > .active {
-  background-color: #116761 !important;
-}
-
 .navbar-nav.testnet > .active {
   background-color: #1d486f !important;
-}
-
-.navbar-nav.signet > .active {
-  background-color: #6f1d5d !important;
-}
-
-.navbar-nav.liquidtestnet > .active {
-  background-color: #494a4a !important;
 }
 
 .form-control {
@@ -226,7 +214,7 @@ main {
 }
 
 .block-size, .blocks-container {
-  span {
+  .symbol {
     font-size: 16px;
     color: #fff !important;
   }
@@ -505,7 +493,7 @@ html:lang(ru) .card-title {
 }
 
 .fee-distribution-chart {
-  height: 250px;
+  height: 265px;
 }
 
 .fees-wrapper-tooltip-chart {
@@ -524,7 +512,7 @@ html:lang(ru) .card-title {
 .fees-wrapper-tooltip-chart-advanced,
 .tx-wrapper-tooltip-chart-advanced {
   background: rgba(#0d0d0d, 0.98);
-  width: 275px;
+  width: 300px;
 
   thead {
     th {
@@ -611,7 +599,6 @@ html:lang(ru) .card-title {
 }
 
 .tx-wrapper-tooltip-chart-advanced {
-  width: 140px;
   .indicator-container {
     .indicator {
       margin-right: 5px;
@@ -990,6 +977,31 @@ th {
       margin-right: 10px;
     }
   }
+
+  .btn-audit {
+    margin-left: .5em;
+  }
+
+  .sidenav {
+    @extend .sidenav;
+    margin-left: 0px !important;
+    margin-right: -250px;
+  }
+
+  .sidenav.open {
+    margin-right: 0px;
+  }
+
+  .profile_image_container {
+    @extend .profile_image_container;
+    margin-right: 0px !important;
+    margin-left: 15px;
+  }
+
+  #blockchain-container.with-menu {
+    width: calc(100% + 120px);
+    left: 120px;
+  }
 }
 
 .scriptmessage {
@@ -1144,7 +1156,7 @@ th {
   display: none;
 }
 
-app-master-page, app-liquid-master-page, app-bisq-master-page {
+app-master-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -1156,4 +1168,15 @@ app-master-page, app-liquid-master-page, app-bisq-master-page {
 
 app-global-footer {
   margin-top: auto;
+}
+
+.btn-xs {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 0.5;
+  border-radius: 0.2rem;
+}
+
+.info-link fa-icon {
+  color: rgba(255, 255, 255, 0.4);
 }

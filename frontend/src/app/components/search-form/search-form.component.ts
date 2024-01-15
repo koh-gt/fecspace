@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output, ViewChild, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output, ViewChild, HostListener, ElementRef, Input } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { EventType, NavigationStart, Router } from '@angular/router';
 import { AssetsService } from '../../services/assets.service';
 import { StateService } from '../../services/state.service';
 import { Observable, of, Subject, zip, BehaviorSubject, combineLatest } from 'rxjs';
@@ -17,6 +17,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchFormComponent implements OnInit {
+  @Input() hamburgerOpen = false;
+
   network = '';
   assets: object = {};
   isSearching = false;
@@ -34,10 +36,12 @@ export class SearchFormComponent implements OnInit {
     }
   }
 
-  regexAddress = /^([a-km-zA-HJ-NP-Z1-9]{26,35}|[a-km-zA-HJ-NP-Z1-9]{80}|[A-z]{2,5}1[a-zA-HJ-NP-Z0-9]{39,59})$/;
+  regexAddress = /^([a-km-zA-HJ-NP-Z1-9]{26,35}|[a-km-zA-HJ-NP-Z1-9]{80}|[A-z]{2,5}1[a-zA-HJ-NP-Z0-9]{39,59}|04[a-fA-F0-9]{128}|(02|03)[a-fA-F0-9]{64})$/;
   regexBlockhash = /^[0]{8}[a-fA-F0-9]{56}$/;
   regexTransaction = /^([a-fA-F0-9]{64})(:\d+)?$/;
   regexBlockheight = /^[0-9]{1,9}$/;
+  regexDate = /^(?:\d{4}[-/]\d{1,2}[-/]\d{1,2}(?: \d{1,2}:\d{2})?)$/;
+  regexUnixTimestamp = /^\d{10}$/;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
@@ -47,6 +51,8 @@ export class SearchFormComponent implements OnInit {
     this.handleKeyDown($event);
   }
 
+  @ViewChild('searchInput') searchInput: ElementRef;
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
@@ -55,27 +61,38 @@ export class SearchFormComponent implements OnInit {
     private electrsApiService: ElectrsApiService,
     private apiService: ApiService,
     private relativeUrlPipe: RelativeUrlPipe,
-    private elementRef: ElementRef,
-  ) { }
+    private elementRef: ElementRef
+  ) {
+  }
 
   ngOnInit(): void {
     this.stateService.networkChanged$.subscribe((network) => this.network = network);
+
+    this.router.events.subscribe((e: NavigationStart) => { // Reset search focus when changing page
+      if (this.searchInput && e.type === EventType.NavigationStart) {
+        this.searchInput.nativeElement.blur();
+      }
+    });
+
+    this.stateService.searchFocus$.subscribe(() => {
+      if (!this.searchInput) { // Try again a bit later once the view is properly initialized
+        setTimeout(() => this.searchInput.nativeElement.focus(), 100);
+      } else if (this.searchInput) {
+        this.searchInput.nativeElement.focus();
+      }
+    });
 
     this.searchForm = this.formBuilder.group({
       searchText: ['', Validators.required],
     });
 
-    if (this.network === 'liquid' || this.network === 'liquidtestnet') {
-      this.assetsService.getAssetsMinimalJson$
-        .subscribe((assets) => {
-          this.assets = assets;
-        });
-    }
-
     const searchText$ = this.searchForm.get('searchText').valueChanges
     .pipe(
       map((text) => {
         return text.trim();
+      }),
+      tap((text) => {
+        this.stateService.searchText$.next(text);
       }),
       distinctUntilChanged(),
     );
@@ -144,15 +161,23 @@ export class SearchFormComponent implements OnInit {
           const addressPrefixSearchResults = result[0];
           const lightningResults = result[1];
 
-          const matchesBlockHeight = this.regexBlockheight.test(searchText);
+          const matchesBlockHeight = this.regexBlockheight.test(searchText) && parseInt(searchText) <= this.stateService.latestBlockHeight;
+          const matchesDateTime = this.regexDate.test(searchText) && new Date(searchText).toString() !== 'Invalid Date';
+          const matchesUnixTimestamp = this.regexUnixTimestamp.test(searchText);
           const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
           const matchesBlockHash = this.regexBlockhash.test(searchText);
           const matchesAddress = !matchesTxId && this.regexAddress.test(searchText);
 
+          if (matchesDateTime && searchText.indexOf('/') !== -1) {
+            searchText = searchText.replace(/\//g, '-');
+          }
+
           return {
             searchText: searchText,
-            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress),
+            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress || matchesUnixTimestamp || matchesDateTime),
             blockHeight: matchesBlockHeight,
+            dateTime: matchesDateTime,
+            unixTimestamp: matchesUnixTimestamp,
             txId: matchesTxId,
             blockHash: matchesBlockHash,
             address: matchesAddress,
@@ -175,7 +200,7 @@ export class SearchFormComponent implements OnInit {
   selectedResult(result: any): void {
     if (typeof result === 'string') {
       this.search(result);
-    } else if (typeof result === 'number') {
+    } else if (typeof result === 'number' && result <= this.stateService.latestBlockHeight) {
       this.navigate('/block/', result.toString());
     } else if (result.alias) {
       this.navigate('/lightning/node/', result.public_key);
@@ -190,27 +215,20 @@ export class SearchFormComponent implements OnInit {
       this.isSearching = true;
       if (!this.regexTransaction.test(searchText) && this.regexAddress.test(searchText)) {
         this.navigate('/address/', searchText);
-      } else if (this.regexBlockhash.test(searchText) || this.regexBlockheight.test(searchText)) {
+      } else if (this.regexBlockhash.test(searchText)) {
         this.navigate('/block/', searchText);
+      } else if (this.regexBlockheight.test(searchText)) {
+        parseInt(searchText) <= this.stateService.latestBlockHeight ? this.navigate('/block/', searchText) : this.isSearching = false;
       } else if (this.regexTransaction.test(searchText)) {
         const matches = this.regexTransaction.exec(searchText);
-        if (this.network === 'liquid' || this.network === 'liquidtestnet') {
-          if (this.assets[matches[1]]) {
-            this.navigate('/assets/asset/', matches[1]);
-          }
-          this.electrsApiService.getAsset$(matches[1])
-            .subscribe(
-              () => { this.navigate('/assets/asset/', matches[1]); },
-              () => {
-                this.electrsApiService.getBlock$(matches[1])
-                  .subscribe(
-                    (block) => { this.navigate('/block/', matches[1], { state: { data: { block } } }); },
-                    () => { this.navigate('/tx/', matches[0]); });
-              }
-            );
-        } else {
-          this.navigate('/tx/', matches[0]);
-        }
+        this.navigate('/tx/', matches[0]);
+      } else if (this.regexDate.test(searchText) || this.regexUnixTimestamp.test(searchText)) {
+        let timestamp: number;
+        this.regexDate.test(searchText) ? timestamp = Math.floor(new Date(searchText).getTime() / 1000) : timestamp = searchText;
+        this.apiService.getBlockDataFromTimestamp$(timestamp).subscribe(
+          (data) => { this.navigate('/block/', data.hash); },
+          (error) => { console.log(error); this.isSearching = false; }
+        );
       } else {
         this.searchResults.searchButtonClick();
         this.isSearching = false;

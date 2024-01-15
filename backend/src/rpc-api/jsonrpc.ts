@@ -1,5 +1,6 @@
 var http = require('http')
 var https = require('https')
+import { readFileSync } from 'fs';
 
 var JsonRPC = function (opts) {
   // @ts-ignore
@@ -38,7 +39,7 @@ JsonRPC.prototype.call = function (method, params) {
     // prepare request options
     var requestOptions = {
       host: this.opts.host || 'localhost',
-      port: this.opts.port || 8332,
+      port: this.opts.port || 9332,
       method: 'POST',
       path: '/',
       headers: {
@@ -50,12 +51,18 @@ JsonRPC.prototype.call = function (method, params) {
     }
 
     if (this.opts.ssl && this.opts.sslCa) {
-    // @ts-ignore 
+    // @ts-ignore
       requestOptions.ca = this.opts.sslCa
     }
 
     // use HTTP auth if user and password set
-    if (this.opts.user && this.opts.pass) {
+    if (this.opts.cookie) {
+      if (!this.cachedCookie) {
+        this.cachedCookie = readFileSync(this.opts.cookie).toString();
+      }
+      // @ts-ignore
+      requestOptions.auth = this.cachedCookie;
+    } else if (this.opts.user && this.opts.pass) {
       // @ts-ignore
       requestOptions.auth = this.opts.user + ':' + this.opts.pass
     }
@@ -93,7 +100,7 @@ JsonRPC.prototype.call = function (method, params) {
       reject(err)
     })
 
-    request.on('response', function (response) {
+    request.on('response', (response) => {
       clearTimeout(reqTimeout)
 
       // We need to buffer the response chunks in a nonblocking way.
@@ -104,7 +111,7 @@ JsonRPC.prototype.call = function (method, params) {
       // When all the responses are finished, we decode the JSON and
       // depending on whether it's got a result or an error, we call
       // emitSuccess or emitError on the promise.
-      response.on('end', function () {
+      response.on('end', () => {
         var err
 
         if (cbCalled) return
@@ -113,6 +120,14 @@ JsonRPC.prototype.call = function (method, params) {
         try {
           var decoded = JSON.parse(buffer)
         } catch (e) {
+          // if we authenticated using a cookie and it failed, read the cookie file again
+          if (
+            response.statusCode === 401 /* Unauthorized */ &&
+            this.opts.cookie
+          ) {
+            this.cachedCookie = undefined;
+          }
+
           if (response.statusCode !== 200) {
             err = new Error('Invalid params, response status code: ' + response.statusCode)
             err.code = -32602

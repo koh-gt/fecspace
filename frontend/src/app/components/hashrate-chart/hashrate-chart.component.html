@@ -12,10 +12,7 @@
       </div>
       <div class="item">
         <h5 class="card-title" i18n="block.difficulty">Difficulty</h5>
-        <p class="card-text" *ngIf="network === 'signet'">
-          {{ hashrates.currentDifficulty | amountShortener : 5 }}
-        </p>
-        <p class="card-text" *ngIf="network !== 'signet'">
+        <p class="card-text">
           {{ hashrates.currentDifficulty | amountShortener : 2 }}
         </p>
       </div>
@@ -28,7 +25,7 @@
       <button class="btn p-0 pl-2" style="margin: 0 0 4px 0px" (click)="onSaveChart()">
         <fa-icon [icon]="['fas', 'download']" [fixedWidth]="true"></fa-icon>
       </button>
-    </div>  
+    </div>
 
     <form [formGroup]="radioGroupForm" class="formRadioGroup" *ngIf="(hashrateObservable$ | async) as stats">
       <div class="btn-group btn-group-toggle" name="radioBasic" [class]="{'disabled': isLoading}">

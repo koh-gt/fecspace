@@ -1,6 +1,6 @@
 # Deploying an Enterprise Production Instance
 
-These instructions are for setting up a serious production Litepool website for Litecoin (mainnet, testnet).
+These instructions are for setting up a serious production Litecion Space website for Litecoin (mainnet, testnet).
 
 Again, this setup is no joke—home users should use [one of the other installation methods](../#installation-methods).
 
@@ -51,7 +51,6 @@ nvm/electrs/testnet/txstore          803G     38G    765G     5%    /electrs/tes
 nvm/mempool                          789G     24G    765G     3%    /mempool
 nvm/mysql                            766G    648M    765G     0%    /mysql
 tmpfs                                1.0G    1.3M    1.0G     0%    /var/cache/nginx
-tmpfs                                3.0G    1.9G    1.1G    63%    /bisq/statsnode-data/btc_mainnet/db/json
 ```
 
 ### Build Dependencies
@@ -107,17 +106,9 @@ DataDirectoryGroupReadable 1
 HiddenServiceDir /var/db/tor/mempool
 HiddenServicePort 80 127.0.0.1:81
 HiddenServiceVersion 3
-
-HiddenServiceDir /var/db/tor/bisq
-HiddenServicePort 80 127.0.0.1:82
-HiddenServiceVersion 3
-
-HiddenServiceDir /var/db/tor/liquid
-HiddenServicePort 80 127.0.0.1:83
-HiddenServiceVersion 3
 ```
 
-### Bitcoin
+### Litecoin
 
 Build [Litecoin Core](https://github.com/litecoin-project/litecoin) from source.
 

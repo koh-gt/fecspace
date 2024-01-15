@@ -16,12 +16,9 @@
         <table class="table table-borderless table-striped">
           <tbody>
             <tr>
-              <td>Description</td>
-              <td>
-                <div class="description-text">
-                  These are the Lightning nodes operated by Litecoin Foundation that provide data for the
-                  litecoinspace.org
-                  website. Connect to us!
+              <td i18n>Description</td>
+              <td><div class="description-text">These are the Lightning nodes operated by the Litecoin
+                 Foundation that provide data for the litecoinspace.org website. Connect to us!
                 </div>
               </td>
             </tr>
@@ -77,10 +74,8 @@
     <table class="table table-borderless">
       <thead>
         <th class="alias text-left" i18n="lightning.alias">Alias</th>
-        <th class="text-left">Connect</th>
-        <th class="city text-right d-none d-md-table-cell" i18n="lightning.location">
-          Location
-        </th>
+        <th class="text-left" i18n="lightning.connect-to-node|Connect">Connect</th>
+        <th class="city text-right d-none d-md-table-cell" i18n="lightning.location">Location</th>
       </thead>
       <tbody *ngIf="nodes$ | async as response; else skeleton">
         <tr *ngFor="

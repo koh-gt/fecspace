@@ -75,9 +75,9 @@ class Statistics {
     memPoolArray.forEach((transaction) => {
       for (let i = 0; i < logFees.length; i++) {
         if (
-          (Common.isLiquid() && (i === lastItem || transaction.effectiveFeePerVsize * 10 < logFees[i + 1]))
+          ((i === lastItem || transaction.effectiveFeePerVsize * 10 < logFees[i + 1]))
           ||
-          (!Common.isLiquid() && (i === lastItem || transaction.effectiveFeePerVsize < logFees[i + 1]))
+          ((i === lastItem || transaction.effectiveFeePerVsize < logFees[i + 1]))
         ) {
           if (weightVsizeFees[logFees[i]]) {
             weightVsizeFees[logFees[i]] += transaction.vsize;
@@ -89,6 +89,9 @@ class Statistics {
       }
     });
 
+    // get minFee and convert to sats/vb
+    const minFee = memPool.getMempoolInfo().mempoolminfee * 100000;
+
     try {
       const insertId = await statisticsApi.$create({
         added: 'NOW()',
@@ -98,6 +101,7 @@ class Statistics {
         mempool_byte_weight: totalWeight,
         total_fee: totalFee,
         fee_data: '',
+        min_fee: minFee,
         vsize_1: weightVsizeFees['1'] || 0,
         vsize_2: weightVsizeFees['2'] || 0,
         vsize_3: weightVsizeFees['3'] || 0,

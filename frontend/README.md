@@ -1,6 +1,6 @@
-# Litepool Frontend
+# Litecoin Space Frontend
 
-You can build and run the Litepool frontend and proxy to the production Litepool backend (for easier frontend development), or you can connect it to your own backend for a full Litepool development instance, custom deployment, etc.
+You can build and run the Litecoin Space frontend and proxy to the production Litecoin Space backend (for easier frontend development), or you can connect it to your own backend for a full Litecoin Space development instance, custom deployment, etc.
 
 Jump to a section in this doc:
 
@@ -10,15 +10,15 @@ Jump to a section in this doc:
 
 ## Quick Setup for Frontend Development
 
-If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Litepool frontend locally and proxy to the litecoinspace.org backend.
+If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Litecoin Space frontend locally and proxy to the litecoinspace.org backend.
 
-### 1. Clone Litepool Repository
+### 1. Clone Litecoin Space Repository
 
-Get the latest Litepool code:
+Get the latest Litecoin Space code:
 
 ```
 git clone https://github.com/litecoin-foundation/ltcspace
-cd litepool
+cd ltcspace/frontend
 ```
 
 ### 2. Specify Website
@@ -66,7 +66,7 @@ If all tests are green, submit your PR, and it will be reviewed by someone on th
 
 ## Manual Setup
 
-Set up the [Litepool backend](../backend/) first, if you haven't already.
+Set up the [Litecoin Space backend](../backend/) first, if you haven't already.
 
 ### 1. Build the Frontend
 
@@ -84,7 +84,7 @@ npm run build
 
 #### Development
 
-To run your local Litepool frontend with your local Litepool backend:
+To run your local Litecoin Space frontend with your local Litecoin Space backend:
 
 ```
 npm run serve
@@ -98,7 +98,7 @@ You will probably want to set up a reverse proxy, TLS, etc. There are sample ngi
 
 ## Translations: Transifex Project
 
-Litepool merges translations from upstream, so please help through the link below.
+Litecoin Space merges translations from upstream, so please help through the link below.
 https://www.transifex.com/mempool/mempool/dashboard/
 
 ### Translators
