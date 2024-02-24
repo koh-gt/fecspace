@@ -29,6 +29,7 @@ class BitcoinRoutes {
       .get(config.MEMPOOL.API_URL_PREFIX + 'difficulty-adjustment', this.getDifficultyChange)
       .get(config.MEMPOOL.API_URL_PREFIX + 'fees/recommended', this.getRecommendedFees)
       .get(config.MEMPOOL.API_URL_PREFIX + 'fees/mempool-blocks', this.getMempoolBlocks)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'fees/recommended-lnd', this.getRecommendedFeesForLnd)
       .get(config.MEMPOOL.API_URL_PREFIX + 'backend-info', this.getBackendInfo)
       .get(config.MEMPOOL.API_URL_PREFIX + 'init-data', this.getInitData)
       .get(config.MEMPOOL.API_URL_PREFIX + 'validate-address/:address', this.validateAddress)
@@ -155,6 +156,26 @@ class BitcoinRoutes {
     } catch (e) {
       res.status(500).send(e instanceof Error ? e.message : e);
     }
+  }
+
+  private async getRecommendedFeesForLnd(req: Request, res: Response) {
+    if (!mempool.isInSync()) {
+      res.statusCode = 503;
+      res.send('Service Unavailable');
+      return;
+    }
+    const currentBlockHash = await bitcoinApi.$getBlockHashTip();
+    const recommendedFees = feeApi.getRecommendedFee();
+    const result = {
+      "current_block_hash": currentBlockHash,
+      "fee_by_block_target": {
+        "1": recommendedFees['fastestFee'] * 1000,
+        "2": recommendedFees['halfHourFee'] * 1000,
+        "3": recommendedFees['hourFee'] * 1000,
+        "24": recommendedFees['economyFee'] * 1000
+      }
+    }
+    res.json(result);
   }
 
   private getTransactionTimes(req: Request, res: Response) {
@@ -480,7 +501,7 @@ class BitcoinRoutes {
       res.status(500).send(e instanceof Error ? e.message : e);
     }
   }
-  
+
   private async getBlockTransactions(req: Request, res: Response) {
     try {
       loadingIndicators.setProgress('blocktxs-' + req.params.hash, 0);
