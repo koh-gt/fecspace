@@ -1,0 +1,55 @@
+{
+  "MEMPOOL": {
+    "NETWORK": "testnet",
+    "BACKEND": "esplora",
+    "ENABLED": true,
+    "HTTP_PORT": 8997,
+    "MINED_BLOCKS_CACHE": 144,
+    "SPAWN_CLUSTER_PROCS": 0,
+    "API_URL_PREFIX": "/api/v1/",
+    "INDEXING_BLOCKS_AMOUNT": -1,
+    "AUDIT": true,
+    "ADVANCED_GBT_AUDIT": true,
+    "ADVANCED_GBT_MEMPOOL": true,
+    "POLL_RATE_MS": 1000,
+    "DISK_CACHE_BLOCK_INTERVAL": 1
+  },
+  "CORE_RPC": {
+    "HOST": "127.0.0.1",
+    "PORT": 19332,
+    "USERNAME": "mempool",
+    "PASSWORD": "mempool",
+    "TIMEOUT": 60000
+  },
+  "ESPLORA": {
+    "REST_API_URL": "http://127.0.0.1:3002"
+  },
+  "DATABASE": {
+    "ENABLED": true,
+    "HOST": "127.0.0.1",
+    "PORT": 3306,
+    "SOCKET": "/var/run/mysqld/mysqld.sock",
+    "DATABASE": "mempool_testnet",
+    "USERNAME": "mempool",
+    "PASSWORD": "mempool"
+  },
+  "SYSLOG": {
+    "MIN_PRIORITY": "info"
+  },
+  "STATISTICS": {
+    "ENABLED": true,
+    "TX_PER_SECOND_SAMPLE_PERIOD": 150
+  },
+  "SOCKS5PROXY": {
+    "ENABLED": false,
+    "USE_ONION": true,
+    "HOST": "127.0.0.1",
+    "PORT": 9050,
+    "USERNAME": "",
+    "PASSWORD": ""
+  },
+  "EXTERNAL_DATA_SERVER": {
+    "MEMPOOL_API": "https://litecoinspace.org/api/v1",
+    "MEMPOOL_ONION": "http://REPLACEME.onion/api/v1"
+  }
+}
