@@ -35,7 +35,7 @@
   "dependencies": {
     "@babel/core": "^7.21.3",
     "@mempool/electrum-client": "1.1.9",
-    "@types/node": "^18.15.3",
+    "@types/node": "^18.19.41",
     "axios": "~0.27.2",
     "bitcoinjs-lib": "~6.1.0",
     "crypto-js": "~4.1.1",
