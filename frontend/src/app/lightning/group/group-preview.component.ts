@@ -30,7 +30,7 @@ export class GroupPreviewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.seoService.setTitle(`litecoinspace.org Lightning Nodes`);
+    this.seoService.setTitle(`ferritecoin.com Lightning Nodes`);
 
     this.nodes$ = this.activatedRoute.paramMap
       .pipe(
@@ -40,10 +40,10 @@ export class GroupPreviewComponent implements OnInit {
           this.openGraphService.waitFor('ln-group-data-' + this.slug);
 
           if (this.slug === 'the-mempool-open-source-project') {
-            this.groupId = 'litecoinspace.org';
+            this.groupId = 'ferritecoin.com';
             this.group = {
-              name: 'Litecoin Foundation',
-              description: 'These are the Lightning nodes operated by Litecoin Foundation that provide data for the litecoinspace.org website. Connect to us!',
+              name: 'Ferrite Foundation',
+              description: 'These are the Lightning nodes operated by Ferrite Foundation that provide data for the ferritecoin.com website. Connect to us!',
             };
           } else {
             this.group = {

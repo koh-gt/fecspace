@@ -128,7 +128,7 @@ class PoolsUpdater {
 
     if (response !== undefined) {
       for (const file of response['tree']) {
-        if (file['path'] === 'pools.json') {
+        if (file['path'] === 'pools-v2.json') {
           return file['sha'];
         }
       }

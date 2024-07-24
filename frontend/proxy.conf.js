@@ -21,21 +21,21 @@ try {
 PROXY_CONFIG = [
   {
     context: ["*", "/api/**", "!/api/v1/ws", "/testnet/api/**"],
-    target: "https://litecoinspace.org",
+    target: "https://ferritecoin.com",
     ws: true,
     secure: false,
     changeOrigin: true,
   },
   {
     context: ["/api/v1/ws"],
-    target: "https://litecoinspace.org",
+    target: "https://ferritecoin.com",
     ws: true,
     secure: false,
     changeOrigin: true,
   },
   {
     context: ["/resources/mining-pools/**"],
-    target: "https://litecoinspace.org",
+    target: "https://ferritecoin.com",
     secure: false,
     changeOrigin: true,
   },
@@ -45,7 +45,7 @@ PROXY_CONFIG = [
       "/resources/assets.minimal.json",
       "/resources/worldmap.json",
     ],
-    target: "https://litecoinspace.org",
+    target: "https://ferritecoin.com",
     secure: false,
     changeOrigin: true,
   },

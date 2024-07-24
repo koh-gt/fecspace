@@ -16,7 +16,7 @@
               <td><app-svg-images name="warning" class="disclaimer-warning" viewBox="0 0 304 304" fill="#ffc107"
                   width="50" height="50"></app-svg-images></td>
               <td>
-                <p i18n="faq.big-disclaimer"><b>litecoinspace.org merely provides data about the Litecoin network.</b>
+                <p i18n="faq.big-disclaimer"><b>ferritecoin.com merely provides data about the Ferrite network.</b>
                   It
                   cannot help you with retrieving funds, confirming your transaction quicker, etc.</p>
                 <p>For any such requests, you need to get in touch with the entity that helped make the transaction
@@ -26,7 +26,7 @@
           </table>
           <div *ngIf="mobileViewport"><app-svg-images name="warning" class="disclaimer-warning" viewBox="0 0 304 304"
               fill="#ffc107" width="50" height="50"></app-svg-images>
-            <p i18n="faq.big-disclaimer"><b>litecoinspace.org merely provides data about the Litecoin network.</b> It
+            <p i18n="faq.big-disclaimer"><b>ferritecoin.com merely provides data about the Ferrite network.</b> It
               cannot help you with retrieving funds, confirming your transaction quicker, etc.</p>
             <p>For any such requests, you need to get in touch with the entity that helped make the transaction (wallet
               software, exchange company, etc).</p>
@@ -68,7 +68,7 @@
 
       <div class="doc-content">
 
-        <p class="doc-welcome-note">Below is a reference for the {{ network.val === '' ? 'Litecoin' :
+        <p class="doc-welcome-note">Below is a reference for the {{ network.val === '' ? 'Ferrite' :
           network.val.charAt(0).toUpperCase() + network.val.slice(1) }} <ng-container i18n="api-docs.title">REST API
             service</ng-container>.</p>
         <p class="doc-welcome-note api-note" *ngIf="officialMempoolInstance">Note that we enforce rate limits. If you
@@ -190,7 +190,7 @@
           <p>{{electrsPort}}</p>
           <p class="subtitle">SSL</p>
           <p>Enabled</p>
-          <p class="note" *ngIf="network.val !== 'signet'">Electrum RPC interface for Litecoin Signet is <a
+          <p class="note" *ngIf="network.val !== 'signet'">Electrum RPC interface for Ferrite Signet is <a
               href="/signet/docs/api/electrs">publicly available</a>. Electrum RPC interface for all other networks is
             available to <a href='/enterprise'>sponsors</a> only—whitelisting is required.</p>
         </div>
@@ -209,7 +209,7 @@
 <ng-template type="what-is-a-mempool-explorer">
   <p>A mempool explorer is a tool that enables you to view real-time and historical information about a node's mempool,
     visualize its transactions, and search and view those transactions.</p>
-  <p>The litecoinspace.org website invented the concept of visualizing a Litecoin node's mempool as <b>projected
+  <p>The ferritecoin.com website invented the concept of visualizing a Ferrite node's mempool as <b>projected
       blocks</b>.
     These blocks are the inspiration for our half-filled block logo.</p>
   <p>Projected blocks are on the left of the dotted white line, and confirmed blocks are on the right.</p>
@@ -242,11 +242,11 @@
 </ng-template>
 
 <ng-template type="what-are-vb-wu">
-  <p>Virtual bytes (vB) and weight units (WU) are used to measure the size of transactions and blocks on the Litecoin
+  <p>Virtual bytes (vB) and weight units (WU) are used to measure the size of transactions and blocks on the Ferrite
     network.</p>
-  <p>A Litecoin Transaction's size in the blockchain is <i>not</i> determined how much Litecoin it transfers—instead, a
+  <p>A Ferrite Transaction's size in the blockchain is <i>not</i> determined how much Ferrite it transfers—instead, a
     transaction's size is determined by technical factors such as how many inputs and outputs it has, how many
-    signatures it has, and the format it uses (legacy, SegWit, etc). Since space in the Litecoin Blockchain is limited,
+    signatures it has, and the format it uses (legacy, SegWit, etc). Since space in the Ferrite Blockchain is limited,
     bigger transactions pay more in mining fees than smaller transactions.</p>
   <p>Block sizes are limited to 4,000,000 WU (or 1,000,000 vB since 1 vB = 4 WU).</p>
   <p>Transaction sizes and block sizes used to be measured in plain bytes, but virtual bytes and weight units were
@@ -256,8 +256,8 @@
 </ng-template>
 
 <ng-template type="what-is-svb">
-  <p>The priority of a pending Litecoin Transaction is determined by its feerate. Feerates are measured in lit/vB.</p>
-  <p>Using a higher lit/vB feerate for a Litecoin Transaction will generally result in quicker confirmation than using a
+  <p>The priority of a pending Ferrite Transaction is determined by its feerate. Feerates are measured in lit/vB.</p>
+  <p>Using a higher lit/vB feerate for a Ferrite Transaction will generally result in quicker confirmation than using a
     lower feerate. But feerates change all the time, so it's important to check suggested feerates right before making a
     transaction to <a [routerLink]="['/docs/faq' | relativeUrl]" fragment="why-is-transaction-stuck-in-mempool">avoid it
       from getting stuck</a>.</p>
@@ -271,9 +271,9 @@
     relative to other transactions currently in the mempool. Depending on how you made your transaction, there may be <a
       [routerLink]="['/docs/faq' | relativeUrl]" fragment="how-to-get-transaction-confirmed-quickly">ways to accelerate
       the process</a>.</p>
-  <p>There's no need to panic—a Litecoin Transaction will always either confirm completely (or not at all) at some
+  <p>There's no need to panic—a Ferrite Transaction will always either confirm completely (or not at all) at some
     point. As long as you have your transaction's ID, you can always see where your funds are.</p>
-  <p style='font-weight:700'>This site only provides data about the Litecoin network—it cannot help you get your
+  <p style='font-weight:700'>This site only provides data about the Ferrite network—it cannot help you get your
     transaction confirmed quicker.</p>
 </ng-template>
 
@@ -284,7 +284,7 @@
   <p>Otherwise, if you control any of the stuck transaction's outputs, you can use CPFP to increase your stuck
     transaction's effective feerate.</p>
   <p>If you are not sure how to do RBF or CPFP, work with the tool you used to make the transaction (wallet software,
-    exchange company, etc). This website only provides data about the Litecoin network, so there is nothing it can do to
+    exchange company, etc). This website only provides data about the Ferrite network, so there is nothing it can do to
     help you get your transaction confirmed quicker.</p>
 </ng-template>
 
@@ -329,7 +329,7 @@
   <p>Mempool blocks use feerates, transaction sizes, and other metrics to <b>forecast</b> which transactions will be in
     future blocks. Actual blocks will turn out to be different: miners have their own views of the mempool, their own
     algorithms for determining which transactions to include in a block, etc.</p>
-  <p>Ultimately, the Litecoin network is not perfectly predictable, so fee estimation cannot be perfectly precise.</p>
+  <p>Ultimately, the Ferrite network is not perfectly predictable, so fee estimation cannot be perfectly precise.</p>
   <p><b>Use Mempool's feerate suggestions as a guide, and understand that they do not guarantee transaction confirmation
       in any period of time.</b></p>
 </ng-template>
@@ -340,9 +340,9 @@
 </ng-template>
 
 <ng-template type="what-is-full-mempool">
-  <p>When a Litecoin Transaction is made, it is stored in a Litecoin node's mempool before it is confirmed into a block.
+  <p>When a Ferrite Transaction is made, it is stored in a Ferrite node's mempool before it is confirmed into a block.
     When the rate of incoming transactions exceeds the rate transactions are confirmed, the mempool grows in size.</p>
-  <p>By default, Litecoin Core allocates 300MB of memory for its mempool, so when a node's mempool grows big enough to
+  <p>By default, Ferrite Core allocates 300MB of memory for its mempool, so when a node's mempool grows big enough to
     use all 300MB of allocated memory, we say it's "full".</p>
   <p>Once a node's mempool is using all of its allocated memory, it will start rejecting new transactions below a
     certain feerate threshold—so when this is the case, be extra sure to set a feerate that (at a minimum) exceeds that
@@ -350,34 +350,34 @@
 </ng-template>
 
 <ng-template type="how-big-is-mempool-used-by-mempool-space">
-  <p>litecoinspace.org uses multiple Litecoin nodes to obtain data: some with the default 300MB mempool memory limit
+  <p>ferritecoin.com uses multiple Ferrite nodes to obtain data: some with the default 300MB mempool memory limit
     (call
     these Small Nodes) and others with a much larger mempool memory limit (call these Big Nodes).</p>
-  <p>Many nodes on the Litecoin network are configured to run with the default 300MB mempool memory setting. When all
+  <p>Many nodes on the Ferrite network are configured to run with the default 300MB mempool memory setting. When all
     300MB of memory are used up, such nodes will reject transactions below a certain threshold feerate. Running Small
-    Nodes allows litecoinspace.org to tell you what this threshold feerate is—this is the "Purging" feerate that shows
+    Nodes allows ferritecoin.com to tell you what this threshold feerate is—this is the "Purging" feerate that shows
     on
     the front page when mempools are full, which you can use to be reasonably sure that your transaction will be widely
     propagated.</p>
   <p>Big Node mempools are so big that they don't need to reject (or purge) transactions. Such nodes allow for
-    litecoinspace.org to provide you with information on any pending transaction it has received—no matter how congested
+    ferritecoin.com to provide you with information on any pending transaction it has received—no matter how congested
     the
     mempool is, and no matter how low-feerate or low-priority the transaction is.</p>
 </ng-template>
 
 <ng-template type="what-is-memory-usage">
-  <p>Memory usage on the front page refers to the real-time amount of system memory used by a Litecoin node's mempool.
+  <p>Memory usage on the front page refers to the real-time amount of system memory used by a Ferrite node's mempool.
     This memory usage number is always higher than the total size of all pending transactions in the mempool due to
-    indexes, pointers, and other overhead used by Litecoin Core for storage and processing.</p>
-  <p>litecoinspace.org shows the memory usage of a Litecoin node that has a very high mempool memory limit. As a result,
+    indexes, pointers, and other overhead used by Ferrite Core for storage and processing.</p>
+  <p>ferritecoin.com shows the memory usage of a Ferrite node that has a very high mempool memory limit. As a result,
     when
-    mempools fill up, you may notice memory usage on litecoinspace.org go beyond 300MB. This is not a mistake—this
+    mempools fill up, you may notice memory usage on ferritecoin.com go beyond 300MB. This is not a mistake—this
     memory
-    usage figure is high because it's for a Litecoin node that isn't rejecting (or evicting) transactions. Consider it
+    usage figure is high because it's for a Ferrite node that isn't rejecting (or evicting) transactions. Consider it
     to
     be another data point to give you an idea of how congested the mempool is relative to the default memory limit of
     300MB.</p>
-  <p>A Litecoin node running the default 300MB mempool memory limit, like most Raspberry Pi nodes, will never go past
+  <p>A Ferrite node running the default 300MB mempool memory limit, like most Raspberry Pi nodes, will never go past
     300MB of memory usage.</p>
 </ng-template>
 
@@ -392,7 +392,7 @@
 <ng-template type="why-block-timestamps-dont-always-increase">
   <p>Block validation rules do not strictly require that a block's timestamp be more recent than the timestamp of the
     block preceding it. Without a central authority, it's impossible to know what the exact correct time is. Instead,
-    the Litecoin protocol requires that a block's timestamp meet certain requirements. One of those requirements is that
+    the Ferrite protocol requires that a block's timestamp meet certain requirements. One of those requirements is that
     a block's timestamp cannot be older than the median timestamp of the 12 blocks that came before it. See more details
     <a href="https://en.bitcoin.it/wiki/Block_timestamp" target="_blank">here</a>.
   </p>
@@ -416,8 +416,8 @@
 <ng-template type="how-do-block-audits-work">
   <p>A block audit visually compares Mempool's expected block to the actual block for a particular block height.</p>
   <p>How is the expected block determined? Mempool monitors its view of the mempool and runs a re-implementation of
-    Litecoin Core's transaction selection algorithm to determine the transactions it expects to see in upcoming blocks
-    (<a href="https://github.com/litecoin-foundation/ltcspace/blob/master/backend/src/api/mempool-blocks.ts"
+    Ferrite Core's transaction selection algorithm to determine the transactions it expects to see in upcoming blocks
+    (<a href="https://github.com/ferritecoin/fecspace/blob/master/backend/src/api/mempool-blocks.ts"
       target="_blank">source
       code here</a>). Since there is a continual flow of new transactions, this algorithm runs every 2 seconds, and as a
     result, you will see the transactions <a href="/mempool-block/0">projected to be in upcoming blocks</a> change in
@@ -443,8 +443,8 @@
     </li>
     <li><span class="block-audit-highlight-color recent">■</span><code>Recently broadcasted</code>
       <p>A transaction is highlighted dark pink if it is present in the expected block, not present in the actual block,
-        and was first seen by Mempool's Litecoin node within 3 minutes of the block being mined.</p>
-      <p>Due to network latency and other factors, it can take time for a miner's Litecoin nodes to receive a
+        and was first seen by Mempool's Ferrite node within 3 minutes of the block being mined.</p>
+      <p>Due to network latency and other factors, it can take time for a miner's Ferrite nodes to receive a
         transaction, so we do not assume a miner has intentionally excluded such a transaction from a block.</p>
       <p>Recently-broadcasted transactions do not negatively affect <a [routerLink]="['/docs/faq' | relativeUrl]"
           fragment="what-is-block-health">block health</a>.</p>
@@ -470,7 +470,7 @@
   <p>See how results of the block audit are used to devise the block health score <a
       [routerLink]="['/docs/faq' | relativeUrl]" fragment="what-is-block-health">below</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official litecoinspace.org instances.</p>
+    official ferritecoin.com instances.</p>
 </ng-template>
 
 <ng-template type="what-is-block-health">
@@ -503,13 +503,13 @@
   <p>See more context in our FAQ on <a [routerLink]="['/docs/faq' | relativeUrl]"
       fragment="how-do-block-audits-work">block audits</a>.</p>
   <p class='note'>Because of this feature's resource usage and availability requirements, it is only supported on
-    official litecoinspace.org instances.</p>
+    official ferritecoin.com instances.</p>
 </ng-template>
 
 <ng-template type="who-runs-this-website">
-  The official litecoinspace.org website is operated by Litecoin Foundation. See more information on our <a
+  The official ferritecoin.com website is operated by Ferrite Foundation. See more information on our <a
     [routerLink]="['/about']">About page</a>. There are also many unofficial instances of this website operated by
-  individual members of the Litecoin community.
+  individual members of the Ferrite community.
 </ng-template>
 
 <ng-template type="host-my-own-instance-raspberry-pi">
@@ -524,7 +524,7 @@
 
 <ng-template type="install-mempool-with-docker">
   Yes, we publish Docker images (or you can build your own). Check out <a
-    href="https://github.com/litecoin-foundation/ltcspace/tree/master/docker" target="_blank">the documentation</a> for
+    href="https://github.com/ferritecoin/fecspace/tree/master/docker" target="_blank">the documentation</a> for
   details.
 </ng-template>
 
@@ -533,7 +533,7 @@
   <p>Mempool uses an Electrum server to do address lookups. There are several implementations of the Electrum server
     protocol, and Mempool can use any of them, but the implementation you use affects performance:</p>
   <ol>
-    <li><a href="https://github.com/rust-litecoin/electrs-ltc" target="_blank">electrs-ltc</a>. This is a common choice
+    <li><a href="https://github.com/rust-ferrite/electrs-ltc" target="_blank">electrs-ltc</a>. This is a common choice
       for its
       low resource requirements, and most full-node distros use it. But while this implementation works great for basic
       queries, it will struggle with heavier ones (e.g. looking up addresses with many transactions)—especially when
@@ -541,8 +541,8 @@
     <li><a href="https://github.com/cculianu/Fulcrum" target="_blank">Fulcrum</a>. Fulcrum requires more resources than
       romanz/electrs but it can still run on a Raspberry Pi, and it handles heavy queries much more efficiently. If
       you're having issues with romanz/electrs, Fulcrum is worth a try.</li>
-    <li><a href="https://github.com/rust-litecoin/electrs-ltc/tree/esplora" target="_blank">electrs-ltc-esplora</a>. If
+    <li><a href="https://github.com/rust-ferrite/electrs-ltc/tree/esplora" target="_blank">electrs-ltc-esplora</a>. If
       you have stronger
-      hardware, consider running Blockstream's electrs implementation. It's the backend litecoinspace.org uses.</li>
+      hardware, consider running Blockstream's electrs implementation. It's the backend ferritecoin.com uses.</li>
   </ol>
 </ng-template>

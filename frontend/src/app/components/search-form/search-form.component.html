@@ -3,7 +3,7 @@
     <div class="search-box-container mr-2">
       <input autofocus (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)"
         formControlName="searchText" type="text" class="form-control"
-        i18n-placeholder="search-form.searchbar-placeholder" placeholder="Your Gateway to Explore Litecoin">
+        i18n-placeholder="search-form.searchbar-placeholder" placeholder="Your Gateway to Explore Ferrite">
       <app-search-results #searchResults [hidden]="dropdownHidden" [results]="typeAhead$ | async"
         (selectedResult)="selectedResult($event)"></app-search-results>
     </div>

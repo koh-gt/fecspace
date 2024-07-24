@@ -491,7 +491,7 @@ export class BlockComponent implements OnInit, OnDestroy {
   }
 
   // TODO - Refactor this.fees/this.reward for liquid because it is not
-  // used anymore on Litecoin networks (we use block.extras directly)
+  // used anymore on Ferrite networks (we use block.extras directly)
   setBlockSubsidy() {
     this.blockSubsidy = 0;
   }

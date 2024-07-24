@@ -1,6 +1,6 @@
-# Litepool Frontend
+# Ferritepool Frontend
 
-You can build and run the Litepool frontend and proxy to the production Litepool backend (for easier frontend development), or you can connect it to your own backend for a full Litepool development instance, custom deployment, etc.
+You can build and run the Ferritepool frontend and proxy to the production Ferritepool backend (for easier frontend development), or you can connect it to your own backend for a full Ferritepool development instance, custom deployment, etc.
 
 Jump to a section in this doc:
 
@@ -10,20 +10,20 @@ Jump to a section in this doc:
 
 ## Quick Setup for Frontend Development
 
-If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Litepool frontend locally and proxy to the litecoinspace.org backend.
+If you want to quickly improve the UI, fix typos, or make other updates that don't require any backend changes, you don't need to set up an entire backend—you can simply run the Ferritepool frontend locally and proxy to the ferritecoin.com backend.
 
-### 1. Clone Litepool Repository
+### 1. Clone Ferritepool Repository
 
-Get the latest Litepool code:
+Get the latest Ferritepool code:
 
 ```
-git clone https://github.com/litecoin-foundation/ltcspace
-cd litepool
+git clone https://github.com/ferritecoin/fecspace
+cd ferritepool
 ```
 
 ### 2. Specify Website
 
-The same frontend codebase is used for https://litecoinspace.org and https://explorer.litecoinspace.org.
+The same frontend codebase is used for https://ferritecoin.com and https://explorer.ferritecoin.com.
 
 Configure the frontend for the site you want by running the corresponding command:
 
@@ -42,7 +42,7 @@ $ npm install
 $ npm run serve:local-prod
 ```
 
-The frontend will be available at http://localhost:4200/ and all API requests will be proxied to the production server at https://litecoinspace.org.
+The frontend will be available at http://localhost:4200/ and all API requests will be proxied to the production server at https://ferritecoin.com.
 
 ### 4. Test
 
@@ -66,7 +66,7 @@ If all tests are green, submit your PR, and it will be reviewed by someone on th
 
 ## Manual Setup
 
-Set up the [Litepool backend](../backend/) first, if you haven't already.
+Set up the [Ferritepool backend](../backend/) first, if you haven't already.
 
 ### 1. Build the Frontend
 
@@ -84,7 +84,7 @@ npm run build
 
 #### Development
 
-To run your local Litepool frontend with your local Litepool backend:
+To run your local Ferritepool frontend with your local Ferritepool backend:
 
 ```
 npm run serve
@@ -98,7 +98,7 @@ You will probably want to set up a reverse proxy, TLS, etc. There are sample ngi
 
 ## Translations: Transifex Project
 
-Litepool merges translations from upstream, so please help through the link below.
+Ferritepool merges translations from upstream, so please help through the link below.
 https://www.transifex.com/mempool/mempool/dashboard/
 
 ### Translators

@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <div class="row main">
       <div class="offset-lg-1 col-lg-4 col align-self-center branding">
-        <h5><ng-container i18n="about.about-the-project">Litecoin Explorer</ng-container><ng-template
+        <h5><ng-container i18n="about.about-the-project">Ferrite Explorer</ng-container><ng-template
             [ngIf]="locale.substr(0, 2) === 'en'"></ng-template></h5>
-        <p><ng-container i18n="@@7deec1c1520f06170e1f8e8ddfbe4532312f638f">Your Gateway to explore Litecoin's
+        <p><ng-container i18n="@@7deec1c1520f06170e1f8e8ddfbe4532312f638f">Your Gateway to explore Ferrite's
             Blockchain</ng-container><ng-template [ngIf]="locale.substr(0, 2) === 'en'"></ng-template></p>
         <div class="selector">
           <app-language-selector></app-language-selector>
@@ -63,7 +63,7 @@
     </div>
     <div class="row social-links">
       <div class="col-sm-12">
-        <a href="https://github.com/litecoin-foundation/ltcspace" target="_blank"><svg fill="#fff" role="img"
+        <a href="https://github.com/ferritecoin/fecspace" target="_blank"><svg fill="#fff" role="img"
             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <title>GitHub</title>
             <path
@@ -81,11 +81,11 @@
       <div class="col-sm-12">
         <p *ngIf="officialMempoolSpace">{{ (backendInfo$ | async)?.hostname }} (v{{ (backendInfo$ | async )?.version }})
           [<a target="_blank"
-            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{
+            href="https://github.com/ferritecoin/fecspace/commit/{{ (backendInfo$ | async )?.gitCommit | slice:0:8 }}">{{
             (backendInfo$ | async )?.gitCommit | slice:0:8 }}</a>]</p>
 
         <p *ngIf="!officialMempoolSpace">v{{ packetJsonVersion }} [<a target="_blank"
-            href="https://github.com/litecoin-foundation/ltcspace/commit/{{ frontendGitCommitHash }}">{{
+            href="https://github.com/ferritecoin/fecspace/commit/{{ frontendGitCommitHash }}">{{
             frontendGitCommitHash
             }}</a>]</p>
 

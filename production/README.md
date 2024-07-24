@@ -1,12 +1,12 @@
 # Deploying an Enterprise Production Instance
 
-These instructions are for setting up a serious production Litepool website for Litecoin (mainnet, testnet).
+These instructions are for setting up a serious production Ferritepool website for Ferrite (mainnet, testnet).
 
 Again, this setup is no joke—home users should use [one of the other installation methods](../#installation-methods).
 
 ### Server Hardware
 
-Mempool v2 is powered by [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora), which is a beast.
+Mempool v2 is powered by [electrs-ltc-esplora](https://github.com/rust-ferrite/electrs-ltc/tree/esplora), which is a beast.
 
 I recommend a beefy server:
 
@@ -119,12 +119,12 @@ HiddenServiceVersion 3
 
 ### Bitcoin
 
-Build [Litecoin Core](https://github.com/litecoin-project/litecoin) from source.
+Build [Ferrite Core](https://github.com/ferrite-project/ferrite) from source.
 
-Configure your `litecoin.conf` like this:
+Configure your `ferrite.conf` like this:
 
 ```
-datadir=/litecoin
+datadir=/ferrite
 server=1
 txindex=1
 listen=1
@@ -152,10 +152,10 @@ rpcbind=127.0.0.1:19332
 
 ### Electrs
 
-Install [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora) from source:
+Install [electrs-ltc-esplora](https://github.com/rust-ferrite/electrs-ltc/tree/esplora) from source:
 
 ```
-git clone https://github.com/rust-litecoin/electrs-ltc/
+git clone https://github.com/rust-ferrite/electrs-ltc/
 cd electrs-ltc
 git checkout esplora
 ```
@@ -219,4 +219,4 @@ service nginx restart
 
 ### Done
 
-If everything went well, your site should look like the one at https://litecoinspace.org/.
+If everything went well, your site should look like the one at https://ferritecoin.com/.

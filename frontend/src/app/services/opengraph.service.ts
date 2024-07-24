@@ -25,7 +25,7 @@ export class OpenGraphService {
   ) {
     // save og:image tag from original template
     const initialOgImageTag = metaService.getTag('property=\'og:image\'');
-    this.defaultImageUrl = initialOgImageTag?.content || 'https://litecoinspace.org/resources/mempool-space-preview.png';
+    this.defaultImageUrl = initialOgImageTag?.content || 'https://ferritecoin.com/resources/mempool-space-preview.png';
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),

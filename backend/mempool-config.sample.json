@@ -19,11 +19,11 @@
     "EXTERNAL_ASSETS": [],
     "EXTERNAL_MAX_RETRY": 1,
     "EXTERNAL_RETRY_INTERVAL": 0,
-    "USER_AGENT": "mempoollite",
+    "USER_AGENT": "mempoolfec",
     "STDOUT_LOG_MIN_PRIORITY": "debug",
     "AUTOMATIC_BLOCK_REINDEXING": true,
-    "POOLS_JSON_URL": "https://raw.githubusercontent.com/litecoin-foundation/mining-pools-ltc/master/pools.json",
-    "POOLS_JSON_TREE_URL": "https://api.github.com/repos/litecoin-foundation/mining-pools-ltc/git/trees/master",
+    "POOLS_JSON_URL": "https://raw.githubusercontent.com/mempool/mining-pools/master/pools-v2.json",
+    "POOLS_JSON_TREE_URL": "https://api.github.com/repos/mempool/mining-pools/git/trees/master",
     "AUDIT": true,
     "ADVANCED_GBT_AUDIT": true,
     "ADVANCED_GBT_MEMPOOL": true,
@@ -31,17 +31,17 @@
   },
   "CORE_RPC": {
     "HOST": "127.0.0.1",
-    "PORT": 9332,
-    "USERNAME": "poop",
-    "PASSWORD": "poop"
+    "PORT": 9573,
+    "USERNAME": "user",
+    "PASSWORD": "password"
   },
   "ELECTRUM": {
     "HOST": "127.0.0.1",
-    "PORT": 50002,
+    "PORT": 50011,
     "TLS_ENABLED": true
   },
   "ESPLORA": {
-    "REST_API_URL": "http://127.0.0.1:3000"
+    "REST_API_URL": "http://127.0.0.1:3010"
   },
   "SECOND_CORE_RPC": {
     "HOST": "127.0.0.1",
@@ -105,7 +105,7 @@
     "CLEARNET_URL": "https://price.bisq.wiz.biz/getAllMarketPrices"
   },
   "EXTERNAL_DATA_SERVER": {
-    "MEMPOOL_API": "https://litecoinspace.org/api/v1",
+    "MEMPOOL_API": "https://ferritecoin.com/api/v1",
     "MEMPOOL_ONION": "http://mempoolhqx4isw62xs7abwphsq7ldayuidyx2v2oethdhhj6mlo2r6ad.onion/api/v1"
   }
 }

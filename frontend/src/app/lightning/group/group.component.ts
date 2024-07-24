@@ -38,9 +38,9 @@ export class GroupComponent implements OnInit {
       this.selectedSocketIndex = val;
     });
 
-    this.seoService.setTitle(`litecoinspace.org Lightning Nodes`);
+    this.seoService.setTitle(`ferritecoin.com Lightning Nodes`);
 
-    this.nodes$ = this.lightningApiService.getNodGroupNodes$('litecoinspace.org')
+    this.nodes$ = this.lightningApiService.getNodGroupNodes$('ferritecoin.com')
       .pipe(
         map((nodes) => {
           for (const node of nodes) {

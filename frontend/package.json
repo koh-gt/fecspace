@@ -1,18 +1,18 @@
 {
-  "name": "litepool-frontend",
+  "name": "ferritepool-frontend",
   "version": "2.6.0-dev",
-  "description": "Litecoin mempool visualizer and blockchain explorer backend",
+  "description": "Ferrite mempool visualizer and blockchain explorer backend",
   "license": "GNU Affero General Public License v3.0",
-  "homepage": "https://litecoinspace.org",
+  "homepage": "https://ferritecoin.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/litecoin-foundation/ltcspace"
+    "url": "git+https://github.com/ferritecoin/fecspace"
   },
   "bugs": {
-    "url": "https://github.com/litecoin-foundation/ltcspace/issues"
+    "url": "https://github.com/ferritecoin/fecspace/issues"
   },
   "keywords": [
-    "litecoin",
+    "ferrite",
     "mempool",
     "blockchain",
     "explorer"

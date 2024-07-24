@@ -851,8 +851,8 @@
         <note from="description" priority="1">about.about-the-project</note>
       </trans-unit>
       <trans-unit datatype="html" id="489827bef9fd30645fd2a217aea141ac43bd01ef">
-        <source>The mempool open-source project aims to implement a high quality explorer and visualization website for the entire Litecoin ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
-        <target>O projeto de código aberto mempool visa implementar um explorador de alta qualidade e um site de visualização para todo o ecossistema Litecoin, sem distrações como altcoins, publicidade ou rastreadores de terceiros.</target>
+        <source>The mempool open-source project aims to implement a high quality explorer and visualization website for the entire Ferrite ecosystem, without distractions like altcoins, advertising, or third-party trackers.</source>
+        <target>O projeto de código aberto mempool visa implementar um explorador de alta qualidade e um site de visualização para todo o ecossistema Ferrite, sem distrações como altcoins, publicidade ou rastreadores de terceiros.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">16</context>
@@ -1536,8 +1536,8 @@
         <note from="meaning" priority="1">api-docs.mempool.mempool</note>
       </trans-unit>
       <trans-unit datatype="html" id="23c346e87b137b1807bac13c27d19dc18f745f8f">
-        <source>Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match litecoind.</source>
-        <target>Obtenha a lista completa de ID de transações no mempool como um array. A ordem dos IDs de transações é arbitrária e não corresponde ao Litecoin Core daemon.</target>
+        <source>Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match ferrited.</source>
+        <target>Obtenha a lista completa de ID de transações no mempool como um array. A ordem dos IDs de transações é arbitrária e não corresponde ao Ferrite Core daemon.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">63</context>
@@ -1720,8 +1720,8 @@
         </context-group>
       </trans-unit>
       <trans-unit datatype="html" id="d51106cc898981e9862d35a4db40796f0cf464f8">
-        <source>Returns a merkle inclusion proof for the transaction using <x ctype="x-a" equiv-text="&lt;a href=&quot;https://bitcoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>litecoind's merkleblock<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/> format.</source>
-        <target>Retorna uma prova de inclusão de merkle para a transação usando o bloco no formato <x ctype="x-a" equiv-text="&lt;a href=&quot;https://bitcoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>merkle do Litecoin Core daemon<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/>.</target>
+        <source>Returns a merkle inclusion proof for the transaction using <x ctype="x-a" equiv-text="&lt;a href=&quot;https://bitcoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>ferrited's merkleblock<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/> format.</source>
+        <target>Retorna uma prova de inclusão de merkle para a transação usando o bloco no formato <x ctype="x-a" equiv-text="&lt;a href=&quot;https://bitcoin.org/en/glossary/merkle-block&quot;&gt;" id="START_LINK"/>merkle do Ferrite Core daemon<x ctype="x-a" equiv-text="&lt;/a&gt; " id="CLOSE_LINK"/>.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">155</context>

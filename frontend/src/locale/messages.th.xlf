@@ -1439,8 +1439,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4b137ec8bf73a47063740b75c0c40d5fd3c48015" datatype="html">
-        <source>Litecoin Foundation</source>
-        <target>Litecoin Foundation</target>
+        <source>Ferrite Foundation</source>
+        <target>Ferrite Foundation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">12,13</context>
@@ -1448,8 +1448,8 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
-        <target>ระบบ mempool และระบบสำรวจ blockchain สำหรับคอมมูนิตี้ Litecoin โดยมุ่งเป้าไปที่ค่าธรรมเนียมการทำธุรกรรมต่างๆบนระบบและระบบนิเวศหลายชั้น อีกทั้งยังสามารถโฮสได้ด้วยตัวเองโดยปราศจากบุคคลที่สาม</target>
+        <source>Our mempool and blockchain explorer for the Ferrite community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <target>ระบบ mempool และระบบสำรวจ blockchain สำหรับคอมมูนิตี้ Ferrite โดยมุ่งเป้าไปที่ค่าธรรมเนียมการทำธุรกรรมต่างๆบนระบบและระบบนิเวศหลายชั้น อีกทั้งยังสามารถโฮสได้ด้วยตัวเองโดยปราศจากบุคคลที่สาม</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">13,16</context>
@@ -4370,8 +4370,8 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Your Gateway to Explore Litecoin</source>
-        <target>สำรวจระบบนิเวศ Litecoin เต็มรูปแบบ</target>
+        <source>Your Gateway to Explore Ferrite</source>
+        <target>สำรวจระบบนิเวศ Ferrite เต็มรูปแบบ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -5361,8 +5361,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/> litecoinspace.org ให้ข้อมูลเกี่ยวกับเครือข่าย Bitcoin เท่านั้น <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ไม่สามารถช่วยคุณเรียกเงิน ยืนยันธุรกรรมเร็วขึ้น ฯลฯ</target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/>ferritecoin.com merely provides data about the Bitcoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Bitcoin network.&lt;/b&gt; It cannot help you with"/> ferritecoin.com ให้ข้อมูลเกี่ยวกับเครือข่าย Bitcoin เท่านั้น <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> ไม่สามารถช่วยคุณเรียกเงิน ยืนยันธุรกรรมเร็วขึ้น ฯลฯ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>

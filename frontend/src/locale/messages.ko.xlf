@@ -1439,8 +1439,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4b137ec8bf73a47063740b75c0c40d5fd3c48015" datatype="html">
-        <source>Litecoin Foundation</source>
-        <target>Litecoin Foundation</target>
+        <source>Ferrite Foundation</source>
+        <target>Ferrite Foundation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">12,13</context>
@@ -1448,7 +1448,7 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <source>Our mempool and blockchain explorer for the Ferrite community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
         <target>라이트코인 커뮤니티를 위한 멤풀 및 블록체인 탐색기는 트랜잭션 수수료 시장과 다계층 생태계에 중점을 두고 있으며 제3자 없이 자체 호스팅하고 있습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
@@ -4370,8 +4370,8 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Your Gateway to Explore Litecoin</source>
-        <target>Litecoin 네트워크 전체를 검색해 보세요</target>
+        <source>Your Gateway to Explore Ferrite</source>
+        <target>Ferrite 네트워크 전체를 검색해 보세요</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -4388,7 +4388,7 @@
         <note priority="1" from="description">search-form.search-title</note>
       </trans-unit>
       <trans-unit id="0673b255ba8db0bc5e2cccd5962d31dc88c24578" datatype="html">
-        <source>Litecoin Block Height</source>
+        <source>Ferrite Block Height</source>
         <target>라이트코인 블록 높이</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
@@ -4397,7 +4397,7 @@
         <note priority="1" from="description">search.bitcoin-block-height</note>
       </trans-unit>
       <trans-unit id="8b786a14d8c948e31bfb84369f123847a21dbf50" datatype="html">
-        <source>Litecoin Transaction</source>
+        <source>Ferrite Transaction</source>
         <target>라이트코인 트랜잭션</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
@@ -4406,7 +4406,7 @@
         <note priority="1" from="description">search.bitcoin-transaction</note>
       </trans-unit>
       <trans-unit id="aacf72635ebf6cfe00590e3a426ea6002c43a729" datatype="html">
-        <source>Litecoin Address</source>
+        <source>Ferrite Address</source>
         <target>라이트코인 주소</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
@@ -4415,7 +4415,7 @@
         <note priority="1" from="description">search.bitcoin-address</note>
       </trans-unit>
       <trans-unit id="97089c008af92d87389ff1ec5fb2cc96a6ecef0e" datatype="html">
-        <source>Litecoin Block</source>
+        <source>Ferrite Block</source>
         <target>라이트코인 블록</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
@@ -4424,7 +4424,7 @@
         <note priority="1" from="description">search.bitcoin-block</note>
       </trans-unit>
       <trans-unit id="e89c09d708a1da5f6a59ba6c38ba3db78031fe0e" datatype="html">
-        <source>Litecoin Addresses</source>
+        <source>Ferrite Addresses</source>
         <target>라이트코인 주소들</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
@@ -5361,8 +5361,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org merely provides data about the Litecoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target> <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/> litecoinspace.org는 litecoin 네트워크에 대한 데이터만 제공할 뿐입니다. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> 자금을 회수하거나 트랜잭션을 더 빨리 컨펌시키는 것 등에 대해서는 도움을 드릴 수 없습니다.</target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Ferrite network.&lt;/b&gt; It cannot help you with"/>ferritecoin.com merely provides data about the Ferrite network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target> <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Ferrite network.&lt;/b&gt; It cannot help you with"/> ferritecoin.com는 ferrite 네트워크에 대한 데이터만 제공할 뿐입니다. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> 자금을 회수하거나 트랜잭션을 더 빨리 컨펌시키는 것 등에 대해서는 도움을 드릴 수 없습니다.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>

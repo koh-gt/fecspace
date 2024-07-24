@@ -7,7 +7,7 @@ import { StateService } from './state.service';
 })
 export class SeoService {
   network = '';
-  baseTitle = 'Litecoin Space';
+  baseTitle = 'Ferrite Space';
 
   constructor(
     private titleService: Title,
@@ -38,8 +38,8 @@ export class SeoService {
 
   getTitle(): string {
     if (this.network === 'testnet')
-      return this.baseTitle + ' - Litecoin Testnet';
-    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Litecoin') + ' Explorer';
+      return this.baseTitle + ' - Ferrite Testnet';
+    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Ferrite') + ' Explorer';
   }
 
   ucfirst(str: string) {
