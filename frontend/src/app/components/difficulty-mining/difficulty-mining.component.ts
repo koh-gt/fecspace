@@ -63,8 +63,8 @@ export class DifficultyMiningComponent implements OnInit {
           colorPreviousAdjustments = '#ffffff66';
         }
 
-        const blocksUntilHalving = 840000 - (block.height % 840000);
-        const timeUntilHalving = new Date().getTime() + (blocksUntilHalving * 150000);
+        const blocksUntilHalving = 301107 - (block.height % 301107);
+        const timeUntilHalving = new Date().getTime() + (blocksUntilHalving * 60000);
 
         const data = {
           base: `${da.progressPercent.toFixed(2)}%`,

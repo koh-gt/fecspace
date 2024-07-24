@@ -147,82 +147,177 @@ export const languages: Language[] = [
 export const specialBlocks = {
   '0': {
     labelEvent: 'Genesis',
-    labelEventCompleted: 'The Genesis of Litecoin',
+    labelEventCompleted: 'The Genesis of Ferrite',
     networks: ['mainnet', 'testnet'],
   },
-  '840000': {
-    labelEvent: 'Litecoin\'s 1st Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 25 LTC per block',
+  '301107': {
+    labelEvent: 'Ferrite\'s 1st Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 50 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '1680000': {
-    labelEvent: 'Litecoin\'s 2nd Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 12.5 LTC per block',
+  '602214': {
+    labelEvent: 'Ferrite\'s 2nd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 25 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '2520000': {
-    labelEvent: 'Litecoin\'s 3rd Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 6.25 LTC per block',
+  '903321': {
+    labelEvent: 'Ferrite\'s 3rd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 12.5 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '3360000': {
-    labelEvent: 'Litecoin\'s 4th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 3.125 LTC per block',
+  '1204428': {
+    labelEvent: 'Ferrite\'s 4th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 6.25 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '4200000': {
-    labelEvent: 'Litecoin\'s 5th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 1.5625 LTC per block',
+  '1505535': {
+    labelEvent: 'Ferrite\'s 5th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 3.125 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '5040000': {
-    labelEvent: 'Litecoin\'s 6th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.78125 LTC per block',
+  '1806642': {
+    labelEvent: 'Ferrite\'s 6th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 1.5625 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '5880000': {
-    labelEvent: 'Litecoin\'s 7th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.390625 LTC per block',
+  '2107749': {
+    labelEvent: 'Ferrite\'s 7th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.78125 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '6720000': {
-    labelEvent: 'Litecoin\'s 8th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.1953125 LTC per block',
+  '2408856': {
+    labelEvent: 'Ferrite\'s 8th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.390625 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '7560000': {
-    labelEvent: 'Litecoin\'s 9th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.09765625 LTC per block',
+  '2709963': {
+    labelEvent: 'Ferrite\'s 9th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.1953125 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '8400000': {
-    labelEvent: 'Litecoin\'s 10th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.04882812 LTC per block',
+  '3011070': {
+    labelEvent: 'Ferrite\'s 10th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.09765625 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '9240000': {
-    labelEvent: 'Litecoin\'s 11th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.02441406 LTC per block',
+  '3312177': {
+    labelEvent: 'Ferrite\'s 11th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.04882812 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '10080000': {
-    labelEvent: 'Litecoin\'s 12th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.01220703 LTC per block',
+  '3613284': {
+    labelEvent: 'Ferrite\'s 12th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.02441406 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '10920000': {
-    labelEvent: 'Litecoin\'s 13th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.00610351 LTC per block',
+  '3914391': {
+    labelEvent: 'Ferrite\'s 13th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.01220703 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '11760000': {
-    labelEvent: 'Litecoin\'s 14th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.00305175 LTC per block',
+  '4215498': {
+    labelEvent: 'Ferrite\'s 14th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00610351 FEC per block',
     networks: ['mainnet', 'testnet'],
   },
-  '12600000': {
-    labelEvent: 'Litecoin\'s 15th Halving',
-    labelEventCompleted: 'Block Subsidy has halved to 0.00152587 LTC per block',
+  '4516605': {
+    labelEvent: 'Ferrite\'s 15th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00305175 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '4817712': {
+    labelEvent: 'Ferrite\'s 16th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00152587 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '5118819': {
+    labelEvent: 'Ferrite\'s 17th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00076293 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '5419926': {
+    labelEvent: 'Ferrite\'s 18th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00038146 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '5721033': {
+    labelEvent: 'Ferrite\'s 19th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00019073 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '6022140': {
+    labelEvent: 'Ferrite\'s 20th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00009536 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '6323247': {
+    labelEvent: 'Ferrite\'s 21st Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00004768 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '6624354': {
+    labelEvent: 'Ferrite\'s 22nd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00002384 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '6925461': {
+    labelEvent: 'Ferrite\'s 23rd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00001192 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '7226568': {
+    labelEvent: 'Ferrite\'s 24th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000596 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '7527675': {
+    labelEvent: 'Ferrite\'s 25th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000298 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '7828782': {
+    labelEvent: 'Ferrite\'s 26th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000149 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '8129889': {
+    labelEvent: 'Ferrite\'s 27th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000074 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '8430996': {
+    labelEvent: 'Ferrite\'s 28th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000037 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '8732103': {
+    labelEvent: 'Ferrite\'s 29th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000018 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '9033210': {
+    labelEvent: 'Ferrite\'s 30th Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000009 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '9334317': {
+    labelEvent: 'Ferrite\'s 31st Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000004 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '9635424': {
+    labelEvent: 'Ferrite\'s 32nd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000002 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '9936531': {
+    labelEvent: 'Ferrite\'s 33rd Halving',
+    labelEventCompleted: 'Block Subsidy has halved to 0.00000001 FEC per block',
+    networks: ['mainnet', 'testnet'],
+  },
+  '10237638': {
+    labelEvent: 'Ferrite\'s Final Halving',
+    labelEventCompleted: 'Block Subsidy has ended',
     networks: ['mainnet', 'testnet'],
   }
 };

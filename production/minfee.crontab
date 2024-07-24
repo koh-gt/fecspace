@@ -1,1 +1,1 @@
-@reboot /usr/local/bin/litecoind >/dev/null 2>&1
+@reboot /usr/local/bin/ferrited >/dev/null 2>&1

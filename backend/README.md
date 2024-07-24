@@ -1,10 +1,10 @@
-# Litepool Backend
+# Ferritepool Backend
 
 These instructions are mostly intended for developers.
 
-If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Litepool does not provide support for custom setups.
+If you choose to use these instructions for a production setup, be aware that you will still probably need to do additional configuration for your specific OS, environment, use-case, etc. We do our best here to provide a good starting point, but only proceed if you know what you're doing. Ferritepool does not provide support for custom setups.
 
-See other ways to set up Litepool on [the main README](/../../#installation-methods).
+See other ways to set up Ferritepool on [the main README](/../../#installation-methods).
 
 Jump to a section in this doc:
 
@@ -13,25 +13,25 @@ Jump to a section in this doc:
 
 ## Setup
 
-### 1. Clone Litepool Repository
+### 1. Clone Ferritepool Repository
 
-Get the latest Litepool code:
+Get the latest Ferritepool code:
 
 ```
-git clone https://github.com/litecoin-foundation/ltcspace
-cd Litepool
+git clone https://github.com/ferritecoin/fecspace
+cd Ferritepool
 ```
 
 Check out the latest release:
 
 ```
-latestrelease=$(curl -s https://api.github.com/repos/litecoin-foundation/litepool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/ferritecoin/ferritepool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
 git checkout $latestrelease
 ```
 
-### 2. Configure Litecoin Core
+### 2. Configure Ferrite Core
 
-Turn on `txindex`, enable RPC, and set RPC credentials in `litecoin.conf`:
+Turn on `txindex`, enable RPC, and set RPC credentials in `ferrite.conf`:
 
 ```
 txindex=1
@@ -42,13 +42,13 @@ rpcpassword=mempool
 
 ### 3. Configure Electrum Server
 
-[Pick an Electrum Server implementation](https://litecoinspace.org/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
+[Pick an Electrum Server implementation](https://ferritecoin.com/docs/faq#address-lookup-issues), configure it, and make sure it's synced.
 
-**This step is optional.** You can run Litepool without configuring an Electrum Server for it, but address lookups will be disabled.
+**This step is optional.** You can run Ferritepool without configuring an Electrum Server for it, but address lookups will be disabled.
 
 ### 4. Configure MariaDB
 
-_Litepool needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
+_Ferritepool needs MariaDB v10.5 or later. If you already have MySQL installed, make sure to migrate any existing databases **before** installing MariaDB._
 
 Get MariaDB from your operating system's package manager:
 
@@ -74,7 +74,7 @@ MariaDB [(none)]> grant all privileges on mempool.* to 'mempool'@'%' identified 
 Query OK, 0 rows affected (0.00 sec)
 ```
 
-### 5. Prepare Litepool Backend
+### 5. Prepare Ferritepool Backend
 
 #### Build
 
@@ -100,15 +100,15 @@ Edit `mempool-config.json` as needed.
 
 In particular, make sure:
 
-- the correct Litecoin Core RPC credentials are specified in `CORE_RPC`
+- the correct Ferrite Core RPC credentials are specified in `CORE_RPC`
 - the correct `BACKEND` is specified in `MEMPOOL`:
-  - "electrum" if you're using [electrs-ltc](https://github.com/rust-litecoin/electrs-ltc/tree/master) or [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum)
-  - "esplora" if you're using [electrs-ltc-esplora](https://github.com/rust-litecoin/electrs-ltc/tree/esplora)
+  - "electrum" if you're using [electrs-ltc](https://github.com/rust-ferrite/electrs-ltc/tree/master) or [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum)
+  - "esplora" if you're using [electrs-ltc-esplora](https://github.com/rust-ferrite/electrs-ltc/tree/esplora)
   - "none" if you're not using any Electrum Server
 
-### 6. Run Litepool Backend
+### 6. Run Ferritepool Backend
 
-Run the Litepool backend:
+Run the Ferritepool backend:
 
 ```
 npm run start
@@ -144,15 +144,15 @@ Mempool updated in 0.243 seconds
 Updating mempool
 ```
 
-### 7. Set Up Litepool Frontend
+### 7. Set Up Ferritepool Frontend
 
-With the backend configured and running, proceed to set up the [Litepool frontend](../frontend#manual-setup).
+With the backend configured and running, proceed to set up the [Ferritepool frontend](../frontend#manual-setup).
 
 ## Development Tips
 
 ### Set Up Backend Watchers
 
-The litepool backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server.
+The ferritepool backend is static. TypeScript scripts are compiled into the `dist` folder and served through a Node.js web server.
 
 As a result, for development purposes, you may find it helpful to set up backend watchers to avoid the manual shutdown/recompile/restart command-line cycle.
 
@@ -174,61 +174,61 @@ nodemon src/index.ts --ignore cache/
 
 Helpful link: https://gist.github.com/System-Glitch/cb4e87bf1ae3fec9925725bb3ebe223a
 
-Run litecoind on regtest:
+Run ferrited on regtest:
 
 ```
-litecoind -regtest
+ferrited -regtest
 ```
 
 Create a new wallet, if needed:
 
 ```
-litecoin-cli -regtest createwallet test
+ferrite-cli -regtest createwallet test
 ```
 
 Load wallet (this command may take a while if you have lot of UTXOs):
 
 ```
-litecoin-cli -regtest loadwallet test
+ferrite-cli -regtest loadwallet test
 ```
 
 Get a new address:
 
 ```
-address=$(litecoin-cli -regtest getnewaddress)
+address=$(ferrite-cli -regtest getnewaddress)
 ```
 
 Mine blocks to the previously generated address. You need at least 101 blocks before you can spend. This will take some time to execute (~1 min):
 
 ```
-litecoin-cli -regtest generatetoaddress 101 $address
+ferrite-cli -regtest generatetoaddress 101 $address
 ```
 
 Send 0.1 BTC at 5 lit/vB to another address:
 
 ```
-litecoin-cli -named -regtest sendtoaddress address=$(litecoin-cli -regtest getnewaddress) amount=0.1 fee_rate=5
+ferrite-cli -named -regtest sendtoaddress address=$(ferrite-cli -regtest getnewaddress) amount=0.1 fee_rate=5
 ```
 
 See more example of `sendtoaddress`:
 
 ```
-litecoin-cli sendtoaddress # will print the help
+ferrite-cli sendtoaddress # will print the help
 ```
 
 Mini script to generate random network activity (random TX count with random tx fee-rate). It's slow so don't expect to use this to test mempool spam, except if you let it run for a long time, or maybe with multiple regtest nodes connected to each other.
 
 ```
 #!/bin/bash
-address=$(litecoin-cli -regtest getnewaddress)
-litecoin-cli -regtest generatetoaddress 101 $address
+address=$(ferrite-cli -regtest getnewaddress)
+ferrite-cli -regtest generatetoaddress 101 $address
 for i in {1..1000000}
 do
    for y in $(seq 1 "$(jot -r 1 1 1000)")
    do
-      litecoin-cli -regtest -named sendtoaddress address=$address amount=0.01 fee_rate=$(jot -r 1 1 100)
+      ferrite-cli -regtest -named sendtoaddress address=$address amount=0.01 fee_rate=$(jot -r 1 1 100)
    done
-   litecoin-cli -regtest generatetoaddress 1 $address
+   ferrite-cli -regtest generatetoaddress 1 $address
    sleep 5
 done
 ```
@@ -236,7 +236,7 @@ done
 Generate block at regular interval (every 10 seconds in this example):
 
 ```
-watch -n 10 "litecoin-cli -regtest generatetoaddress 1 $address"
+watch -n 10 "ferrite-cli -regtest generatetoaddress 1 $address"
 ```
 
 ### Mining pools update

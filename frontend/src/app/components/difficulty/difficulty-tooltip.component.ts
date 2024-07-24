@@ -16,7 +16,7 @@ interface EpochProgress {
   timeUntilHalving: number;
 }
 
-const EPOCH_BLOCK_LENGTH = 2016; // Bitcoin mainnet
+const EPOCH_BLOCK_LENGTH = 10; // Bitcoin mainnet
 
 @Component({
   selector: 'app-difficulty-tooltip',

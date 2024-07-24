@@ -1,6 +1,6 @@
 {
   "SERVER": {
-    "HOST": "https://litecoinspace.org",
+    "HOST": "https://ferritecoin.com",
     "HTTP_PORT": 8001
   },
   "MEMPOOL": {

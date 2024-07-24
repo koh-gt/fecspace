@@ -143,8 +143,8 @@ const defaults: IConfig = {
     'USER_AGENT': 'mempool',
     'STDOUT_LOG_MIN_PRIORITY': 'debug',
     'AUTOMATIC_BLOCK_REINDEXING': false,
-    'POOLS_JSON_URL': 'https://raw.githubusercontent.com/litecoin-foundation/mining-pools-ltc/master/pools.json',
-    'POOLS_JSON_TREE_URL': 'https://api.github.com/repos/litecoin-foundation/mining-pools-ltc/git/trees/master',
+    'POOLS_JSON_URL': 'https://raw.githubusercontent.com/mempool/mining-pools/master/pools-v2.json',
+    'POOLS_JSON_TREE_URL': 'https://api.github.com/repos/mempool/mining-pools/git/trees/master',
     'AUDIT': false,
     'ADVANCED_GBT_AUDIT': false,
     'ADVANCED_GBT_MEMPOOL': false,
@@ -153,7 +153,7 @@ const defaults: IConfig = {
     'DISK_CACHE_BLOCK_INTERVAL': 6,
   },
   'ESPLORA': {
-    'REST_API_URL': 'http://127.0.0.1:3000',
+    'REST_API_URL': 'http://127.0.0.1:3010',
     'UNIX_SOCKET_PATH': null,
     'RETRY_UNIX_SOCKET_AFTER': 30000,
   },
@@ -164,9 +164,9 @@ const defaults: IConfig = {
   },
   'CORE_RPC': {
     'HOST': '127.0.0.1',
-    'PORT': 8332,
-    'USERNAME': 'mempool',
-    'PASSWORD': 'mempool',
+    'PORT': 9573,
+    'USERNAME': 'user',
+    'PASSWORD': 'password',
     'TIMEOUT': 60000,
   },
   'SECOND_CORE_RPC': {
@@ -225,8 +225,8 @@ const defaults: IConfig = {
     'PASSWORD': ''
   },
   'EXTERNAL_DATA_SERVER': {
-    'MEMPOOL_API': 'https://litecoinspace.org/api/v1',
-    'MEMPOOL_ONION': 'http://TODO: litecoin.onion/api/v1',
+    'MEMPOOL_API': 'https://ferritecoin.com/api/v1',
+    'MEMPOOL_ONION': 'http://TODO: ferrite.onion/api/v1',
   },
   'MAXMIND': {
     'ENABLED': false,

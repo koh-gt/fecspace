@@ -1,14 +1,14 @@
-# Litecoin Space
+# Ferrite Space
 
 <br>
 
-Litepool is the fully-featured mempool visualizer, explorer, and API service running at [litecoinspace.org](https://litecoinspace.org/).
+Ferritepool is the fully-featured mempool visualizer, explorer, and API service running at [ferritecoin.com](https://ferritecoin.com/).
 
-It is an open-source project developed and operated for the benefit of the Litecoin community, with a focus on the emerging transaction fee market that is evolving Litecoin into a multi-layer ecosystem.
+It is an open-source project developed and operated for the benefit of the Ferrite community, with a focus on the emerging transaction fee market that is evolving Ferrite into a multi-layer ecosystem.
 
 # Installation Methods
 
-litepool can be self-hosted on a wide variety of your own hardware, ranging from a simple one-click installation on a Raspberry Pi full-node distro all the way to a robust production instance on a powerful FreeBSD server.
+ferritepool can be self-hosted on a wide variety of your own hardware, ranging from a simple one-click installation on a Raspberry Pi full-node distro all the way to a robust production instance on a powerful FreeBSD server.
 
 **Most people should use a one-click install method.** Other install methods are meant for developers and others with experience managing servers.
 
@@ -28,8 +28,8 @@ Mempool can be conveniently installed on the following full-node distros:
 
 ## Advanced Installation Methods
 
-Litepool can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
+Ferritepool can be installed in other ways too, but we only recommend doing so if you're a developer, have experience managing servers, or otherwise know what you're doing.
 
-- See the [`docker/`](./docker/) directory for instructions on deploying Litepool with Docker.
+- See the [`docker/`](./docker/) directory for instructions on deploying Ferritepool with Docker.
 - See the [`backend/`](./backend/) and [`frontend/`](./frontend/) directories for manual install instructions oriented for developers.
-- See the [`production/`](./production/) directory for guidance on setting up a more serious Litepool instance designed for high performance at scale.
+- See the [`production/`](./production/) directory for guidance on setting up a more serious Ferritepool instance designed for high performance at scale.

@@ -86,7 +86,7 @@ def on_open(ws):
     ws.send(json.dumps(message))
 
 if __name__ == "__main__":
-    ws = websocket.WebSocketApp("wss://litecoinspace.org/api/v1/ws",
+    ws = websocket.WebSocketApp("wss://ferritecoin.com/api/v1/ws",
                               on_open=on_open,
                               on_message=on_message,
                               on_error=on_error,
@@ -8864,7 +8864,7 @@ export const faqData = [
     category: "advanced",
     showConditions: bitcoinNetworks,
     fragment: "how-big-is-mempool-used-by-mempool-space",
-    title: "How big is the mempool used by litecoinspace.org?",
+    title: "How big is the mempool used by ferritecoin.com?",
     options: { officialOnly: true },
   },
   {
@@ -8944,7 +8944,7 @@ export const faqData = [
     category: "self-hosting",
     showConditions: bitcoinNetworks,
     fragment: "install-mempool-with-docker",
-    title: "Can I install Litepool using Docker?",
+    title: "Can I install Ferritepool using Docker?",
   },
   {
     type: "endpoint",

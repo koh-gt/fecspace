@@ -6,8 +6,8 @@ LOCKFILE="${HOME}/lock"
 REF=$(echo "${1:=origin/master}"|sed -e 's!:!/!')
 
 # get rpc credentials
-BITCOIN_RPC_USER=$(grep '^rpcuser' /etc/litecoin/litecoin.conf | cut -d '=' -f2)
-BITCOIN_RPC_PASS=$(grep '^rpcpassword' /etc/litecoin/litecoin.conf | cut -d '=' -f2)
+BITCOIN_RPC_USER=$(grep '^rpcuser' /etc/ferrite/ferrite.conf | cut -d '=' -f2)
+BITCOIN_RPC_PASS=$(grep '^rpcpassword' /etc/ferrite/ferrite.conf | cut -d '=' -f2)
 
 # get mysql credentials
 MYSQL_CRED_FILE=${HOME}/.mysql_credentials
@@ -133,7 +133,7 @@ done
 
 # update all repos
 for repo in $backend_repos;do
-    # litecoin: updates currently disabled 
+    # ferrite: updates currently disabled 
     # update_repo "${repo}"
 done
 

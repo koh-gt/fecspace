@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 PROTO=https
-HOSTNAME=litecoinspace.org
+HOSTNAME=ferritecoin.com
 URL_BASE=${PROTO}://${HOSTNAME}
 
 curltest()

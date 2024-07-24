@@ -24,9 +24,9 @@ export function calcDifficultyAdjustment(
   network: string,
   latestBlockTimestamp: number,
 ): DifficultyAdjustment {
-  const EPOCH_BLOCK_LENGTH = 2016; // Litecoin mainnet
-  const BLOCK_SECONDS_TARGET = 150; // Litecoin mainnet (2.5min * 60)
-  const TESTNET_MAX_BLOCK_SECONDS = 1200; // Litecoin testnet
+  const EPOCH_BLOCK_LENGTH = 10; // Ferrite mainnet
+  const BLOCK_SECONDS_TARGET = 60; // Ferrite mainnet (1min * 60)
+  const TESTNET_MAX_BLOCK_SECONDS = 1200; // Ferrite testnet
 
   const diffSeconds = Math.max(0, nowSeconds - DATime);
   const blocksInEpoch = (blockHeight >= 0) ? blockHeight % EPOCH_BLOCK_LENGTH : 0;
@@ -34,11 +34,12 @@ export function calcDifficultyAdjustment(
   const remainingBlocks = EPOCH_BLOCK_LENGTH - blocksInEpoch;
   const nextRetargetHeight = (blockHeight >= 0) ? blockHeight + remainingBlocks : 0;
   const expectedBlocks = diffSeconds / BLOCK_SECONDS_TARGET;
-  const actualTimespan = (blocksInEpoch === 2015 ? latestBlockTimestamp : nowSeconds) - DATime;
+  const actualTimespan = (blocksInEpoch === 9 ? latestBlockTimestamp : nowSeconds) - DATime;
 
   let difficultyChange = 0;
   let timeAvgSecs = blocksInEpoch ? diffSeconds / blocksInEpoch : BLOCK_SECONDS_TARGET;
 
+  // pre DGWv3 as of now 20240724 height 166274 of 250000
   difficultyChange = (BLOCK_SECONDS_TARGET / (actualTimespan / (blocksInEpoch + 1)) - 1) * 100;
   // Max increase is x4 (+300%)
   if (difficultyChange > 300) {

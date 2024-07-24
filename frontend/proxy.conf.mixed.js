@@ -34,7 +34,7 @@ PROXY_CONFIG.push(
     },
     {
       context: ["/api/**"],
-      target: `https://litecoinspace.org`,
+      target: `https://ferritecoin.com`,
       secure: false,
       changeOrigin: true,
       proxyTimeout: 30000,

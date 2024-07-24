@@ -37,7 +37,7 @@
                     <ng-template #hasPrevout>
                       <ng-template [ngIf]="vin.is_pegin" [ngIfElse]="defaultPrevout">
                         <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegInLink"
-                          [attr.href]="'https://litecoinspace.org/tx/' + vin.txid" class="red">
+                          [attr.href]="'https://ferritecoin.com/tx/' + vin.txid" class="red">
                           <fa-icon [icon]="['fas', 'arrow-alt-circle-right']" [fixedWidth]="true"></fa-icon>
                         </a>
                         <ng-template #localPegInLink>
@@ -221,7 +221,7 @@
                             *ngTemplateOutlet="pegOutLink"></ng-container></ng-container>
                         <ng-template #pegOutLink>
                           <a *ngIf="stateService.env.BASE_MODULE === 'liquid'; else localPegoutLink"
-                            [attr.href]="'https://litecoinspace.org/address/' + vout.pegout.scriptpubkey_address"
+                            [attr.href]="'https://ferritecoin.com/address/' + vout.pegout.scriptpubkey_address"
                             title="{{ vout.pegout.scriptpubkey_address }}">
                             <app-truncate [text]="vout.pegout.scriptpubkey_address"></app-truncate>
                           </a>

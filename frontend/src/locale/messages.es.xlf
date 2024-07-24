@@ -1388,8 +1388,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4b137ec8bf73a47063740b75c0c40d5fd3c48015" datatype="html">
-        <source>Litecoin Foundation</source>
-        <target>Litecoin Foundation</target>
+        <source>Ferrite Foundation</source>
+        <target>Ferrite Foundation</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">12,13</context>
@@ -1397,8 +1397,8 @@
         <note priority="1" from="description">about.about-the-project</note>
       </trans-unit>
       <trans-unit id="8a4411dcb4da0aa489ec367bf2a3ec289e07a86e" datatype="html">
-        <source>Our mempool and blockchain explorer for the Litecoin community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
-        <target>Nuestro explorador de bloques y mempool para la comunidad Litecoin,  con foco en las tasas de mercado de transacciones y el ecosistema multicapa, completamente auto-hosteado sin terceras partes de confianza.</target>
+        <source>Our mempool and blockchain explorer for the Ferrite community, focusing on the transaction fee market and multi-layer ecosystem, completely self-hosted without any trusted third-parties.</source>
+        <target>Nuestro explorador de bloques y mempool para la comunidad Ferrite,  con foco en las tasas de mercado de transacciones y el ecosistema multicapa, completamente auto-hosteado sin terceras partes de confianza.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/about/about.component.html</context>
           <context context-type="linenumber">13,16</context>
@@ -4319,8 +4319,8 @@
         <note priority="1" from="description">mining.rewards-per-tx</note>
       </trans-unit>
       <trans-unit id="7deec1c1520f06170e1f8e8ddfbe4532312f638f" datatype="html">
-        <source>Your Gateway to Explore Litecoin</source>
-        <target>Explora todo el ecosistema Litecoin</target>
+        <source>Your Gateway to Explore Ferrite</source>
+        <target>Explora todo el ecosistema Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-form.component.html</context>
           <context context-type="linenumber">4,5</context>
@@ -4337,8 +4337,8 @@
         <note priority="1" from="description">search-form.search-title</note>
       </trans-unit>
       <trans-unit id="0673b255ba8db0bc5e2cccd5962d31dc88c24578" datatype="html">
-        <source>Litecoin Block Height</source>
-        <target>Altura del bloque de Litecoin</target>
+        <source>Ferrite Block Height</source>
+        <target>Altura del bloque de Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">3</context>
@@ -4346,8 +4346,8 @@
         <note priority="1" from="description">search.bitcoin-block-height</note>
       </trans-unit>
       <trans-unit id="8b786a14d8c948e31bfb84369f123847a21dbf50" datatype="html">
-        <source>Litecoin Transaction</source>
-        <target>Transacción de Litecoin</target>
+        <source>Ferrite Transaction</source>
+        <target>Transacción de Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">9</context>
@@ -4355,8 +4355,8 @@
         <note priority="1" from="description">search.bitcoin-transaction</note>
       </trans-unit>
       <trans-unit id="aacf72635ebf6cfe00590e3a426ea6002c43a729" datatype="html">
-        <source>Litecoin Address</source>
-        <target>Dirección de Litecoin</target>
+        <source>Ferrite Address</source>
+        <target>Dirección de Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">15</context>
@@ -4364,8 +4364,8 @@
         <note priority="1" from="description">search.bitcoin-address</note>
       </trans-unit>
       <trans-unit id="97089c008af92d87389ff1ec5fb2cc96a6ecef0e" datatype="html">
-        <source>Litecoin Block</source>
-        <target>Bloque de Litecoin</target>
+        <source>Ferrite Block</source>
+        <target>Bloque de Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">21</context>
@@ -4373,8 +4373,8 @@
         <note priority="1" from="description">search.bitcoin-block</note>
       </trans-unit>
       <trans-unit id="e89c09d708a1da5f6a59ba6c38ba3db78031fe0e" datatype="html">
-        <source>Litecoin Addresses</source>
-        <target>Direcciones de Litecoin</target>
+        <source>Ferrite Addresses</source>
+        <target>Direcciones de Ferrite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/search-form/search-results/search-results.component.html</context>
           <context context-type="linenumber">27</context>
@@ -5310,8 +5310,8 @@
         <note priority="1" from="description">dashboard.lbtc-pegs-in-circulation</note>
       </trans-unit>
       <trans-unit id="8f2791f5d9656271dd6c385f5ad572716e90f4a2" datatype="html">
-        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org merely provides data about the Litecoin network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
-        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="litecoinspace.org merely provides data about the Litecoin network.&lt;/b&gt; It cannot help you with"/>litecoinspace.org simplemente proporciona datos sobre la red Litecoin. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>No puede ayudarle a recuperar fondos, confirmar su transacción más rápido, etc. </target>
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Ferrite network.&lt;/b&gt; It cannot help you with"/>ferritecoin.com merely provides data about the Ferrite network.<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> It cannot help you with retrieving funds, confirming your transaction quicker, etc.</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="ferritecoin.com merely provides data about the Ferrite network.&lt;/b&gt; It cannot help you with"/>ferritecoin.com simplemente proporciona datos sobre la red Ferrite. <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>No puede ayudarle a recuperar fondos, confirmar su transacción más rápido, etc. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/api-docs/api-docs.component.html</context>
           <context context-type="linenumber">13</context>
