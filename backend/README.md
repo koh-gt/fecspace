@@ -13,13 +13,13 @@ Jump to a section in this doc:
 
 ## Setup
 
-### 1. Clone Ferritepool Repository
+### 1. Clone fecspace Repository
 
-Get the latest Ferritepool code:
+Get the latest fecspace code:
 
 ```
 git clone https://github.com/ferritecoin/fecspace
-cd Ferritepool
+cd fecspace
 ```
 
 Check out the latest release:
@@ -36,8 +36,8 @@ Turn on `txindex`, enable RPC, and set RPC credentials in `ferrite.conf`:
 ```
 txindex=1
 server=1
-rpcuser=mempool
-rpcpassword=mempool
+rpcuser=user
+rpcpassword=password
 ```
 
 ### 3. Configure Electrum Server
@@ -54,7 +54,7 @@ Get MariaDB from your operating system's package manager:
 
 ```
 # Debian, Ubuntu, etc.
-apt-get install mariadb-server mariadb-client
+sudo apt-get install mariadb-server mariadb-client
 
 # macOS
 brew install mariadb
@@ -64,6 +64,8 @@ mysql.server start
 Create a database and grant privileges:
 
 ```
+sudo mariadb
+
 MariaDB [(none)]> drop database mempool;
 Query OK, 0 rows affected (0.00 sec)
 
@@ -72,6 +74,8 @@ Query OK, 1 row affected (0.00 sec)
 
 MariaDB [(none)]> grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
 Query OK, 0 rows affected (0.00 sec)
+
+exit
 ```
 
 ### 5. Prepare Ferritepool Backend
@@ -79,11 +83,22 @@ Query OK, 0 rows affected (0.00 sec)
 #### Build
 
 _Make sure to use Node.js 16.10 and npm 7._
+```
+node -v
+```
 
 Install dependencies with `npm` and build the backend:
 
 ```
 cd backend
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+source ~/.bashrc   # reload shell
+nvm install 16
+nvm use 16
+
 npm install
 npm run build
 ```
@@ -96,14 +111,14 @@ In the backend folder, make a copy of the sample config file:
 cp mempool-config.sample.json mempool-config.json
 ```
 
-Edit `mempool-config.json` as needed.
+Edit `mempool-config.json` as needed.n
 
 In particular, make sure:
 
 - the correct Ferrite Core RPC credentials are specified in `CORE_RPC`
 - the correct `BACKEND` is specified in `MEMPOOL`:
-  - "electrum" if you're using [electrs-ltc](https://github.com/rust-ferrite/electrs-ltc/tree/master) or [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum)
-  - "esplora" if you're using [electrs-ltc-esplora](https://github.com/rust-ferrite/electrs-ltc/tree/esplora)
+  ~- "electrum" if you're using [electrs-ltc](https://github.com/rust-ferrite/electrs-ltc/tree/master) or [cculianu/Fulcrum](https://github.com/cculianu/Fulcrum)~
+  - "esplora" if you're using [electrs-fec](https://github.com/ferritecoin/electrs-fec)
   - "none" if you're not using any Electrum Server
 
 ### 6. Run Ferritepool Backend
