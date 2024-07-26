@@ -7,8 +7,8 @@
           <svg class="epoch-blocks" height="22px" width="100%" viewBox="0 0 224 9" shape-rendering="crispEdges" preserveAspectRatio="none">
             <defs>
               <linearGradient id="diff-gradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#2368d9" />
-                <stop offset="100%" stop-color="#2396d9" />
+                <stop offset="0%" stop-color="#ff0f7b" />
+                <stop offset="100%" stop-color="#ffd700" />
               </linearGradient>
               <linearGradient id="diff-hover-gradient" x1="0%" y1="0%" x2="100%" y2="0%" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stop-color="#2486eb" />
@@ -28,7 +28,7 @@
                 *ngIf="rect.status === 'next'"
                 attributeType="XML"
                 attributeName="fill"
-                [attr.values]="'#fff;' + (rect.expected ? '#D81B60' : '#4d4d4d') + ';#fff'"
+                [attr.values]="'#fff;' + (rect.expected ? '#D81B60' : '#2d3348') + ';#fff'"
                 dur="2s"
                 repeatCount="indefinite"/>
             </rect>

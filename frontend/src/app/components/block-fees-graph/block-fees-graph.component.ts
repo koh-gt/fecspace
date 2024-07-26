@@ -161,7 +161,7 @@ export class BlockFeesGraphComponent implements OnInit {
 
           for (const tick of data) {
             if (tick.seriesIndex === 0) {
-              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.3-3')} LTC<br>`;
+              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.3-3')} FEC<br>`;
             } else if (tick.seriesIndex === 1) {
               tooltip += `${tick.marker} ${tick.seriesName}: ${this.fiatCurrencyPipe.transform(tick.data[1], null, this.currency) }<br>`;
             }
@@ -182,7 +182,7 @@ export class BlockFeesGraphComponent implements OnInit {
       legend: data.blockFees.length === 0 ? undefined : {
         data: [
           {
-            name: 'Fees LTC',
+            name: 'Fees FEC',
             inactiveColor: 'rgb(110, 112, 121)',
             textStyle: {
               color: 'white',
@@ -205,7 +205,7 @@ export class BlockFeesGraphComponent implements OnInit {
           axisLabel: {
             color: 'rgb(110, 112, 121)',
             formatter: (val) => {
-              return `${val} LTC`;
+              return `${val} FEC`;
             }
           },
           splitLine: {
@@ -235,7 +235,7 @@ export class BlockFeesGraphComponent implements OnInit {
           legendHoverLink: false,
           zlevel: 0,
           yAxisIndex: 0,
-          name: 'Fees LTC',
+          name: 'Fees FEC',
           data: data.blockFees,
           type: 'line',
           smooth: 0.25,

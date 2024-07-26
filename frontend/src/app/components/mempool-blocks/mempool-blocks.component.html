@@ -13,10 +13,10 @@
           <div class="block-body">
             <ng-container *ngIf="!minimal">
               <div [attr.data-cy]="'mempool-block-' + i + '-fees'" class="fees">
-                ~{{ projectedBlock.medianFee | number:feeRounding }} <span i18n="shared.sat-vbyte|lit/vB">lit/vB</span>
+                ~{{ projectedBlock.medianFee | number:feeRounding }} <span i18n="shared.sat-vbyte|atom/vB">atom/vB</span>
               </div>
               <div [attr.data-cy]="'mempool-block-' + i + '-fee-span'" class="fee-span">
-                {{ projectedBlock.feeRange[0] | number:feeRounding }} - {{ projectedBlock.feeRange[projectedBlock.feeRange.length - 1] | number:feeRounding }} <span i18n="shared.sat-vbyte|lit/vB">lit/vB</span>
+                {{ projectedBlock.feeRange[0] | number:feeRounding }} - {{ projectedBlock.feeRange[projectedBlock.feeRange.length - 1] | number:feeRounding }} <span i18n="shared.sat-vbyte|atom/vB">atom/vB</span>
               </div>
               <div *ngIf="showMiningInfo" class="block-size">
                 <app-amount [attr.data-cy]="'mempool-block-' + i + '-total-fees'" [satoshis]="projectedBlock.totalFees" digitsInfo="1.2-3" [noFiat]="true"></app-amount>
