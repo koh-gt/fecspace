@@ -26,7 +26,7 @@
     <span class="field col-sm-4 text-center"><ng-container *ngIf="transactionTime > 0">&lrm;{{ transactionTime * 1000 |
         date:'yyyy-MM-dd HH:mm' }}</ng-container></span>
     <span class="field col-sm-4 text-right"><span class="label" i18n="transaction.fee|Transaction fee">Fee</span> {{
-      tx.fee | number }} <span class="symbol" i18n="shared.sat|lit">lit</span></span>
+      tx.fee | number }} <span class="symbol" i18n="shared.sat|atom">atom</span></span>
   </div>
 
 
@@ -38,7 +38,7 @@
         <span [innerHTML]="'&lrm;' + (tx.weight | wuBytes: 2)"></span>
       </p>
       <p class="field" *ngIf="!isCoinbase(tx)">
-        {{ tx.feePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-vbyte|lit/vB">lit/vB</span>
+        {{ tx.feePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-vbyte|atom/vB">atom/vB</span>
       </p>
     </div>
     <div class="overlaid">

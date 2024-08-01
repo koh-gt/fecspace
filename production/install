@@ -74,10 +74,10 @@ MD5=md5sum
 
 # used for bisq and firewall configuration
 BITCOIN_MAINNET_P2P_HOST=127.0.0.1
-BITCOIN_MAINNET_P2P_PORT=8333
+BITCOIN_MAINNET_P2P_PORT=9574
 # used for RPC communication
 BITCOIN_MAINNET_RPC_HOST=127.0.0.1
-BITCOIN_MAINNET_RPC_PORT=8332
+BITCOIN_MAINNET_RPC_PORT=9573
 # generate random hex string
 BITCOIN_RPC_USER=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 BITCOIN_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
@@ -96,12 +96,12 @@ ELEMENTS_RPC_PASS=$(head -150 /dev/urandom | ${MD5} | awk '{print $1}')
 # set either socket or TCP host/port, not both
 #ELECTRS_MAINNET_HTTP_SOCK=/tmp/bitcoin.mainnet.electrs
 ELECTRS_MAINNET_HTTP_HOST=127.0.0.1
-ELECTRS_MAINNET_HTTP_PORT=3000
+ELECTRS_MAINNET_HTTP_PORT=3010
 
 # set either socket or TCP host/port, not both
 #ELECTRS_TESTNET_HTTP_SOCK=/tmp/bitcoin.testnet.electrs
 ELECTRS_TESTNET_HTTP_HOST=127.0.0.1
-ELECTRS_TESTNET_HTTP_PORT=3002
+ELECTRS_TESTNET_HTTP_PORT=3011
 
 # set either socket or TCP host/port, not both
 #MEMPOOL_MAINNET_HTTP_SOCK=/tmp/bitcoin.mainnet.mempool

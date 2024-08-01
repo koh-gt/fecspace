@@ -40,8 +40,8 @@
     </div>
     <div class="stats top right">
       <p class="label" i18n="clock.priority-rate|priority fee rate">priority rate</p>
-      <p *ngIf="recommendedFees$ | async as recommendedFees;" i18n="shared.sat-vbyte|lit/vB">{{
-        recommendedFees.fastestFee }} lit/vB</p>
+      <p *ngIf="recommendedFees$ | async as recommendedFees;" i18n="shared.sat-vbyte|atom/vB">{{
+        recommendedFees.fastestFee }} atom/vB</p>
     </div>
     <div *ngIf="mode !== 'mempool' && block" class="stats bottom left">
       <p [innerHTML]="block.size | bytes: 2"></p>

@@ -1,10 +1,11 @@
 import config from '../config';
 import logger from '../logger';
 import PricesRepository, { ApiPrice, MAX_PRICES } from '../repositories/PricesRepository';
-import BitfinexApi from './price-feeds/bitfinex-api';
-import CoinbaseApi from './price-feeds/coinbase-api';
-import GeminiApi from './price-feeds/gemini-api';
-import KrakenApi from './price-feeds/kraken-api';
+//import BitfinexApi from './price-feeds/bitfinex-api';
+//import CoinbaseApi from './price-feeds/coinbase-api';
+//import GeminiApi from './price-feeds/gemini-api';
+//import KrakenApi from './price-feeds/kraken-api';
+import XeggexApi from './price-feeds/xeggex-api';
 
 export interface PriceFeed {
   name: string;
@@ -33,10 +34,11 @@ class PriceUpdater {
   constructor() {
     this.latestPrices = this.getEmptyPricesObj();
 
-    this.feeds.push(new KrakenApi());
-    this.feeds.push(new CoinbaseApi());
-    this.feeds.push(new BitfinexApi());
-    this.feeds.push(new GeminiApi());
+    // this.feeds.push(new KrakenApi());
+    // this.feeds.push(new CoinbaseApi());
+    // this.feeds.push(new BitfinexApi());
+    // this.feeds.push(new GeminiApi());
+    this.feeds.push(new XeggexApi());
   }
 
   public getLatestPrices(): ApiPrice {
@@ -88,14 +90,14 @@ class PriceUpdater {
         await this.$insertHistoricalPrices();
       }
     } catch (e: any) {
-      logger.err(`Cannot save LTC prices in db. Reason: ${e instanceof Error ? e.message : e}`, logger.tags.mining);
+      logger.err(`Cannot save FEC prices in db. Reason: ${e instanceof Error ? e.message : e}`, logger.tags.mining);
     }
 
     this.running = false;
   }
 
   /**
-   * Fetch last LTC price from exchanges, average them, and save it in the database once every hour
+   * Fetch last FEC price from exchanges, average them, and save it in the database once every hour
    */
   private async $updatePrice(): Promise<void> {
     if (this.lastRun === 0 && config.DATABASE.ENABLED === true) {
@@ -121,14 +123,14 @@ class PriceUpdater {
             if (price > -1 && price < MAX_PRICES[currency]) {
               prices.push(price);
             }
-            logger.debug(`${feed.name} LTC/${currency} price: ${price}`, logger.tags.mining);
+            logger.debug(`${feed.name} FEC/${currency} price: ${price}`, logger.tags.mining);
           } catch (e) {
-            logger.debug(`Could not fetch LTC/${currency} price at ${feed.name}. Reason: ${(e instanceof Error ? e.message : e)}`, logger.tags.mining);
+            logger.debug(`Could not fetch FEC/${currency} price at ${feed.name}. Reason: ${(e instanceof Error ? e.message : e)}`, logger.tags.mining);
           }
         }
       }
       if (prices.length === 1) {
-        logger.debug(`Only ${prices.length} feed available for LTC/${currency} price`, logger.tags.mining);
+        logger.debug(`Only ${prices.length} feed available for FEC/${currency} price`, logger.tags.mining);
       }
 
       // Compute average price, non weighted
@@ -140,7 +142,7 @@ class PriceUpdater {
       }
     }
 
-    logger.info(`Latest LTC fiat averaged price: ${JSON.stringify(this.latestPrices)}`);
+    logger.info(`Latest FEC fiat averaged price: ${JSON.stringify(this.latestPrices)}`);
 
     if (config.DATABASE.ENABLED === true) {
       // Save everything in db
@@ -172,7 +174,7 @@ class PriceUpdater {
    */
   private async $insertHistoricalPrices(): Promise<void> {
     // Insert Kraken weekly prices
-    await new KrakenApi().$insertHistoricalPrice();
+    // await new KrakenApi().$insertHistoricalPrice();
 
     // Insert missing recent hourly prices
     await this.$insertMissingRecentPrices('day');

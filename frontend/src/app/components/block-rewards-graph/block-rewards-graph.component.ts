@@ -160,7 +160,7 @@ export class BlockRewardsGraphComponent implements OnInit {
 
           for (const tick of data) {
             if (tick.seriesIndex === 0) {
-              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.3-3')} LTC<br>`;
+              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.3-3')} FEC<br>`;
             } else if (tick.seriesIndex === 1) {
               tooltip += `${tick.marker} ${tick.seriesName}: ${this.fiatCurrencyPipe.transform(tick.data[1], null, this.currency)}<br>`;
             }
@@ -181,7 +181,7 @@ export class BlockRewardsGraphComponent implements OnInit {
       legend: data.blockRewards.length === 0 ? undefined : {
         data: [
           {
-            name: 'Rewards LTC',
+            name: 'Rewards FEC',
             inactiveColor: 'rgb(110, 112, 121)',
             textStyle: {
               color: 'white',
@@ -204,7 +204,7 @@ export class BlockRewardsGraphComponent implements OnInit {
           axisLabel: {
             color: 'rgb(110, 112, 121)',
             formatter: (val) => {
-              return `${val} LTC`;
+              return `${val} FEC`;
             }
           },
           min: (value) => {
@@ -246,7 +246,7 @@ export class BlockRewardsGraphComponent implements OnInit {
           legendHoverLink: false,
           zlevel: 0,
           yAxisIndex: 0,
-          name: 'Rewards LTC',
+          name: 'Rewards FEC',
           data: data.blockRewards,
           type: 'line',
           smooth: 0.25,

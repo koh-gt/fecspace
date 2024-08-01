@@ -184,15 +184,15 @@ class Server {
       <head>
         <meta charset="utf-8">
         <title>${ogTitle}</title>
-        <meta name="description" content="Ferrite Space - Gateway to Explore Ferrite"/>
+        <meta name="description" content="Ferrite Mempool - Gateway to Explore Ferrite"/>
         <meta property="og:image" content="${ogImageUrl}"/>
         <meta property="og:image:type" content="image/png"/>
         <meta property="og:image:width" content="${matchedRoute.render ? 1200 : 1000}"/>
         <meta property="og:image:height" content="${matchedRoute.render ? 600 : 500}"/>
         <meta property="og:title" content="${ogTitle}">
         <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:site" content="@ferrite">
-        <meta property="twitter:creator" content="@ferrite">
+        <meta property="twitter:site" content="@ferritecoin">
+        <meta property="twitter:creator" content="@ferritecoin">
         <meta property="twitter:title" content="${ogTitle}">
         <meta property="twitter:description" content="Your Gateway to Explore Ferrite"/>
         <meta property="twitter:image:src" content="${ogImageUrl}"/>

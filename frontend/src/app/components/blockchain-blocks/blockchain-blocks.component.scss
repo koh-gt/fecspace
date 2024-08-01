@@ -88,7 +88,7 @@
   position:absolute;
   top: calc(-0.192 * var(--block-size));
   left: calc(-0.16 * var(--block-size));
-  background-color: #3e3c3c; // LTCbrand: block cube (top)
+  background-color: #232838;
   transform:skew(40deg);
   transform-origin:top;
 }
@@ -100,7 +100,7 @@
   position: absolute;
   top: calc(-0.096 * var(--block-size));
   left: calc(-0.16 * var(--block-size));
-  background-color: #2b2b2b; // LTCbrand: block cube (left)
+  background-color: #191c27;
 
   transform: skewY(50deg);
   transform-origin: top;
@@ -144,7 +144,7 @@
 }
 
 .loading .bitcoin-block.mined-block {
-  background: #4d4d4d;
+  background: #2d3348;
 }
 
 @keyframes opacityPulse {
